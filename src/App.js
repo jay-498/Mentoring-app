@@ -8,9 +8,10 @@ function App() {
   return (
     <div className="container w-360 h-[937px] bg-[#FFE8EB]">
       <Navbar />
-        <Routes>
+      <HomePage />
+        {/* <Routes>
             <Route path="/" element={<HomePage />}/>
-        </Routes>
+        </Routes> */}
     </div>
   );
 }

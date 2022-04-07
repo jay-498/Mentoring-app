@@ -1,0 +1,9 @@
+.slick-slide {
+  padding-left: 15px;
+  padding-right: 15px;
+  opacity: 0.2;
+}
+
+.slick-active {
+  opacity: 1;
+}

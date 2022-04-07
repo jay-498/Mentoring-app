@@ -1,0 +1,2 @@
+export const SET_BOOKING_DATE = "SET_BOOKING_DATE"
+export const SET_BOOKING_TIME = "SET_BOOKING_TIME"

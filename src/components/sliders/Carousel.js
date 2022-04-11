@@ -6,18 +6,67 @@ import img1 from "../../assets/images/1.png";
 import img2 from "../../assets/images/2.png";
 import img3 from "../../assets/images/3.png";
 import img4 from "../../assets/images/4.png";
+import left from "../../assets/images/design/left.png"
+import right from "../../assets/images/design/right.png"
 
 
 export default class Gallery extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categories : [
+         {
+           image: img1,
+           tag: "REASEARCH"
+         },
+         {
+          image: img2,
+          tag: "REASEARCH"
+        },
+        {
+          image: img3,
+          tag: "REASEARCH"
+        },
+        {
+          image: img4,
+          tag: "research"
+        },
+        {
+          image: img1,
+          tag: "REASEARCH"
+        },
+        {
+         image: img2,
+         tag: "REASEARCH"
+       },
+       {
+         image: img3,
+         tag: "REASEARCH"
+       },
+       {
+         image: img4,
+         tag: "research"
+       },
+      ]
+    };
+    this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
+  }
+  next() {
+    this.slider.slickNext();
+  }
+  previous() {
+    this.slider.slickPrev();
+  }
+
   render() {
     const settings = {
-      arrows:true,
+      arrows: false,
       swipe: true,
       infinite: true,
       speed: 500,
       slidesToShow: 4,
       slidesToScroll: 2,
-      initialSlide: 0,
       responsive: [
         {
           breakpoint: 1024,
@@ -28,7 +77,7 @@ export default class Gallery extends Component {
           }
         },
         {
-          breakpoint: 600,
+          breakpoint: 770,
           settings: {
             slidesToShow: 2,
             slidesToScroll: 2,
@@ -36,7 +85,15 @@ export default class Gallery extends Component {
           }
         },
         {
-          breakpoint: 480,
+          breakpoint: 650,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            initialSlide: 2
+          }
+        },
+        {
+          breakpoint: 500,
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1
@@ -45,69 +102,35 @@ export default class Gallery extends Component {
       ]
     };
     return (
-      <div className="pt-5">
-        <Slider {...settings}>
-          <div>
+      <div className="relative pt-5">
+        <div className="absolute top-24 left-3 z-10 bg-white rounded-2xl h-13 w-13 p-3">
+          <button className="button" onClick={this.previous}>
+            <img src={left} alt="left" className="h-6 w-6"/>
+          </button>
+        </div>
+        <Slider ref={c => (this.slider = c)} {...settings}>
+        {this.state.categories.map((mentor,index)=>(
+        <div key={index}>
             <div className="relative">
                 <a className="absolute inset-0 z-10 text-center flex items-center justify-center">
-                  <h1  className="text-2xl text-slate-100">RESEARCH</h1>
+                  <h1  className="text-2xl text-slate-100">{mentor.tag}</h1>
                 </a>
                 <a href="#" className="relative">
                     <div className="flex flex-wrap">
-                        <img src={img1} alt="1" />
+                        <img src={mentor.image} alt="1" />
                     </div>
                 </a>
             </div>
-          </div>
-          <div>
-            <div className="relative">
-                <a className="absolute inset-0 z-10 text-center flex items-center justify-center">
-                  <h1  className="text-2xl text-slate-100">RESEARCH</h1>
-                </a>
-                <a href="#" className="relative">
-                    <div className="flex flex-wrap">
-                        <img src={img2} alt="1" />
-                    </div>
-                </a>
-            </div>
-          </div>
-          <div>
-            <div className="relative">
-                <a className="absolute inset-0 z-10 text-center flex items-center justify-center">
-                  <h1  className="text-2xl text-slate-100">RESEARCH</h1>
-                </a>
-                <a href="#" className="relative">
-                    <div className="flex flex-wrap">
-                        <img src={img3} alt="1" />
-                    </div>
-                </a>
-            </div>
-          </div>
-          <div>
-            <div className="relative">
-                <a className="absolute inset-0 z-10 text-center flex items-center justify-center">
-                  <h1  className="text-2xl text-slate-100">RESEARCH</h1>
-                </a>
-                <a href="#" className="relative">
-                    <div className="flex flex-wrap">
-                        <img src={img4} alt="1" />
-                    </div>
-                </a>
-            </div>
-          </div>
-          <div>
-            <div className="relative">
-                <a className="absolute inset-0 z-10 text-center flex items-center justify-center">
-                  <h1  className="text-2xl text-slate-100">RESEARCH</h1>
-                </a>
-                <a href="#" className="relative">
-                    <div className="flex flex-wrap">
-                        <img src={img1} alt="1" />
-                    </div>
-                </a>
-            </div>
-          </div>
+        </div>
+        ))}
+          
         </Slider>
+
+        <div className="absolute right-3 top-24">
+          <button className="button bg-white rounded-2xl h-13 w-13 p-4" onClick={this.next}>
+            <img src={right} alt="left" className="rounded-3xl h-6 w-6"/>
+          </button>
+        </div>
       </div>
     );
   }

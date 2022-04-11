@@ -6,12 +6,14 @@ import {Routes, Route} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="container w-360 h-[937px] bg-[#FFE8EB]">
+    <div className="flex flex-col mx-auto h-[937px] bg-[#FFE8EB]">
+      <div>
       <Navbar />
       <HomePage />
         {/* <Routes>
             <Route path="/" element={<HomePage />}/>
         </Routes> */}
+      </div>
     </div>
   );
 }

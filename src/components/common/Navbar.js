@@ -8,8 +8,8 @@ export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = useState(false);
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3">
-        <div className="container px-4 mx-auto pl-20 flex flex-wrap items-center justify-between">
+      <nav className="relative flex flex-wrap mx-20 items-center justify-between py-3">
+        <div className="flex flex-row items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <a
               className="text-[28px] font-semibold font-poppins leading-relaxed inline-block mr-4 py-2 whitespace-nowrap  text-gray"
@@ -32,35 +32,36 @@ export default function Navbar({ fixed }) {
             }
             id="example-navbar-danger"
           >
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto gap-x-8">
+            <ul className="flex flex-col lg:flex-row list-none pl-52 gap-x-8">
               <li className="nav-item">
                 <a
-                  className="px-3 py-2 flex items-center text-[18px]  font-bold leading-snug text-gray hover:opacity-75"
+                  className="px-3 py-2 flex items-center text-[18px]  font-bold leading-snug text-gray"
                   href="#pablo"
                 >
-                  <span className="ml-2 font-normal text-[#999FAE] font-Helvetica">Home</span>
+                  <span className="ml-2 font-normal text-[#999FAE] font-Helvetica hover:text-[#A36EBA]">Home</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a
-                  className="px-3 py-2 flex items-center text-[18px]  font-bold leading-snug text-gray hover:opacity-75"
+                  className="px-3 py-2 flex items-center text-[18px]  font-bold leading-snug text-gray"
                   href="#pablo"
                 >
-                  <span className="ml-2 font-normal text-[#999FAE] font-Helvetica">About</span>
+                  <span className="ml-2 font-normal text-[#999FAE] font-Helvetica hover:text-[#A36EBA]">About</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a
-                  className="px-3 py-2 flex items-center text-[18px]  font-bold leading-snug text-gray hover:opacity-75"
+                  className="px-3 py-2 flex items-center text-[18px]  font-bold leading-snug text-gray"
                   href="#pablo"
                 >
-                  <span className="ml-2 font-normal text-[#999FAE] font-Helvetica">Pricing</span>
+                  <span className="ml-2 font-normal text-[#999FAE] font-Helvetica hover:text-[#A36EBA]">Pricing</span>
                 </a>
               </li>
             </ul>
           </div>
-          <div className={
-              "lg:flex rounded my-4 mx-20" +
+        </div>
+        <div className={
+              "lg:flex rounded my-4" +
               (navbarOpen ? " flex" : " hidden")
             }
             id="example-navbar-danger">
@@ -70,13 +71,12 @@ export default function Navbar({ fixed }) {
                     </div>
                     <input type="text" id="email-adress-icon" className="block p-2 pl-10 w-[417px] h-10 text-[#999FAE] sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-[#727272]  dark:placeholder-[#000] opacity-10" placeholder="Search..." />
                 </div>
-                <div className="hidden rounded relative lg:ml-6 md:mr-0 md:block">
-                <button className="bg-[#8F6EC5] font-Helvetica text-white font-bold py-2 px-3 rounded-lg">
+                <div className="hidden relative lg:ml-6 md:mr-0 md:block">
+                <button className="bg-[#8F6EC5] font-Helvetica text-white font-bold py-2 px-4 rounded-[5px]">
                   Sign Up
                 </button>
                 </div>
             </div>
-        </div>
       </nav>
     </>
   );

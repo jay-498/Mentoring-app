@@ -10,7 +10,7 @@ module.exports = {
         '64' : '64px',
       },
       fontFamily: {
-        'poppins': ['Poppins'],
+        'poppins': ['poppins'],
         'Helvetica': ['Helvetica'],
         'Avenir': ['Avenir'],
      },

@@ -20,31 +20,36 @@ export default class CarouselDiscover extends Component {
           image: img1,
           name: "Anjali Bhati",
           qualification: "B.COM | SRCC",
-          value: 1200
+          value: 1200,
+          college: "Shree Ram College of Commerce"
          },
          {
           image: img2,
           name: "Anjali Bhati",
           qualification: "B.COM | SRCC",
-          value: 1200
+          value: 1200,
+          college: "Shree Ram College of Commerce"
          },
          {
           image: img3,
           name: "Anjali Bhati",
           qualification: "B.COM | SRCC",
-          value: 1200
+          value: 1200,
+          college: "Shree Ram College of Commerce"
          },
          {
           image: img4,
           name: "Anjali Bhati",
           qualification: "B.COM | SRCC",
-          value: 1200
+          value: 1200,
+          college: "Shree Ram College of Commerce"
          },
          {
           image: img4,
           name: "Anjali Bhati",
           qualification: "B.COM | SRCC",
-          value: 1200
+          value: 1200,
+          college: "Shree Ram College of Commerce"
          }
       ]
     };
@@ -119,7 +124,8 @@ export default class CarouselDiscover extends Component {
                           <p  className="text-xl text-[#646464] pl-5 font-Avenir font-black pt-1">{mentor.name}</p>
                           <span className="text-[#FB89A1] font-semibold pl-[76px] font-poppins lg:text-xl text-sm">RS {mentor.value}</span>
                           </div>
-                          <p  className="text-sm font-medium text-[#0C2054] pl-5 pb-2">{mentor.qualification}</p>
+                          <p  className="text-sm font-medium text-[#0C2054] pl-5 font-Avenir">{mentor.qualification}</p>
+                          <p  className="text-[10px] font-light text-[#0C2054] pl-5 pb-2 font-poppins">{mentor.college}</p>
                           </div>
                       </div>
                   </a>

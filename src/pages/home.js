@@ -21,21 +21,24 @@ class HomePage extends Component {
     return (
       <div className="flex flex-col">
           <div className="grid lg:grid-cols-2 h-[840px] mx-20">
-          <div className="flex flex-col pt-[50%] w-[564px] gap-y-4">
+          <div className="flex flex-col pt-[50%] gap-y-4">
             <div className="flex justify-start leading-[64px]">
-            <p className="text-[#8F6EC5] font-bold text-[52px] font-poppins">Learn and grow from the best in industry</p>
+            <p className="text-[#8F6EC5] font-bold text-[52px] font-poppins">Learn and grow from <br/>the best in industry</p>
             </div>
             <div className="flex flex-col h-8 leading-7.5 gap-y-4">
-                <p className="text-[#797373] font-medium text-2xl font-Poppins">Find the best mentor who can help you ace your next case</p>
+                <p className="text-[#797373] font-medium text-2xl font-poppins">Find the best mentor who can help you ace your<br /> next case</p>
                 <div className="flex first-letter:my-2">
                     <div className="hidden rounded-l-lg relative md:mr-0 md:block">
                         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg className="w-5 h-5 text-[#797373]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+                        <svg className="w-5 h-5 text-[#797373]" fill="currentColor" viewBox="0 0 20 20" 
+                        xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 
+                        000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 
+                        8z" clipRule="evenodd"></path></svg>
                         </div>
                         <input type="text" id="email-adress-icon" 
                         className="block p-2 pl-10 w-[417px] h-12 text-[#797373] 
-                        rounded-l-lg sm:text-sm focus:ring-blue-500 focus:border-blue-500 
-                        dark:bg-[#fff] dark:placeholder-[#797373]" 
+                        rounded-l-lg md:text-md sm:text-sm
+                        dark:bg-[#fff] dark:placeholder-[#797373] font-medium" 
                         placeholder="Find your mentor" />
                     </div>
                     <button className="bg-[#8F6EC5] text-white font-bold py-2 px-8 rounded-r-lg">
@@ -95,12 +98,12 @@ class HomePage extends Component {
                       <h1  className="text-5xl text-slate-100 font-bold font-Helvetica">Sign in to our book</h1>
                       <p className="font-normal text-white text-xl font-Helvetica py-6">Craven omni memoria patriae zombieland clairvius<br/> narcisse religionis sunt diri undead historiarum.</p>
                       <div className="flex first-letter:my-2">
-                          <div className="hidden rounded-l-lg relative md:mr-0 md:block">
+                          <div className="rounded-l-lg relative md:mr-0">
                               <input type="text" id="email-adress-icon" 
                               className="block p-2 pl-10 w-[380px] h-[54px] text-[#fff] 
-                              rounded-l-lg sm:text-sm focus:ring-blue-500 focus:border-blue-500 
-                              dark:bg-[#FFACFF] dark:placeholder-[#fff] opacity-20" 
-                              placeholder="email address" />
+                              rounded-l-lg sm:text-sm 
+                              placeholder-[#fff] border border-[#FFACFF] outline-none" 
+                              placeholder="email address" style={{background: "rgba(255, 208, 255, 0.15)"}}/>
                           </div>
                           <button className="bg-[#FFACFF] font-Helvetica text-white font-bold py-2 px-4 rounded-r-lg">
                           Download
@@ -116,7 +119,7 @@ class HomePage extends Component {
 
           <div className="flex flex-col lg:py-28 py-20">
               <div className="flex flex-col px-7">
-              <h1 className="text-[#646464] text-2xl font-medium font-poppins text-center">TESTOMONIAL</h1>
+              <h1 className="text-[#646464] text-2xl font-medium font-poppins text-center">TESTIMONIAL</h1>
               <Testimonials />
               </div>
           </div>
@@ -124,25 +127,25 @@ class HomePage extends Component {
           <div className="flex flex-col lg:p-10 p-5 bg-[#F9EFFD]" 
           >
               <div className="flex flex-col lg:mx-36 mx-5">
-              <h1 className="text-[#939EA4] text-[14px] font-medium font-roboto pb-14">Your company</h1>
+              <h1 className="text-[#939EA4] text-[14px] font-medium font-Roboto pb-14">Your company</h1>
               <hr style={{backgroundColor: "#CDD1D4",height: "1px"}} />
               <div className="flex xs:flex-col">
               <div className="flex flex-grow">
             <ul className="flex flex-row lg:flex-row list-none lg:mr-auto">
               <li>
                 <a
-                  className="py-2 flex items-center  font-bold leading-snug text-gray hover:opacity-75"
+                  className="py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
                   href="#pablo"
                 >
-                  <span className="font-normal text-[#999FAE] font-Roboto">Home</span>
+                  <span className="font-normal text-[#929ECC] font-Roboto text-[14px]">Home</span>
                 </a>
               </li>
               <li>
                 <a
-                  className="px-5 py-2 flex items-centerfont-bold leading-snug text-gray hover:opacity-75"
+                  className="px-5 py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
                   href="#pablo"
                 >
-                  <span className="ml-5 font-normal text-[#999FAE] font-Roboto">About</span>
+                  <span className="ml-5 font-normal text-[#929ECC] font-Roboto text-[14px]">About</span>
                 </a>
               </li>
               <li >
@@ -150,7 +153,7 @@ class HomePage extends Component {
                   className="px-3 py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
                   href="#pablo"
                 >
-                  <span className="ml-2 font-normal text-[#999FAE] font-Roboto">Contact</span>
+                  <span className="ml-2 font-normal text-[#929ECC] font-Roboto text-[14px]">Contact</span>
                 </a>
               </li>
             </ul>

@@ -29,7 +29,7 @@ export default class Gallery extends Component {
         },
         {
           image: img4,
-          tag: "research"
+          tag: "REASEARCH"
         },
         {
           image: img1,
@@ -45,7 +45,7 @@ export default class Gallery extends Component {
        },
        {
          image: img4,
-         tag: "research"
+         tag: "RESEARCH"
        },
       ]
     };
@@ -112,13 +112,11 @@ export default class Gallery extends Component {
         {this.state.categories.map((mentor,index)=>(
         <div key={index}>
             <div className="relative">
-                <a className="absolute inset-0 z-10 text-center flex items-center justify-center">
-                  <h1  className="text-2xl text-slate-100">{mentor.tag}</h1>
+                <a className="absolute inset-0 z-10 text-center flex top-[35%] justify-center">
+                  <h1 className="text-2xl text-white font-bold font-poppins tracking-[.13em]" style={{textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"}}>{mentor.tag}</h1>
                 </a>
                 <a href="#" className="relative">
-                    <div className="flex flex-wrap">
-                        <img src={mentor.image} alt="1" />
-                    </div>
+                    <img src={mentor.image} alt="1" />
                 </a>
             </div>
         </div>

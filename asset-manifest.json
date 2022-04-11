@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Mentoring-app/static/css/main.4b50d8b0.css",
+    "main.css": "/Mentoring-app/static/css/main.ed1526fb.css",
     "main.js": "/Mentoring-app/static/js/main.62499f75.js",
     "static/js/787.737a8018.chunk.js": "/Mentoring-app/static/js/787.737a8018.chunk.js",
     "static/media/bgcolor.png": "/Mentoring-app/static/media/bgcolor.e04359e6b20d44788e16.png",
@@ -23,12 +23,12 @@
     "static/media/menuopen.svg": "/Mentoring-app/static/media/menuopen.8c004292b9e0d8b6a5d63f9e22e94556.svg",
     "index.html": "/Mentoring-app/index.html",
     "static/media/menuclose.svg": "/Mentoring-app/static/media/menuclose.9f829dbea39731db81140261f0f3f969.svg",
-    "main.4b50d8b0.css.map": "/Mentoring-app/static/css/main.4b50d8b0.css.map",
+    "main.ed1526fb.css.map": "/Mentoring-app/static/css/main.ed1526fb.css.map",
     "main.62499f75.js.map": "/Mentoring-app/static/js/main.62499f75.js.map",
     "787.737a8018.chunk.js.map": "/Mentoring-app/static/js/787.737a8018.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4b50d8b0.css",
+    "static/css/main.ed1526fb.css",
     "static/js/main.62499f75.js"
   ]
 }

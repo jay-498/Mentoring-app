@@ -115,7 +115,7 @@ class HomePage extends Component {
           </div>
 
           <div className="flex flex-col lg:py-28 py-20">
-              <div className="flex flex-col px-20">
+              <div className="flex flex-col px-7">
               <h1 className="text-[#646464] text-2xl font-medium font-poppins text-center">TESTOMONIAL</h1>
               <Testimonials />
               </div>

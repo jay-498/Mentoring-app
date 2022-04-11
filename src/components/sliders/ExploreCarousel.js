@@ -5,6 +5,14 @@ import img3 from "../../assets/images/mentee/Group 9548.png";
 import Mentor from "../mentor";
 
 
+  /**
+   * PurgeCSS:
+   * bg-[#FD8498]
+   * bg-[#3960FE]
+   * bg-[#F6C859]
+
+   */
+
 export default class ExploreCarousel extends Component {
   constructor(){
     super();

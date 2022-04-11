@@ -109,12 +109,12 @@ export default class CarouselDiscover extends Component {
         </div>
         <Slider ref={c => (this.slider = c)} {...settings}>
           {this.state.mentorDetails.map((mentor,index)=>(
-              <div className="shadow-lg shadow-slate-500/40 my-5 rounded-2xl" key={index}>
+              <div className="shadow-lg shadow-slate-500/40 my-5 rounded-b-[20px]" key={index}>
               <div className="relative">
                   <a href="#" className="relative">
                       <div className="flex flex-col">
                           <img src={mentor.image} alt="1" className="pb-0 mb-0 rounded-t-[20px]"/>
-                          <div className="flex flex-wrap bg-white rounded-2xl">
+                          <div className="flex flex-col bg-white rounded-b-[20px]">
                           <div className="grid grid-cols-2 items-center">
                           <p  className="text-xl text-[#646464] pl-5 font-Avenir font-black pt-1">{mentor.name}</p>
                           <span className="text-[#FB89A1] font-semibold pl-[76px] font-poppins lg:text-xl text-sm">RS {mentor.value}</span>

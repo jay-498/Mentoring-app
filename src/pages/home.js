@@ -37,7 +37,7 @@ class HomePage extends Component {
                           </div>
                           <input type="text" id="email-adress-icon" 
                           className="block p-2 pl-10 w-[417px] h-12 text-[#797373] 
-                          rounded-l-lg md:text-md sm:text-sm
+                          rounded-l-lg md:text-md text-[16px]
                           dark:bg-[#fff] dark:placeholder-[#797373] font-medium font-nunito" 
                           placeholder="Find your mentor" />
                       </div>

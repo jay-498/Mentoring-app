@@ -1,7 +1,7 @@
 import React from "react";
 import {useState} from "react";
 import menuopen from "../../assets/svgs/menuopen.svg";
-import menupen2 from "../../assets/svgs/menupen2.svg";
+import menuopen2 from "../../assets/svgs/menuopen3.svg";
 import menuclose from "../../assets/svgs/menuclose.svg";
 
 export default function Navbar({ fixed }) {
@@ -25,7 +25,7 @@ export default function Navbar({ fixed }) {
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <img src={navbarOpen?menuclose:menuclose} alt="menuopen"/>
+              <img src={navbarOpen?menuclose:menuopen2} alt="menuopen"/>
             </button>
             </div>
           </div>

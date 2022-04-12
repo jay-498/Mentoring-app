@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors:{
+        'opacitywhite': 'rgba(255, 255, 255, 0.7)',
+      },
       lineHeight: {
         '64' : '64px',
       },
@@ -13,6 +16,7 @@ module.exports = {
         'poppins': ['poppins'],
         'Helvetica': ['Helvetica'],
         'Avenir': ['Avenir'],
+        'nunito': ['Nunito']
      },
     },
   },

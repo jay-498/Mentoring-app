@@ -1,42 +1,40 @@
-const plugin = require('tailwindcss/plugin')
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      colors:{
-        'opacitywhite': 'rgba(255, 255, 255, 0.7)',
+      colors: {
+        opacitywhite: "rgba(255, 255, 255, 0.7)",
       },
       lineHeight: {
-        '64' : '64px',
+        64: "64px",
       },
       fontFamily: {
-        'poppins': ['poppins'],
-        'Helvetica': ['Helvetica'],
-        'Avenir': ['Avenir'],
-        'nunito': ['Nunito']
-     },
+        poppins: ["poppins"],
+        Helvetica: ["Helvetica"],
+        Avenir: ["Avenir"],
+        nunito: ["Nunito"],
+        AvenirNext: ["Avenir Next LT Pro"],
+      },
     },
   },
-  plugins:  [
+  plugins: [
     plugin(function ({ addUtilities }) {
       addUtilities({
-        '.scrollbar-hide': {
+        ".scrollbar-hide": {
           /* IE and Edge */
-          '-ms-overflow-style': 'none',
+          "-ms-overflow-style": "none",
 
           /* Firefox */
-          'scrollbar-width': 'none',
+          "scrollbar-width": "none",
 
           /* Safari and Chrome */
-          '&::-webkit-scrollbar': {
-            display: 'none'
-          }
-        }
-      }
-      )
-    })
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        },
+      });
+    }),
   ],
-}
+};

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import profile from "../assets/images/profile/Profil1.png";
-import Gallery from "../components/main/Carousel";
 import CarouselDiscover from "../components/main/CarouselDiscover";
+import Gallery from "../components/main/Carousel";
 import ExploreCarousel from "../components/main/ExploreCarousel";
 import Testimonials from "../components/main/Testimonials";
 import Mentors from "../components/main/Mentors";
@@ -23,7 +23,7 @@ class HomePage extends Component {
     return (
       <div className="flex flex-col">
         <div className="grid lg:grid-cols-2 h-[840px] mx-20">
-          <div className="flex flex-col pt-[43%] gap-y-4">
+          <div className="flex flex-col pt-[30%] gap-y-4">
             <div className="flex justify-start leading-[64px]">
               <p className="text-[#8F6EC5] font-bold text-[52px] font-poppins">
                 Learn and grow from <br />
@@ -56,9 +56,9 @@ class HomePage extends Component {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center pt-20 lg:block hidden">
-            <div className="h-[600px]">
-              <img src={profile} className="relative" alt="profile" />
+          <div className="flex flex-col  justify-center items-center pt-8 lg:block">
+            <div className="h-[590px] px-2">
+              <img src={profile} className="relative h-[750px]" alt="profile" />
             </div>
             <h1 className="font-Helvetica text-xl font-normal text-center">
               Pragyan Pandey, Software Engineer
@@ -81,8 +81,6 @@ class HomePage extends Component {
         <div
           className="flex flex-col pt-10"
           style={{
-            // backgroundImage:
-            //   "linear-gradient(180deg, #FFE8EB 0%, rgba(226, 227, 255, 0) 100%)",
             backgroundImage: `url(${bg})`,
             backgroundPosition: "center",
             backgroundSize: "cover",
@@ -90,20 +88,34 @@ class HomePage extends Component {
           }}
         >
           <div className="flex flex-col lg:mx-10 mx-6 mt-16">
-            <h1 className="text-[#646464] text-2xl pl-10 font-medium font-poppins">
+            <h1 className="text-[#646464] text-3xl pl-[44px] font-medium font-poppins">
               CATEGORIES
             </h1>
             <Gallery />
           </div>
         </div>
 
-        <div className="flex flex-col pt-10">
-          <div className="absolute lg:w-[58px] w-[50px] mt-28 lg:ml-10 ml-4">
+        <div className="flex flex-col pt-20">
+          <div className="absolute lg:w-[60px] w-[40px] mt-36 lg:ml-10 ml-4">
             <img src={dots} alt="dot" />
           </div>
-          <div className="flex flex-col lg:mx-14 mx-6">
+          <div className="flex flex-col lg:mx-10 mx-6">
             <div className="flex">
-              <h1 className="text-[#646464] pl-6 text-2xl font-medium font-poppins">
+              <h1 className="text-[#646464] pl-[44px] text-3xl font-medium font-poppins">
+                DISCOVER TOP MENTORS
+              </h1>
+            </div>
+            <CarouselDiscover />
+          </div>
+        </div>
+
+        <div className="flex flex-col pt-20">
+          <div className="absolute lg:w-[60px] w-[40px] mt-36 lg:ml-10 ml-4">
+            <img src={dots} alt="dot" />
+          </div>
+          <div className="flex flex-col lg:mx-10 mx-6">
+            <div className="flex">
+              <h1 className="text-[#646464] pl-[44px] text-3xl font-medium font-poppins">
                 DISCOVER TOP MENTORS
               </h1>
             </div>
@@ -124,7 +136,7 @@ class HomePage extends Component {
             <img src={plane2} alt="plane2" className="w-[113px] h-[100px]" />
           </div>
           <div className="flex flex-col lg:mx-20 mx-6">
-            <h1 className="text-[#646464] text-2xl pb-10 font-medium font-poppins text-center">
+            <h1 className="text-[#646464] text-3xl pb-10 font-medium font-poppins text-center">
               EXPLORE CONSULTING COMPANIES
             </h1>
             <ExploreCarousel />
@@ -168,7 +180,7 @@ class HomePage extends Component {
 
         <div className="flex flex-col lg:py-28 py-20">
           <div className="flex flex-col px-7">
-            <h1 className="text-[#646464] text-2xl font-medium font-poppins text-center">
+            <h1 className="text-[#646464] text-3xl font-medium font-poppins text-center">
               TESTIMONIAL
             </h1>
             <Testimonials />

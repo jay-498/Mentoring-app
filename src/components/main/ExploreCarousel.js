@@ -43,7 +43,9 @@ export default class ExploreCarousel extends Component {
                   alt="1"
                   className="w-30 h-28 px-20"
                 />
-                <h1 className="text-2xl text-slate-100">{mentor.name}</h1>
+                <h1 className="text-2xl text-slate-100 font-Helvetica">
+                  {mentor.name}
+                </h1>
               </div>
             </div>
           </div>

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import img1 from "../../assets/images/artwork/at.png";
+import zen from "../../assets/images/artwork/zendeskcolor.png";
+import linkedin from "../../assets/images/artwork/linkedincolor.png";
+import reddit from "../../assets/images/artwork/redditcolor.png";
+import att from "../../assets/images/artwork/ATTCOLOR.png";
 
 /**
  * PurgeCSS:
@@ -13,22 +16,18 @@ export default class Mentors extends Component {
   constructor() {
     super();
     this.state = {
-      explore: [
+      companies: [
         {
-          img: "MCKINSKY",
-          bg: "#FD8498",
+          image: reddit,
         },
         {
-          name: "MCKINSKY",
-          bg: "#3960FE",
+          image: att,
         },
         {
-          name: "MCKINSKY",
-          bg: "#F6C859",
+          image: zen,
         },
         {
-          name: "MCKINSKY",
-          bg: "#F6C859",
+          image: linkedin,
         },
       ],
     };
@@ -36,12 +35,16 @@ export default class Mentors extends Component {
   render() {
     return (
       <div className="grid grid-cols lg:grid-cols-4 grid-cols-1 pt-10 gap-y-2">
-        {this.state.explore.map((mentor, index) => (
+        {this.state.companies.map((logo, index) => (
           <div
             className="flex flex-col py-2 items-center justify-center"
             key={index}
           >
-            <img src={img1} alt="1" className="w-[150px] h-[54px]" />
+            <img
+              src={logo.image}
+              alt="1"
+              className="w-[150px] h-[60px] hover:grayscale"
+            />
           </div>
         ))}
       </div>

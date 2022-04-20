@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import "./slick.css";
-import "./slick-theme.css";
+import "slick-carousel/slick/slick-theme.css";
 import left from "../../assets/images/design/left.png";
 import right from "../../assets/images/design/right.png";
 import MainService from "../../services/main.service";
@@ -70,7 +70,10 @@ export default class CarouselDiscover extends Component {
             })
             .catch((err) => console.log(err));
         });
-        this.setState({ mentorDetails: tempMentors });
+        this.setState((prevState) => ({
+          ...prevState,
+          mentorDetails: tempMentors,
+        }));
       })
       .catch((err) => console.log(err));
   }
@@ -81,6 +84,7 @@ export default class CarouselDiscover extends Component {
       swipe: true,
       infinite: true,
       speed: 500,
+      loop: true,
       slidesToShow: 4,
       slidesToScroll: 2,
       responsive: [
@@ -105,7 +109,7 @@ export default class CarouselDiscover extends Component {
           breakpoint: 650,
           settings: {
             slidesToShow: 2,
-            slidesToScroll: 1,
+            slidesToScroll: 2,
             initialSlide: 2,
             infinite: true,
           },
@@ -121,10 +125,13 @@ export default class CarouselDiscover extends Component {
       ],
     };
     return (
-      <div className="relative px-2">
-        <div className="absolute top-56 left-0 z-10 bg-white rounded-2xl h-13 w-13 p-3">
-          <button className="button" onClick={this.previous}>
-            <img src={left} alt="left" className="h-6 w-6" />
+      <div className="relative pt-5 px-[31px]">
+        <div
+          className="absolute top-56 left-2 z-10 bg-white rounded-2xl h-[65px] w-[69px] p-3 bg-gray-50 cursor-pointer"
+          onClick={this.previous}
+        >
+          <button className="button">
+            <img src={left} alt="left" className="h-6 w-6 mt-2 ml-3" />
           </button>
         </div>
         <Slider ref={(c) => (this.slider = c)} {...settings}>
@@ -143,14 +150,14 @@ export default class CarouselDiscover extends Component {
                     />
                     <div className="flex flex-col bg-white rounded-b-[20px]">
                       <div className="grid grid-cols-2 items-center">
-                        <p className="text-xl text-[#646464] pl-5 font-Avenir font-black pt-1">
+                        <p className="text-xl text-[#646464] pl-5 font-Manrope font-black pt-1">
                           {mentor.name}
                         </p>
                         <span className="text-[#FB89A1] font-semibold pl-[76px] font-poppins lg:text-xl text-sm">
                           RS {mentor.session_rate}
                         </span>
                       </div>
-                      <p className="text-sm font-medium text-[#0C2054] pl-5 font-Avenir">
+                      <p className="text-sm font-medium text-[#0C2054] pl-5 font-Manrope">
                         {mentor.description}
                       </p>
                       <p className="text-[10px] font-light text-[#0C2054] pl-5 pb-2 font-poppins">
@@ -163,11 +170,11 @@ export default class CarouselDiscover extends Component {
             </div>
           ))}
         </Slider>
-        <div className="absolute right-0 top-56">
-          <button
-            className="button bg-white rounded-2xl h-13 w-13 p-4"
-            onClick={this.next}
-          >
+        <div
+          className="absolute right-1 top-56 bg-gray-50 rounded-2xl"
+          onClick={this.next}
+        >
+          <button className="button rounded-2xl h-[65px] w-[69px] p-4 pl-5">
             <img src={right} alt="left" className="h-6 w-6" />
           </button>
         </div>

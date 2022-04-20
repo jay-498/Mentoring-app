@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import profile from "../assets/images/profile/Profil1.png";
-import bgcolor from "../assets/images/bgcolor.png";
-import Gallery from "../components/sliders/Carousel";
-import CarouselDiscover from "../components/sliders/CarouselDiscover";
-import ExploreCarousel from "../components/sliders/ExploreCarousel";
-import Testimonials from "../components/sliders/Testimonials";
+import Gallery from "../components/main/Carousel";
+import CarouselDiscover from "../components/main/CarouselDiscover";
+import ExploreCarousel from "../components/main/ExploreCarousel";
+import Testimonials from "../components/main/Testimonials";
+import Mentors from "../components/main/Mentors";
 import sign from "../assets/images/mentee/sign.png";
 import plane1 from "../assets/images/design/plane1.png";
 import plane2 from "../assets/images/design/plane3.png";
@@ -16,7 +16,6 @@ import twitter from "../assets/images/icons/twitter.png";
 import youtube from "../assets/images/icons/youtube.png";
 
 class HomePage extends Component {
-
   render() {
     return (
       <div className="flex flex-col">
@@ -53,6 +52,13 @@ class HomePage extends Component {
                 </div>
                 <h1 className="font-Helvetica text-xl font-normal text-center">Pragyan Pandey, Software Engineer</h1>
             </div>
+          </div>
+
+          <div className="flex flex-col py-10">
+              <div className="flex flex-col lg:mx-20 mx-6">
+                <h1 className="text-[#1D2538] text-center text-2xl font-semibold font-poppins">Mentors we’ve work with</h1>
+                <Mentors />
+              </div>
           </div>
 
           <div className="flex flex-col pt-10 bg-gradient-to-r from-[#E2E3FF] to-[#FFE8EB]">

@@ -4,9 +4,11 @@ import menuopen from "../../assets/svgs/menuopen.svg";
 import search from "../../assets/images/design/Search.png";
 import menuopen2 from "../../assets/svgs/menuopen3.svg";
 import menuclose from "../../assets/svgs/menuclose.svg";
+import { useLocation } from "react-router-dom";
 
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const location = useLocation().pathname;
   return (
     <>
       <nav className="relative flex flex-wrap md:mx-20 mx-10 items-center justify-between py-3">
@@ -44,7 +46,11 @@ export default function Navbar({ fixed }) {
                 className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
                 href="#pablo"
               >
-                <span className="ml-2 font-normal text-[#999FAE] font-Helvetica hover:text-[#A36EBA]">
+                <span
+                  className={`ml-2 ${
+                    location === "/" ? "text-[#A36EBA]" : "text-[#999FAE]"
+                  } font-normal font-Helvetica hover:text-[#A36EBA]`}
+                >
                   Home
                 </span>
               </a>
@@ -54,7 +60,11 @@ export default function Navbar({ fixed }) {
                 className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
                 href="#pablo"
               >
-                <span className="ml-2 font-normal text-[#999FAE] font-Helvetica hover:text-[#A36EBA]">
+                <span
+                  className={`ml-2 ${
+                    location === "/about" ? "text-[#A36EBA]" : "text-[#999FAE]"
+                  } font-normal font-Helvetica hover:text-[#A36EBA]`}
+                >
                   About
                 </span>
               </a>
@@ -64,7 +74,13 @@ export default function Navbar({ fixed }) {
                 className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
                 href="#pablo"
               >
-                <span className="ml-2 font-normal text-[#999FAE] font-Helvetica hover:text-[#A36EBA]">
+                <span
+                  className={`ml-2 ${
+                    location === "/pricing"
+                      ? "text-[#A36EBA]"
+                      : "text-[#999FAE]"
+                  } font-normal font-Helvetica hover:text-[#A36EBA]`}
+                >
                   Pricing
                 </span>
               </a>

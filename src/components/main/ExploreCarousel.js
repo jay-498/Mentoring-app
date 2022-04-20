@@ -30,7 +30,6 @@ export default class ExploreCarousel extends Component {
   }
 
   render() {
-    console.log(this.state.explore);
     return (
       <div className="grid grid-cols lg:grid-cols-3 grid-cols-1 pt-10 gap-y-2">
         {this.state.explore.map((mentor, index) => (

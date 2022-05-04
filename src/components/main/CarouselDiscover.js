@@ -141,7 +141,7 @@ export default class CarouselDiscover extends Component {
               key={index}
             >
               <div className="relative">
-                <a href="#" className="relative">
+                <a href="/profile" className="relative">
                   <div className="flex flex-col">
                     <img
                       src={mentor.profile_picture}

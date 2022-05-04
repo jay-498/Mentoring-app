@@ -11,17 +11,18 @@ import plane2 from "../assets/images/design/plane3.png";
 import dots from "../assets/images/design/Dots.png";
 import facebook from "../assets/images/icons/facebook.png";
 import search from "../assets/images/design/Search.png";
-import profilebg from "../assets/images/design/profilebg.png";
 import instagram from "../assets/images/icons/Instagram.png";
 import linkedin from "../assets/images/icons/linkedin.png";
 import twitter from "../assets/images/icons/twitter.png";
 import youtube from "../assets/images/icons/youtube.png";
 import bg from "../assets/images/bg.png";
+import Navbar from "../components/common/Navbar";
 
 class HomePage extends Component {
   render() {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col mx-auto h-[937px] bg-[#FFE8EB]">
+        <Navbar />
         <div className="grid lg:grid-cols-2 h-[840px] mx-20">
           <div className="flex flex-col pt-[30%] gap-y-4">
             <div className="flex justify-start leading-[64px]">
@@ -57,7 +58,7 @@ class HomePage extends Component {
             </div>
           </div>
           <div className="flex flex-col  justify-center items-center pt-8 lg:block">
-            <div className="h-[590px] px-2">
+            <div className="h-[590px] pl-14">
               <img src={profile} className="relative h-[750px]" alt="profile" />
             </div>
             <h1 className="font-Helvetica text-xl font-normal text-center">
@@ -66,7 +67,7 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col py-10">
+        <div className="relative flex flex-col py-10 mt-48">
           <div className="flex flex-col lg:mx-20 mx-6">
             <h1
               className="text-[#1D2538] text-center md:text-md sm:text-sm 

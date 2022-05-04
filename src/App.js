@@ -2,16 +2,17 @@ import Booking from "./components/booking";
 import "./App.css";
 import Navbar from "./components/common/Navbar";
 import HomePage from "./pages/home";
+import Profile from "./components/profile/Profile";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="flex flex-col mx-auto h-[937px] bg-[#FFE8EB]">
+    <div className="flex flex-col">
       <div>
-        <Navbar />
-        {/* <HomePage /> */}
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </div>

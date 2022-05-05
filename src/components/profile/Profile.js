@@ -1,9 +1,30 @@
 import React, { Component } from "react";
-import img1 from "../../assets/images/mentee/1.png";
 import profiledesigns from "../../assets/images/design/profiledesigns.png";
 import Slots from "./Slots";
-export default class Profile extends Component {
+import { withRouter } from "../../utils/withRouter";
+import mainService from "../../services/main.service";
+class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mentor: {},
+    };
+  }
+  componentDidMount() {
+    const id = this.props.params.id;
+    mainService
+      .getMentorById(id)
+      .then((response) => {
+        let tempMentors = JSON.parse(JSON.stringify(response.data));
+        this.setState((prevState) => ({
+          ...prevState,
+          mentor: tempMentors,
+        }));
+      })
+      .catch((err) => console.log(err));
+  }
   render() {
+    const { mentor } = this.state;
     return (
       <div className="flex flex-col overflow-hidden pb-10">
         <div>
@@ -12,16 +33,18 @@ export default class Profile extends Component {
         <div className="flex-col justify-left -mt-16 mx-5 sm:mx-10 lg:mx-40 md:mx-16">
           <div className="sm:flex  items-center">
             <img
-              src={img1}
+              src={mentor.profile_picture}
               alt="ProfileImage"
               className="rounded-full border-solid border-white w-24 h-24 sm:w-44 sm:h-44 md:w-52 md:h-52 border-8 sm:-mt-5 mt-4"
             />
             <div className="flex-col sm:pt-8 text-left items-center sm:pl-10">
               <p className="text-[32px] font-bold text-[#797979] font-poppins pt-1">
-                Anjali Bhati
+                {mentor.name}
               </p>
               <p className="font-poppins font-normal text-[#797979] text-[16px[">
-                UX Designer at Deloitte
+                {mentor.companies &&
+                  mentor.companies.length !== 0 &&
+                  mentor.companies[0].description}
               </p>
             </div>
           </div>
@@ -41,78 +64,55 @@ export default class Profile extends Component {
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                   laboris nisi.”
                 </p>
-                <div className="grid gap-y-2">
-                  <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
-                    Experience
-                  </h1>
-                  <div className="flex items-center mt-2">
-                    <img
-                      src={img1}
-                      alt="ProfileImage"
-                      className="w-[38px] h-[38px]"
-                    />
-                    <div className="flex-col text-left items-center px-3">
-                      <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
-                        UX Analyst
-                      </p>
-                      <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
-                        Delhi Governemnt I 2020--2021
-                      </p>
+                {mentor.companies &&
+                  mentor.companies.length !== 0 &&
+                  mentor.companies.map((company, index) => (
+                    <div className="grid gap-y-2" key={company._id}>
+                      <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
+                        Experience
+                      </h1>
+                      <div className="flex items-center mt-2">
+                        <img
+                          src={company.image_url}
+                          alt="ProfileImage"
+                          className="w-[38px] h-[38px]"
+                        />
+                        <div className="flex-col text-left items-center px-3">
+                          <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
+                            {company.description}
+                          </p>
+                          <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
+                            {company.name}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center mt-2">
-                    <img
-                      src={img1}
-                      alt="ProfileImage"
-                      className="w-[38px] h-[38px]"
-                    />
-                    <div className="flex-col text-left items-center px-3">
-                      <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
-                        UX Analyst
-                      </p>
-                      <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
-                        Delhi Governemnt I 2020--2021
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  ))}
 
-                <div className="grid gap-y-2">
-                  <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
-                    Education
-                  </h1>
-                  <div className="flex items-center mt-2">
-                    <img
-                      src={img1}
-                      alt="ProfileImage"
-                      className="w-[38px] h-[38px]"
-                    />
-                    <div className="flex-col text-left items-center px-3">
-                      <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
-                        UX Analyst
-                      </p>
-                      <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
-                        Delhi Governemnt I 2020--2021
-                      </p>
+                {mentor.colleges &&
+                  mentor.colleges.length !== 0 &&
+                  mentor.colleges.map((college, index) => (
+                    <div className="grid gap-y-2" key={college._id}>
+                      <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
+                        Education
+                      </h1>
+                      <div className="flex items-center mt-2">
+                        <img
+                          src={college.image_url}
+                          alt="ProfileImage"
+                          className="w-[38px] h-[38px]"
+                        />
+                        <div className="flex-col text-left items-center px-3">
+                          <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
+                            {college.description}
+                          </p>
+                          <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
+                            {college.name}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center mt-2">
-                    <img
-                      src={img1}
-                      alt="ProfileImage"
-                      className="w-[38px] h-[38px]"
-                    />
-                    <div className="flex-col text-left items-center px-3">
-                      <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
-                        UX Analyst
-                      </p>
-                      <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
-                        Delhi Governemnt I 2020--2021
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
+                  ))}
                 <div className="grid gap-y-2">
                   <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
                     Expertise
@@ -148,3 +148,5 @@ export default class Profile extends Component {
     );
   }
 }
+
+export default withRouter(Profile);

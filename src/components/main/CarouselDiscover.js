@@ -5,49 +5,13 @@ import "slick-carousel/slick/slick-theme.css";
 import left from "../../assets/images/design/left.png";
 import right from "../../assets/images/design/right.png";
 import MainService from "../../services/main.service";
+import { withRouter } from "../../utils/withRouter";
 
-export default class CarouselDiscover extends Component {
+class CarouselDiscover extends Component {
   constructor() {
     super();
     this.state = {
       mentorDetails: [],
-      // mentorDetails: [
-      //   {
-      //     image: img1,
-      //     name: "Anjali Bhati",
-      //     qualification: "B.COM | SRCC",
-      //     value: 1200,
-      //     college: "Shree Ram College of Commerce",
-      //   },
-      //   {
-      //     image: img2,
-      //     name: "Anjali Bhati",
-      //     qualification: "B.COM | SRCC",
-      //     value: 1200,
-      //     college: "Shree Ram College of Commerce",
-      //   },
-      //   {
-      //     image: img3,
-      //     name: "Anjali Bhati",
-      //     qualification: "B.COM | SRCC",
-      //     value: 1200,
-      //     college: "Shree Ram College of Commerce",
-      //   },
-      //   {
-      //     image: img4,
-      //     name: "Anjali Bhati",
-      //     qualification: "B.COM | SRCC",
-      //     value: 1200,
-      //     college: "Shree Ram College of Commerce",
-      //   },
-      //   {
-      //     image: img4,
-      //     name: "Anjali Bhati",
-      //     qualification: "B.COM | SRCC",
-      //     value: 1200,
-      //     college: "Shree Ram College of Commerce",
-      //   },
-      // ],
     };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
@@ -63,13 +27,6 @@ export default class CarouselDiscover extends Component {
     MainService.discoverTopMentors()
       .then((response) => {
         let tempMentors = [...response.data];
-        tempMentors.forEach((eachMentor, index) => {
-          MainService.getCollegeById(eachMentor.colleges[0])
-            .then((response) => {
-              tempMentors[index]["college"] = response.data.description;
-            })
-            .catch((err) => console.log(err));
-        });
         this.setState((prevState) => ({
           ...prevState,
           mentorDetails: tempMentors,
@@ -141,7 +98,7 @@ export default class CarouselDiscover extends Component {
               key={index}
             >
               <div className="relative">
-                <a href="/profile" className="relative">
+                <a href={`/profile/${mentor._id}`} className="relative">
                   <div className="flex flex-col">
                     <img
                       src={mentor.profile_picture}
@@ -161,7 +118,7 @@ export default class CarouselDiscover extends Component {
                         {mentor.description}
                       </p>
                       <p className="text-[10px] font-light text-[#0C2054] pl-5 pb-2 font-poppins">
-                        {mentor.college}
+                        {mentor.colleges[0].name}
                       </p>
                     </div>
                   </div>
@@ -182,3 +139,5 @@ export default class CarouselDiscover extends Component {
     );
   }
 }
+
+export default withRouter(CarouselDiscover);

@@ -15,8 +15,22 @@ const getCollegeById = (id) => {
   );
 };
 
+const getMentorById = (id) => {
+  return axios.get(
+    `https://intense-stream-21467.herokuapp.com/api/mentor/${id}`
+  );
+};
+
+const getCompanyById = (id) => {
+  return axios.get(
+    `https://intense-stream-21467.herokuapp.com/api/company/${id}`
+  );
+};
+
 export default {
   discoverTopMentors,
   exploreConsultingCompanies,
   getCollegeById,
+  getMentorById,
+  getCompanyById,
 };

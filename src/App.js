@@ -9,7 +9,6 @@ function App() {
   return (
     <div className="flex flex-col">
       <div>
-        {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/profile/:id" element={<Profile />} />

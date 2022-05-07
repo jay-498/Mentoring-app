@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import { withRouter } from "../../utils/withRouter";
+import { UpdateLoginModal } from "../../store/actions/booking";
+import { connect } from "react-redux";
 import calender from "../../assets/images/design/Icons/calender.png";
-export default class Slots extends Component {
+class Slots extends Component {
   render() {
     return (
       <div className="flex-col h-[355px] md:mt-0 mt-5 p-5 lg:p-10 lg:m-10 md:m-5 items-center justify-center border border-gray-300 rounded-3xl">
@@ -56,10 +59,21 @@ export default class Slots extends Component {
             </div>
           </div>
         </div>
-        <button className="bg-[#5B6BD0] rounded-[5px] w-full text-white font-semibold py-2 font-Helvetica md:text-[18px] text-[10px]">
+        <button
+          onClick={() => this.props.updateLoginModal(true)}
+          className="bg-[#5B6BD0] rounded-[5px] w-full text-white font-semibold py-2 font-Helvetica md:text-[18px] text-[10px]"
+        >
           Book
         </button>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateLoginModal: (data) => dispatch(UpdateLoginModal(data)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(Slots));

@@ -3,6 +3,9 @@ import profiledesigns from "../../assets/images/design/profiledesigns.png";
 import Slots from "./Slots";
 import { withRouter } from "../../utils/withRouter";
 import mainService from "../../services/main.service";
+import { UpdateLoginModal } from "../../store/actions/booking";
+import { connect } from "react-redux";
+import LoginModal from "./LoginModal";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -23,10 +26,12 @@ class Profile extends Component {
       })
       .catch((err) => console.log(err));
   }
+
   render() {
     const { mentor } = this.state;
     return (
       <div className="flex flex-col overflow-hidden pb-10">
+        <LoginModal />
         <div>
           <img src={profiledesigns} alt="bg" className="w-full" />
         </div>
@@ -149,4 +154,12 @@ class Profile extends Component {
   }
 }
 
-export default withRouter(Profile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateLoginModal: (data) => {
+      dispatch(UpdateLoginModal(data));
+    },
+  };
+};
+
+export default connect(mapDispatchToProps)(withRouter(Profile));

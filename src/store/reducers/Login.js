@@ -5,6 +5,8 @@ import {
   SIGNIN_FAILURE,
   SIGNIN_SUCCESS,
   LOGOUT,
+  UPDATE_USER_MOBILE,
+  SET_ERROR_MESSAGE,
 } from "../actionTypes/index";
 
 const token = localStorage.getItem("user_token");
@@ -14,8 +16,8 @@ if (!token) {
 }
 
 const initialState = user
-  ? { isLoggedIn: true, user }
-  : { isLoggedIn: false, user: null };
+  ? { isLoggedIn: true, user, userMobile: "" }
+  : { isLoggedIn: false, user: null, userMobile: "", otpMessage: "" };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -26,6 +28,19 @@ export default function (state = initialState, action) {
         ...state,
         isLoggedIn: true,
       };
+
+    case UPDATE_USER_MOBILE:
+      return {
+        ...state,
+        userMobile: payload,
+      };
+
+    case SET_ERROR_MESSAGE:
+      return {
+        ...state,
+        otpMessage: action.payload,
+      };
+
     case SIGNIN_FAILURE:
       return {
         ...state,
@@ -41,6 +56,7 @@ export default function (state = initialState, action) {
         ...state,
         isLoggedIn: false,
         user: null,
+        otpMessage: action.payload,
       };
     case LOGOUT:
       localStorage.removeItem("user_token");

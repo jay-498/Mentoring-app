@@ -5,12 +5,28 @@ import {
   LOGOUT,
   SIGNIN_REQUESTED,
   SIGNIN_SUCCESS,
+  SET_ERROR_MESSAGE,
   SIGNIN_FAILURE,
+  UPDATE_USER_MOBILE,
 } from "../actionTypes/index";
 
 export const signinRequested = (data) => {
   return {
     type: SIGNIN_REQUESTED,
+    payload: data,
+  };
+};
+
+export const setErrorMessage = (data) => {
+  return {
+    type: SET_ERROR_MESSAGE,
+    payload: data,
+  };
+};
+
+export const updateUserMobile = (data) => {
+  return {
+    type: UPDATE_USER_MOBILE,
     payload: data,
   };
 };

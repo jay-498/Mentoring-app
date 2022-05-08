@@ -6,8 +6,12 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
 export const LOGOUT = "LOGOUT";
 
+export const UPDATE_USER_MOBILE = "UPDATE_USER_MOBILE";
+
 export const SIGNIN_REQUESTED = "SIGNIN_REQUESTED";
 
 export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
 
 export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
+
+export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";

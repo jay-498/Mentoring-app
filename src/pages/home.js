@@ -57,7 +57,7 @@ class HomePage extends Component {
               </div>
             </div>
           </div>
-          <div className="flex flex-col  justify-center items-center pt-8 lg:block">
+          <div className="lg:visible invisible flex-col  justify-center items-center pt-8">
             <div className="h-[590px] pl-14">
               <img src={profile} className="relative h-[750px]" alt="profile" />
             </div>

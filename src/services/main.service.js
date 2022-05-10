@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../assets/js/config";
 
 const discoverTopMentors = () => {
-  return axios.get("/api/mentor");
+  return axios.get(`${BASE_URL}/api/mentor`);
 };
 
 const exploreConsultingCompanies = () => {

@@ -37,7 +37,7 @@ export const signinUser = (data) => {
 
 export const googleSignin = (data) => {
   return axios
-    .post(`${BASE_URL}/api/auth/googlelogin`, data)
+    .post(`${BASE_URL}/api/googlelogin`, data)
     .then((res) => {
       return res.data;
     })

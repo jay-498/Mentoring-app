@@ -6,7 +6,8 @@ console.log("services",data)
   return axios
     .post(`${BASE_URL}/api/calendar`, data)
     .then((res) => {
-      return res.data;
+      window.open(res.data.authUrl);
+      return res;
     })
     .catch((error) => {
       throw Error(error.response.data);

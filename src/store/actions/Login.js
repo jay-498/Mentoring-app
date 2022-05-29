@@ -8,6 +8,7 @@ import {
   SET_ERROR_MESSAGE,
   SIGNIN_FAILURE,
   UPDATE_USER_MOBILE,
+  GOOGLE_SIGNIN_REQUESTED
 } from "../actionTypes/index";
 
 export const signinRequested = (data) => {
@@ -16,6 +17,14 @@ export const signinRequested = (data) => {
     payload: data,
   };
 };
+
+export const googleSigninRequested = (data) => {
+  return {
+    type: GOOGLE_SIGNIN_REQUESTED,
+    payload: data,
+  };
+};
+
 
 export const setErrorMessage = (data) => {
   return {

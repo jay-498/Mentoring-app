@@ -1,12 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { LOGIN_REQUESTED, SIGNIN_REQUESTED } from "../actionTypes/index";
+import { LOGIN_REQUESTED, GOOGLE_SIGNIN_REQUESTED } from "../actionTypes/index";
 import {
   loginSuccess,
   loginFailure,
   signinSuccess,
   signinFailure,
 } from "../actions/Login";
-import { verifyOtp, signinUser } from "../../services/auth.service";
+import { verifyOtp, googleSignin } from "../../services/auth.service";
 
 function* loginSaga(action) {
   try {
@@ -17,6 +17,19 @@ function* loginSaga(action) {
     yield put(loginSuccess(auth));
   } catch (e) {
     yield put(loginFailure("Invalid Otp"));
+  }
+}
+
+function* googleLoginSaga(action) {
+  try {
+    const auth = yield call(googleSignin, action.payload);
+    console.log("googlesaga",auth);
+    if (auth.success) {
+      localStorage.setItem("user_token", auth.token);
+    }
+    yield put(loginSuccess(auth));
+  } catch (e) {
+    yield put(loginFailure(e.msg));
   }
 }
 
@@ -35,6 +48,7 @@ function* loginSaga(action) {
 
 function* userSaga() {
   yield takeEvery(LOGIN_REQUESTED, loginSaga);
+  yield takeEvery(GOOGLE_SIGNIN_REQUESTED, googleLoginSaga);
 }
 
 export default userSaga;

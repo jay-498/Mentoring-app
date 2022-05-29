@@ -3,6 +3,7 @@ import {
   SET_BOOKING_DATE,
   UPDATE_LOGIN_MODAL,
   UPDATE_MODAL_NUMBER,
+  UPDATE_CALENDER_EVENT,
 } from "../actionTypes/index";
 
 const initialState = {

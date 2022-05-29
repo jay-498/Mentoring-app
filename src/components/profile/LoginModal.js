@@ -13,8 +13,12 @@ import {
   setErrorMessage,
   signinRequested,
   updateUserMobile,
+  googleSigninRequested
 } from "../../store/actions/Login";
+import {updateCalenderEventRequested} from "../../store/actions/booking";
 import { sendOtp, signinUser } from "../../services/auth.service";
+import GoogleLogin from "react-google-login";
+import { GLOGIN_CLIENT_ID } from "../../assets/js/config";
 
 class DeleteTest extends Component {
   constructor() {
@@ -35,6 +39,7 @@ class DeleteTest extends Component {
         email: "",
       },
     };
+    this.onGoogleLoginSuccess = this.onGoogleLoginSuccess.bind(this);
   }
 
   componentDidMount() {
@@ -140,6 +145,16 @@ class DeleteTest extends Component {
     return true;
   };
 
+  onGoogleLoginSuccess = (res) => {
+    console.log(res.tokenId)
+    //hit login API here then use the userToken to redirect towards dashboard
+    this.props.googleSigninRequested({tokenId : res.tokenId});
+  };
+
+  onGoogleLoginFailure = (res) =>{
+    alert(res);
+  }
+
   handleSignin(e) {
     e.preventDefault();
     const { email, first_name, last_name } = this.state.form;
@@ -161,6 +176,10 @@ class DeleteTest extends Component {
     }
   }
 
+  handleUpdateCalender(e){
+    this.props.updateCalenderEventRequested();
+  }
+
   render() {
     const allModals = () => {
       switch (this.props.currentModalNumber) {
@@ -170,7 +189,7 @@ class DeleteTest extends Component {
               <div className="w-full">
                 <form className="rounded p-5 py-1 mb-4">
                   {!this.state.otpSent ? (
-                    <div className="flex-col mb-4">
+                    <div className="flex-col">
                       <div className="flex items-center mb-2">
                         <label
                           className="block text-gray-700 text-sm font-bold"
@@ -201,6 +220,14 @@ class DeleteTest extends Component {
                           Proceed
                         </button>
                       </div>
+                      <GoogleLogin
+                        className="mt-4 rounded"
+                        clientId={GLOGIN_CLIENT_ID}
+                        buttonText="Login in with Google"
+                        onSuccess={this.onGoogleLoginSuccess}
+                        onFailure={this.onGoogleLoginFailure}
+                        cookiePolicy={"single_host_origin"}
+                      />
                     </div>
                   ) : (
                     <div>
@@ -468,7 +495,7 @@ class DeleteTest extends Component {
                             <button
                               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                               type="button"
-                              onClick={(e) => this.handleLogin(e)}
+                              onClick={(e) => this.handleUpdateCalender(e)}
                             >
                               Book Slot
                             </button>
@@ -507,7 +534,9 @@ const mapDispatchToProps = (dispatch) => {
     loginRequested: (data) => dispatch(loginRequested(data)),
     signinRequested: (data) => dispatch(signinRequested(data)),
     updateUserMobile: (data) => dispatch(updateUserMobile(data)),
+    googleSigninRequested: (data) => dispatch(googleSigninRequested(data)),
     logOut: () => dispatch(logOut()),
+    updateCalenderEventRequested: ()=>dispatch(updateCalenderEventRequested())
   };
 };
 

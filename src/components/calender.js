@@ -72,7 +72,7 @@ export class calender extends Component {
                   day: "numeric",
                 })}
               </h2>
-              <div className="pt-0 h-96 grid gap-4 grid-cols-1 grid-rows p-10 overflow-y-auto scrollbar-hide">
+              {/* <div className="pt-0 h-96 grid gap-4 grid-cols-1 grid-rows p-10 overflow-y-auto scrollbar-hide">
                 {this.props.timings.map((time) => (
                   <button
                     key={time}
@@ -82,7 +82,7 @@ export class calender extends Component {
                     {time}
                   </button>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -3,7 +3,15 @@ import {
   SET_BOOKING_DATE,
   UPDATE_LOGIN_MODAL,
   UPDATE_MODAL_NUMBER,
+  UPDATE_CALENDER_EVENT_REQUESTED,
 } from "../actionTypes/index";
+
+export const updateCalenderEventRequested = () => {
+  return {
+    type: UPDATE_CALENDER_EVENT_REQUESTED,
+  };
+};
+
 
 export const UpdateLoginModal = (data) => {
   return {

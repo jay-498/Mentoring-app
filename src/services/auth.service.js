@@ -31,6 +31,17 @@ export const signinUser = (data) => {
       return res.data;
     })
     .catch((error) => {
-      throw error;
+      throw Error;
     });
 };
+
+export const googleSignin = (data) => {
+  return axios
+    .post(`${BASE_URL}/api/auth/googlelogin`, data)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      throw (error.response.data);
+    });
+}

@@ -4,20 +4,22 @@ import {
   LOGIN_FAILURE,
   SIGNIN_FAILURE,
   SIGNIN_SUCCESS,
+  GOOGLE_SIGNIN_FAILURE,
+  GOOGLE_SIGNIN_SUCCESS,
   LOGOUT,
   UPDATE_USER_MOBILE,
   SET_ERROR_MESSAGE,
 } from "../actionTypes/index";
 
-const token = localStorage.getItem("user_token");
+const token = localStorage.getItem("jwt_token");
 let user = { token };
 if (!token) {
   user = null;
 }
 
 const initialState = user
-  ? { isLoggedIn: true, user, userMobile: "" }
-  : { isLoggedIn: false, user: null, userMobile: "", otpMessage: "" };
+  ? { isLoggedIn: true,is_google_verified: false, user, userMobile: "" }
+  : { isLoggedIn: false,is_google_verified: false, user: null, userMobile: "", otpMessage: "" };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -35,6 +37,18 @@ export default function (state = initialState, action) {
         userMobile: payload,
       };
 
+    case GOOGLE_SIGNIN_SUCCESS:
+      return {
+        ...state,
+        is_google_verified: true,
+      };
+
+    case GOOGLE_SIGNIN_FAILURE:
+      return {
+        ...state,
+        is_google_verified: false,
+      };
+
     case SET_ERROR_MESSAGE:
       return {
         ...state,
@@ -47,8 +61,10 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
       };
     case LOGIN_SUCCESS:
+      console.log("reducer",action.payload)
       return {
         ...state,
+        is_google_verified: action.payload.is_google_verified,
         isLoggedIn: true,
       };
     case LOGIN_FAILURE:
@@ -59,7 +75,7 @@ export default function (state = initialState, action) {
         otpMessage: action.payload,
       };
     case LOGOUT:
-      localStorage.removeItem("user_token");
+      localStorage.removeItem("jwt_token");
       return {
         ...state,
         isLoggedIn: false,

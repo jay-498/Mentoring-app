@@ -146,7 +146,6 @@ class DeleteTest extends Component {
   };
 
   onGoogleLoginSuccess = (res) => {
-    console.log(res.tokenId)
     //hit login API here then use the userToken to redirect towards dashboard
     this.props.googleSigninRequested({tokenId : res.tokenId});
   };
@@ -181,6 +180,7 @@ class DeleteTest extends Component {
   }
 
   render() {
+    console.log("modal",this.props.is_google_verified,"login",this.props.isLoggedIn)
     const allModals = () => {
       switch (this.props.currentModalNumber) {
         case 1:
@@ -220,14 +220,6 @@ class DeleteTest extends Component {
                           Proceed
                         </button>
                       </div>
-                      <GoogleLogin
-                        className="mt-4 rounded"
-                        clientId={GLOGIN_CLIENT_ID}
-                        buttonText="Login in with Google"
-                        onSuccess={this.onGoogleLoginSuccess}
-                        onFailure={this.onGoogleLoginFailure}
-                        cookiePolicy={"single_host_origin"}
-                      />
                     </div>
                   ) : (
                     <div>
@@ -445,7 +437,9 @@ class DeleteTest extends Component {
                     </button>
                   </div>
                   {this.props.isLoggedIn ? (
+                    
                     <>
+                    {this.props.is_google_verified ? 
                       <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
                           <div className="mb-4">
@@ -502,6 +496,26 @@ class DeleteTest extends Component {
                           </div>
                         </form>
                       </div>
+                    :
+                    <div className="w-full">
+                        <form className="rounded p-5 pt-0 mb-4">
+                            <label
+                              className="block text-gray-700 text-sm font-bold mb-2"
+                              htmlFor="Email"
+                            >
+                              Please verify your email here
+                            </label>
+                          <GoogleLogin
+                              className="mt-2 rounded"
+                              clientId={GLOGIN_CLIENT_ID}
+                              buttonText="Login in with Google"
+                              onSuccess={this.onGoogleLoginSuccess}
+                              onFailure={this.onGoogleLoginFailure}
+                              cookiePolicy={"single_host_origin"}
+                          />
+                        </form>
+                    </div>
+                    }
                     </>
                   ) : (
                     <>{allModals()}</>
@@ -522,6 +536,7 @@ const mapStateToProps = ({ booking, Login }) => {
     otpMessage: Login.otpMessage,
     isLoggedIn: Login.isLoggedIn,
     userMobile: Login.userMobile,
+    is_google_verified: Login.is_google_verified,
     currentModalNumber: booking.currentModalNumber,
   };
 };

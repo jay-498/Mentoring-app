@@ -147,6 +147,7 @@ class DeleteTest extends Component {
 
   onGoogleLoginSuccess = (res) => {
     //hit login API here then use the userToken to redirect towards dashboard
+    console.log(res.tokenId)
     this.props.googleSigninRequested({tokenId : res.tokenId});
   };
 

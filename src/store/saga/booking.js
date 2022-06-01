@@ -10,7 +10,7 @@ import { updateCalenderEvent } from "../../services/booking.service";
 
 function* updateCalenderEventSaga(action) {
   try {
-    const jwt_token = localStorage.getItem("user_token");
+    const jwt_token = localStorage.getItem("jwt_token");
     const auth = yield call(updateCalenderEvent, {jwt_token});
     console.log("saga",auth)
 //     if (auth.success) {

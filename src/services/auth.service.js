@@ -39,7 +39,7 @@ export const googleSignin = (data) => {
   return axios
     .post(`${BASE_URL}/api/auth/googlelogin`, data)
     .then((res) => {
-      window.open(res.data.googleAuthUrl);
+      window.location.replace(res.data.googleAuthUrl);
       return res.data;
     })
     .catch((error) => {

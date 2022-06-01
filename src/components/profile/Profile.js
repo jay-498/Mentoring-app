@@ -15,6 +15,12 @@ class Profile extends Component {
   }
   componentDidMount() {
     const id = this.props.params.id;
+    const search = window.location.search
+    const params = new URLSearchParams(search);
+    const modal = params.get('modal');
+    if(modal==="true"){
+     this.props.updateLoginModal(true);
+    }
     mainService
       .getMentorById(id)
       .then((response) => {
@@ -156,10 +162,8 @@ class Profile extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateLoginModal: (data) => {
-      dispatch(UpdateLoginModal(data));
-    },
+    updateLoginModal: (data) => dispatch(UpdateLoginModal(data)),
   };
 };
 
-export default connect(mapDispatchToProps)(withRouter(Profile));
+export default connect(null,mapDispatchToProps)(withRouter(Profile));

@@ -43,7 +43,16 @@ class DeleteTest extends Component {
   }
 
   // componentDidMount() {
-  //   this.props.logOut();
+  //   // this.props.logOut();
+  //   const search = window.location.search
+  //   const params = new URLSearchParams(search);
+  //   const modal = params.get('modal');
+  //   console.log(typeof(modal))
+  //   if(modal==="true"){
+
+  //   }
+  //   // const query = new URLSearchParams(this.props.location);
+  //   // console.log(query.get('modal'))
   // }
 
   handleChange = (e) => {
@@ -148,7 +157,8 @@ class DeleteTest extends Component {
   onGoogleLoginSuccess = (res) => {
     //hit login API here then use the userToken to redirect towards dashboard
     console.log(res.tokenId)
-    this.props.googleSigninRequested({tokenId : res.tokenId});
+    const mentor_id = this.props.params.id;
+    this.props.googleSigninRequested({tokenId : res.tokenId,mentor_id});
   };
 
   onGoogleLoginFailure = (res) =>{

@@ -12,14 +12,15 @@ import {
 } from "../actionTypes/index";
 
 const token = localStorage.getItem("jwt_token");
+const google_check = localStorage.getItem("is_google_verified");
 let user = { token };
 if (!token) {
   user = null;
 }
 
 const initialState = user
-  ? { isLoggedIn: true,is_google_verified: false, user, userMobile: "" }
-  : { isLoggedIn: false,is_google_verified: false, user: null, userMobile: "", otpMessage: "" };
+  ? { isLoggedIn: true,is_google_verified: google_check, user, userMobile: "" }
+  : { isLoggedIn: false,is_google_verified: google_check, user: null, userMobile: "", otpMessage: "" };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;

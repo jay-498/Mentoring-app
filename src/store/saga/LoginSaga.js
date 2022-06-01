@@ -13,6 +13,7 @@ function* loginSaga(action) {
     const auth = yield call(verifyOtp, action.payload);
     if (auth.success) {
       localStorage.setItem("jwt_token", auth.jwt_token);
+      localStorage.setItem("is_google_verified", auth.is_google_verified);
     }
     yield put(loginSuccess(auth));
   } catch (e) {
@@ -25,7 +26,6 @@ function* googleLoginSaga(action) {
     const jwt_token = localStorage.getItem("jwt_token");
     const data = {...action.payload,jwt_token }
     const auth = yield call(googleSignin, data);
-    console.log("googlesaga",auth);
     yield put(googleSigninSuccess());
   } catch (e) {
     yield put(googleSigninFailure());

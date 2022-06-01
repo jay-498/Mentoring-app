@@ -42,9 +42,9 @@ class DeleteTest extends Component {
     this.onGoogleLoginSuccess = this.onGoogleLoginSuccess.bind(this);
   }
 
-  componentDidMount() {
-    this.props.logOut();
-  }
+  // componentDidMount() {
+  //   this.props.logOut();
+  // }
 
   handleChange = (e) => {
     const { value, name } = e.target;
@@ -181,7 +181,6 @@ class DeleteTest extends Component {
   }
 
   render() {
-    console.log("modal",this.props.is_google_verified,"login",this.props.isLoggedIn)
     const allModals = () => {
       switch (this.props.currentModalNumber) {
         case 1:

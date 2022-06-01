@@ -5,8 +5,7 @@ export const updateCalenderEvent = (data) => {
   return axios
     .post(`${BASE_URL}/api/calendar`, data)
     .then((res) => {
-      window.open(res.data.authUrl);
-      return res;
+      return res.data.eventResponse;
     })
     .catch((error) => {
       throw Error(error.response.data);

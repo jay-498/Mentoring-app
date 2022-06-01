@@ -12,14 +12,11 @@ function* updateCalenderEventSaga(action) {
   try {
     const jwt_token = localStorage.getItem("jwt_token");
     const auth = yield call(updateCalenderEvent, {jwt_token});
-    console.log("saga",auth)
-//     if (auth.success) {
-//       localStorage.setItem("user_token", auth.token);
-//     }
-//     yield put(loginSuccess(auth));
+    if (auth.success) {
+      alert(auth.msg)
+    }
   } catch (e) {
-      console.log("sagafailed");
-    // yield put(loginFailure("Invalid Otp"));
+    alert("Failed to add the Calender Event")
   }
 }
 

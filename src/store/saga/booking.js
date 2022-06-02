@@ -16,7 +16,7 @@ function* updateCalenderEventSaga(action) {
       alert(auth.msg)
     }
   } catch (e) {
-    alert("Failed to add the Calender Event")
+    console.log("Failed to add the Calender Event")
   }
 }
 

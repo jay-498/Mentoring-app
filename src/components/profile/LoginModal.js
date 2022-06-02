@@ -162,7 +162,7 @@ class DeleteTest extends Component {
   };
 
   onGoogleLoginFailure = (res) =>{
-    alert(res);
+    console.log(res);
   }
 
   handleSignin(e) {

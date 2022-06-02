@@ -13,7 +13,7 @@ function* updateCalenderEventSaga(action) {
     const jwt_token = localStorage.getItem("jwt_token");
     const auth = yield call(updateCalenderEvent, {jwt_token});
     if (auth.success) {
-      alert(auth.msg)
+      console.log(auth.msg)
     }
   } catch (e) {
     console.log("Failed to add the Calender Event")

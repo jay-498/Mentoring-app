@@ -462,8 +462,8 @@ class DeleteTest extends Component {
                             <textarea
                               className="border-2 p-2 border-gray-100 w-full rounded"
                               placeholder="Your Answer"
-                              // value={this.state.textAreaValue}
-                              // onChange={this.handleChange}
+                              value={this.props.summary}
+                              onChange={(e)=>this.props.onChangeEventSumary(e)}
                               rows={5}
                             />
                           </div>
@@ -478,11 +478,11 @@ class DeleteTest extends Component {
                               <select
                                 className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
                                 id="grid-state"
+                                onChange={(e)=>this.props.onChangeEventEndDate(e)}
                               >
-                                <option>30 mins</option>
-                                <option>1 hour</option>
-                                <option>1.5 hours</option>
-                                <option>2 hours</option>
+                                <option value="1">1 hour</option>
+                                <option value="1.5">1.5 hours</option>
+                                <option value="2">2 hours</option>
                               </select>
                               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <svg

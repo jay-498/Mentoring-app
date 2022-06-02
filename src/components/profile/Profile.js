@@ -11,7 +11,33 @@ class Profile extends Component {
     super(props);
     this.state = {
       mentor: {},
+      StartDates: [
+        {
+          date: "Thu Jun 03 2022 11:39:33 GMT+0530 (India Standard Time)",
+        },
+        {
+          date: "Thu Jun 04 2022 14:39:33 GMT+0530 (India Standard Time)",
+        },
+        {
+          date: "Thu Jun 05 2022 16:39:33 GMT+0530 (India Standard Time)",
+        },
+        {
+          date: "Thu Jun 06 2022 18:39:33 GMT+0530 (India Standard Time)",
+        },
+        {
+          date: "Thu Jun 07 2022 20:39:33 GMT+0530 (India Standard Time)",
+        }
+      ],
+      event: {
+        startDate: "",
+        endDate : "",
+        summary : "",
+      }
     };
+    this.onChangeEventStartDate= this.onChangeEventStartDate.bind(this);
+    this.onChangeEventEndDate = this.onChangeEventEndDate.bind(this);
+    this.onChangeEventSumary = this.onChangeEventSumary.bind(this);
+    // this.addHours =
   }
   componentDidMount() {
     const id = this.props.params.id;
@@ -33,11 +59,63 @@ class Profile extends Component {
       .catch((err) => console.log(err));
   }
 
+  onChangeEventStartDate=(index)=>{
+    const {StartDates} = this.state;
+    this.setState(prev=>{
+      return{
+        ...prev,
+        event: {
+          ...prev.event,
+          startDate : StartDates[index],
+        }
+      }
+    })
+  }
+
+  onChangeEventSumary=(e)=>{
+    console.log(e.target.value)
+    this.setState(prev=>{
+      return{
+        ...prev,
+        event: {
+          ...prev.event,
+          summary : e.target.value,
+        }
+      }
+    })
+    console.log(this.state.event)
+  }
+
+  addHours(numOfHours,date) {
+    date.setTime(date.getTime() + numOfHours * 60 * 60 * 1000);
+  
+    return date;
+  }
+
+  onChangeEventEndDate=(e)=>{
+    console.log(e.target.value)
+    // const {StartDates} = this.state;
+    // this.setState(prev=>{
+    //   return{
+    //     ...prev,
+    //     event: {
+    //       ...prev.event,
+    //       startDate : StartDates[index],
+    //     }
+    //   }
+    // })
+  }
+
+
+
   render() {
     const { mentor } = this.state;
     return (
       <div className="flex flex-col overflow-hidden pb-10">
-        <LoginModal />
+        <LoginModal 
+        onChangeEventSumary={this.onChangeEventSumary} 
+        onChangeEventEndDate={this.onChangeEventEndDate}
+        summary={this.state.event.summary}/>
         <div>
           <img src={profiledesigns} alt="bg" className="w-full" />
         </div>
@@ -151,7 +229,9 @@ class Profile extends Component {
                 </div>
               </div>
 
-              <Slots />
+              <Slots 
+              onChangeEventStartDate={this.onChangeEventStartDate}
+              startDates={this.state.StartDates}/>
             </div>
           </div>
         </div>

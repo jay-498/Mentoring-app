@@ -3,7 +3,7 @@ import {
   SET_BOOKING_DATE,
   UPDATE_LOGIN_MODAL,
   UPDATE_MODAL_NUMBER,
-  UPDATE_CALENDER_EVENT,
+  UPDATE_CALENDER_EVENT_SUCCESS
 } from "../actionTypes/index";
 
 const initialState = {
@@ -38,6 +38,12 @@ const bookingReducer = (state = initialState, action) => {
         ...state,
         showLoginModal: action.payload,
       };
+
+    case UPDATE_CALENDER_EVENT_SUCCESS:
+      return{
+        ...state,
+        showLoginModal: false,
+      }
 
     case UPDATE_MODAL_NUMBER:
       return {

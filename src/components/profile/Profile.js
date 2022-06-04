@@ -13,21 +13,28 @@ class Profile extends Component {
       mentor: {},
       StartDates: [
         {
-          date: "Thu Jun 03 2022 11:39:33 GMT+0530 (India Standard Time)",
+          date: "Fri Jun 03 2022 8:00:00 GMT+0530 (India Standard Time)",
+          times: [8 ,9 ,10 ,14, 16]
         },
         {
-          date: "Thu Jun 04 2022 14:39:33 GMT+0530 (India Standard Time)",
+          date: "Sat Jun 04 2022 10:00:00 GMT+0530 (India Standard Time)",
+          times: [10 ,9]
         },
         {
-          date: "Thu Jun 05 2022 16:39:33 GMT+0530 (India Standard Time)",
+          date: "Sun Jun 05 2022 14:00:00 GMT+0530 (India Standard Time)",
+          times: [14, 16, 20]
         },
         {
-          date: "Thu Jun 06 2022 18:39:33 GMT+0530 (India Standard Time)",
+          date: "Mon Jun 06 2022 9:00:00 GMT+0530 (India Standard Time)",
+          times: [9 ,10 ,14, 16]
         },
         {
-          date: "Thu Jun 07 2022 20:39:33 GMT+0530 (India Standard Time)",
+          date: "Tue Jun 07 2022 8:00:00 GMT+0530 (India Standard Time)",
+          times: [8 ,9 ,10, 20]
         }
       ],
+      currentStartDateIndex : 0,
+      currentStartTimeIndex : 0,
       event: {
         startDate: "",
         endDate : "",
@@ -37,15 +44,24 @@ class Profile extends Component {
     this.onChangeEventStartDate= this.onChangeEventStartDate.bind(this);
     this.onChangeEventEndDate = this.onChangeEventEndDate.bind(this);
     this.onChangeEventSumary = this.onChangeEventSumary.bind(this);
-    // this.addHours =
+    this.onChangeEventStartTime = this.onChangeEventStartTime.bind(this);
+    this.addHours = this.addHours.bind(this);
   }
   componentDidMount() {
     const id = this.props.params.id;
     const search = window.location.search
     const params = new URLSearchParams(search);
     const modal = params.get('modal');
+    const storageEvent = JSON.parse(localStorage.getItem('event'))
+    // console.log({...JSON.parse(storageEvent)})
     if(modal==="true"){
      this.props.updateLoginModal(true);
+     this.setState(prev=>{
+       return{
+         ...prev,
+         event: {...storageEvent},
+       }
+     })
     }
     mainService
       .getMentorById(id)
@@ -57,6 +73,7 @@ class Profile extends Component {
         }));
       })
       .catch((err) => console.log(err));
+    this.onChangeEventStartDate(0);
   }
 
   onChangeEventStartDate=(index)=>{
@@ -64,16 +81,34 @@ class Profile extends Component {
     this.setState(prev=>{
       return{
         ...prev,
+        currentStartDateIndex: index,
         event: {
           ...prev.event,
-          startDate : StartDates[index],
+          startDate : (StartDates[index].date),
+        }
+      }
+    })
+  }
+
+  onChangeEventStartTime=(timeIndex)=>{
+    const {startDate} = this.state.event;
+    const {StartDates,currentStartDateIndex} = this.state;
+    const newStartDate = new Date(startDate);
+    newStartDate.setHours(StartDates[currentStartDateIndex].times[timeIndex])
+    console.log(newStartDate)
+    this.setState(prev=>{
+      return{
+        ...prev,
+        currentStartTimeIndex: timeIndex,
+        event: {
+          ...prev.event,
+          startDate : String(newStartDate),
         }
       }
     })
   }
 
   onChangeEventSumary=(e)=>{
-    console.log(e.target.value)
     this.setState(prev=>{
       return{
         ...prev,
@@ -83,28 +118,30 @@ class Profile extends Component {
         }
       }
     })
-    console.log(this.state.event)
   }
 
-  addHours(numOfHours,date) {
-    date.setTime(date.getTime() + numOfHours * 60 * 60 * 1000);
-  
-    return date;
+  addHours(numOfHours,startDate) {
+    var oldDateObj = new Date(startDate);
+    var newDateObj = new Date(startDate);
+    newDateObj.setTime(oldDateObj.getTime() + (numOfHours*60* 60 * 1000));
+    console.log(newDateObj);
+    return newDateObj;
   }
 
   onChangeEventEndDate=(e)=>{
-    console.log(e.target.value)
-    // const {StartDates} = this.state;
-    // this.setState(prev=>{
-    //   return{
-    //     ...prev,
-    //     event: {
-    //       ...prev.event,
-    //       startDate : StartDates[index],
-    //     }
-    //   }
-    // })
+    const endDate = this.addHours(parseInt(e.target.value),this.state.event.startDate);
+    this.setState(prev=>{
+      return{
+        ...prev,
+        event: {
+          ...prev.event,
+          endDate: String(endDate)
+        }
+      }
+    })
   }
+
+  
 
 
 
@@ -115,7 +152,7 @@ class Profile extends Component {
         <LoginModal 
         onChangeEventSumary={this.onChangeEventSumary} 
         onChangeEventEndDate={this.onChangeEventEndDate}
-        summary={this.state.event.summary}/>
+        event={this.state.event}/>
         <div>
           <img src={profiledesigns} alt="bg" className="w-full" />
         </div>
@@ -231,7 +268,11 @@ class Profile extends Component {
 
               <Slots 
               onChangeEventStartDate={this.onChangeEventStartDate}
-              startDates={this.state.StartDates}/>
+              onChangeEventStartTime={this.onChangeEventStartTime}
+              startDates={this.state.StartDates}
+              event={this.state.event}
+              currentStartTimeIndex={this.state.currentStartTimeIndex}
+              currentStartDateIndex={this.state.currentStartDateIndex}/>
             </div>
           </div>
         </div>

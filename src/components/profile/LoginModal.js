@@ -42,18 +42,6 @@ class DeleteTest extends Component {
     this.onGoogleLoginSuccess = this.onGoogleLoginSuccess.bind(this);
   }
 
-  // componentDidMount() {
-  //   // this.props.logOut();
-  //   const search = window.location.search
-  //   const params = new URLSearchParams(search);
-  //   const modal = params.get('modal');
-  //   console.log(typeof(modal))
-  //   if(modal==="true"){
-
-  //   }
-  //   // const query = new URLSearchParams(this.props.location);
-  //   // console.log(query.get('modal'))
-  // }
 
   handleChange = (e) => {
     const { value, name } = e.target;
@@ -158,6 +146,7 @@ class DeleteTest extends Component {
     //hit login API here then use the userToken to redirect towards dashboard
     console.log(res.tokenId)
     const mentor_id = this.props.params.id;
+    localStorage.setItem('event',JSON.stringify(this.props.event))
     this.props.googleSigninRequested({tokenId : res.tokenId,mentor_id});
   };
 
@@ -187,7 +176,15 @@ class DeleteTest extends Component {
   }
 
   handleUpdateCalender(e){
-    this.props.updateCalenderEventRequested();
+    console.log(this.props.event)
+    const {event} = this.props;
+    if(event.startDate && event.endDate && event.summary)
+    {
+      this.props.updateCalenderEventRequested({event:this.props.event});
+    }
+    else{
+      alert("Please select summary and duration")
+    } 
   }
 
   render() {
@@ -462,7 +459,7 @@ class DeleteTest extends Component {
                             <textarea
                               className="border-2 p-2 border-gray-100 w-full rounded"
                               placeholder="Your Answer"
-                              value={this.props.summary}
+                              value={this.props.event.summary}
                               onChange={(e)=>this.props.onChangeEventSumary(e)}
                               rows={5}
                             />
@@ -480,9 +477,10 @@ class DeleteTest extends Component {
                                 id="grid-state"
                                 onChange={(e)=>this.props.onChangeEventEndDate(e)}
                               >
+                                <option>Select session duration</option>
                                 <option value="1">1 hour</option>
-                                <option value="1.5">1.5 hours</option>
                                 <option value="2">2 hours</option>
+                                <option value="3">3 hours</option>
                               </select>
                               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <svg
@@ -561,7 +559,7 @@ const mapDispatchToProps = (dispatch) => {
     updateUserMobile: (data) => dispatch(updateUserMobile(data)),
     googleSigninRequested: (data) => dispatch(googleSigninRequested(data)),
     logOut: () => dispatch(logOut()),
-    updateCalenderEventRequested: ()=>dispatch(updateCalenderEventRequested())
+    updateCalenderEventRequested: (data)=>dispatch(updateCalenderEventRequested(data))
   };
 };
 

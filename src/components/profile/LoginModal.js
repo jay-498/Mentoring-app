@@ -176,11 +176,11 @@ class DeleteTest extends Component {
   }
 
   handleUpdateCalender(e){
-    console.log(this.props.event)
+    const id = this.props.params.id;
     const {event} = this.props;
     if(event.startDate && event.endDate && event.summary)
     {
-      this.props.updateCalenderEventRequested({event:this.props.event});
+      this.props.updateCalenderEventRequested({event:this.props.event,mentor_id: id});
     }
     else{
       alert("Please select summary and duration")
@@ -446,7 +446,7 @@ class DeleteTest extends Component {
                   {this.props.isLoggedIn ? (
                     
                     <>
-                    {this.props.is_google_verified ? 
+                    {/* {this.props.is_google_verified ?  */}
                       <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
                           <div className="mb-4">
@@ -504,7 +504,7 @@ class DeleteTest extends Component {
                           </div>
                         </form>
                       </div>
-                    :
+                    {/* :
                     <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
                             <label
@@ -523,7 +523,7 @@ class DeleteTest extends Component {
                           />
                         </form>
                     </div>
-                    }
+                    } */}
                     </>
                   ) : (
                     <>{allModals()}</>

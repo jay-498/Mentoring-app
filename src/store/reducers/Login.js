@@ -62,7 +62,6 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
       };
     case LOGIN_SUCCESS:
-      console.log("reducer",action.payload)
       return {
         ...state,
         is_google_verified: action.payload.is_google_verified,

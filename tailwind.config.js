@@ -16,6 +16,7 @@ module.exports = {
         Avenir: ["avenir-next-lt-pro"],
         Monteserat: ["Montserrat", "sans-serif"],
         nunito: ["Nunito"],
+        roboto: ['Roboto', 'sans-serif'],
         AvenirNext: ["Avenir Next LT Pro"],
         Manrope: ["Manrope", "sans-serif"],
       },

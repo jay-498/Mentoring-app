@@ -53,7 +53,6 @@ class Profile extends Component {
     const params = new URLSearchParams(search);
     const modal = params.get('modal');
     const storageEvent = JSON.parse(localStorage.getItem('event'))
-    // console.log({...JSON.parse(storageEvent)})
     if(modal==="true"){
      this.props.updateLoginModal(true);
      this.setState(prev=>{

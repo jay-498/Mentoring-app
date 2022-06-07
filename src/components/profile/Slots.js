@@ -45,7 +45,7 @@ class Slots extends Component {
         <div className="grid grid-cols-5 gap-x-3 mt-5">
           {startDates.map((eachDate,index)=>(
               <button key={index} onClick={()=>this.props.onChangeEventStartDate(index)} 
-              className={`font-semibold ${currentStartDateIndex===index && "border-2 border-violet-500"} font-poppins text-center border border-[#D5D3D3] rounded`}>
+              className={`font-semibold ${currentStartDateIndex===index ? "border-2 border-[#8F6EC5]":"border border-[#D5D3D3]"} font-poppins text-center  rounded`}>
               <p className="text-[10px] text-[#B4B4B4]">{this.getDay(eachDate.date)}</p>
               <p className="text-[14px] text-[#565656]">{(new Date(eachDate.date)).getDate()} {this.getMonth(eachDate.date)}</p>
               <p className="text-[#5B6BD0] text-[10px]">2 slots</p>
@@ -61,7 +61,7 @@ class Slots extends Component {
           <div className="grid grid-cols-5 gap-x-5 mt-2">
             {startDates[currentStartDateIndex].times.map((eachTime,index)=>(
               <button key={index} onClick={()=>this.props.onChangeEventStartTime(index)} 
-              className={`font-semibold ${currentStartTimeIndex===index && "border-2 border-violet-500"} font-poppins text-center border border-[#D5D3D3] rounded`}>
+              className={`font-semibold ${currentStartTimeIndex===index ? "border-2 border-[#8F6EC5]":"border border-[#D5D3D3]"} font-poppins text-center  rounded`}>
                 <p className="text-[10px] p-1 text-[#565656]">{eachTime>12 ? eachTime-12+" PM" :eachTime+" AM"}</p>
               </button>
             ))}
@@ -78,7 +78,7 @@ class Slots extends Component {
         </div>
         <button
           onClick={() => this.handleLoginModal()}
-          className="bg-[#5B6BD0] rounded-[5px] w-full text-white font-semibold py-2 font-Helvetica md:text-[18px] text-[10px]"
+          className="bg-[#8F6EC5] rounded-[5px] w-full text-white font-semibold py-2 font-Helvetica md:text-[18px] text-[10px]"
         >
           Book
         </button>

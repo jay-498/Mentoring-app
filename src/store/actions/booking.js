@@ -4,11 +4,19 @@ import {
   UPDATE_LOGIN_MODAL,
   UPDATE_MODAL_NUMBER,
   UPDATE_CALENDER_EVENT_REQUESTED,
+  UPDATE_CALENDER_EVENT_SUCCESS
 } from "../actionTypes/index";
 
-export const updateCalenderEventRequested = () => {
+export const updateCalenderEventRequested = (data) => {
   return {
     type: UPDATE_CALENDER_EVENT_REQUESTED,
+    payload: data,
+  };
+};
+
+export const updateCalenderEventSuccess = (data) => {
+  return {
+    type: UPDATE_CALENDER_EVENT_SUCCESS,
   };
 };
 

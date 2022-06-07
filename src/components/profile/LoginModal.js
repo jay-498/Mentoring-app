@@ -20,10 +20,12 @@ import { sendOtp, signinUser } from "../../services/auth.service";
 import GoogleLogin from "react-google-login";
 import { GLOGIN_CLIENT_ID } from "../../assets/js/config";
 
+
 class DeleteTest extends Component {
   constructor() {
     super();
     this.state = {
+      showPassword: false,
       emailError: "",
       otpError: "",
       otpSent: false,
@@ -42,18 +44,6 @@ class DeleteTest extends Component {
     this.onGoogleLoginSuccess = this.onGoogleLoginSuccess.bind(this);
   }
 
-  // componentDidMount() {
-  //   // this.props.logOut();
-  //   const search = window.location.search
-  //   const params = new URLSearchParams(search);
-  //   const modal = params.get('modal');
-  //   console.log(typeof(modal))
-  //   if(modal==="true"){
-
-  //   }
-  //   // const query = new URLSearchParams(this.props.location);
-  //   // console.log(query.get('modal'))
-  // }
 
   handleChange = (e) => {
     const { value, name } = e.target;
@@ -103,9 +93,10 @@ class DeleteTest extends Component {
               otpSent: true,
             };
           });
-        } else {
-          this.props.updateModalNumber(2);
-        }
+        } 
+        // else {
+        //   this.props.updateModalNumber(2);
+        // }
       });
       this.setState({
         mobile: "",
@@ -156,8 +147,9 @@ class DeleteTest extends Component {
 
   onGoogleLoginSuccess = (res) => {
     //hit login API here then use the userToken to redirect towards dashboard
-    console.log(res.tokenId)
+    // console.log(res.tokenId)
     const mentor_id = this.props.params.id;
+    localStorage.setItem('event',JSON.stringify(this.props.event))
     this.props.googleSigninRequested({tokenId : res.tokenId,mentor_id});
   };
 
@@ -171,24 +163,42 @@ class DeleteTest extends Component {
     const { userMobile } = this.props;
     const isValid = this.validate();
     if (isValid) {
-      signinUser({ email, first_name, last_name, mobile: userMobile }).then(
-        (res) => {
-          if (res.success) {
-            this.setState((prevState) => {
-              return {
-                ...prevState,
-                otpSent: true,
-              };
-            });
-          }
-        }
-      );
+      this.props.signinRequested({email, first_name, last_name, mobile: userMobile});
+      // signinUser({ email, first_name, last_name, mobile: userMobile }).then(
+      //   (res) => {
+      //     if (res.success) {
+      //       this.setState((prevState) => {
+      //         return {
+      //           ...prevState,
+      //           otpSent: true,
+      //         };
+      //       });
+      //     }
+      //   }
+      // );
     }
   }
 
   handleUpdateCalender(e){
-    this.props.updateCalenderEventRequested();
+    const id = this.props.params.id;
+    const {event} = this.props;
+    if(event.startDate && event.endDate && event.summary)
+    {
+      this.props.updateCalenderEventRequested({event:this.props.event,mentor_id: id});
+    }
+    else{
+      alert("Please select summary and duration")
+    } 
   }
+
+  handleShowPassword = () => {
+    this.setState(prev=>{
+      return{
+        ...prev,
+        showPassword: !prev.showPassword
+      }
+    })
+  };
 
   render() {
     const allModals = () => {
@@ -201,45 +211,46 @@ class DeleteTest extends Component {
                   {!this.state.otpSent ? (
                     <div className="flex-col">
                       <div className="flex items-center mb-2">
-                        <label
+                        {/* <label
                           className="block text-gray-700 text-sm font-bold"
                           htmlFor="Mobile"
                         >
                           Mobile
-                        </label>
+                        </label> */}
                         {this.state.isMobilEmpty && (
                           <p className="py-1 text-sm text-red-500 px-1">
                             *Invalid
                           </p>
                         )}
                       </div>
-                      <div className="flex">
-                        <input
-                          className="shadow appearance-none border rounded-l w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      <div className="relative my-3">
+                          <input
+                          className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
                           id="mobile"
-                          type="text"
+                          type="mobile"
                           value={this.state.mobile}
                           onChange={(e) => this.onChangeMobile(e)}
-                          placeholder="Mobile"
+                          placeholder=" "
                         />
+                        <label for="mobile" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
+                      </div>
                         <button
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
+                          className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
                           type="button"
                           onClick={(e) => this.handleLogin(e)}
                         >
                           Proceed
                         </button>
                       </div>
-                    </div>
                   ) : (
                     <div>
                       <div className="flex items-center my-2">
-                        <label
+                        {/* <label
                           className="block text-gray-700 text-sm font-bold"
                           htmlFor="Mobile"
                         >
                           OTP Verification
-                        </label>
+                        </label> */}
                         {(this.state.otpError !== "" ||
                           this.props.otpMessage !== "") && (
                           <p className="py-1 text-sm text-red-500 px-1">
@@ -247,24 +258,25 @@ class DeleteTest extends Component {
                           </p>
                         )}
                       </div>
-                      <div className="flex">
+                      <div className="relative my-3">
                         <input
-                          className="shadow appearance-none border rounded-l w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
                           id="otp"
                           type="text"
                           value={this.state.otp}
                           onChange={(e) => this.onChangeOtp(e)}
-                          placeholder="OTP"
+                          placeholder=" "
                         />
+                        <label for="otp" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">OTP</label>
+                       </div> 
                         <button
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
+                          className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
                           type="button"
                           onClick={(e) => this.handleOtp(e)}
                         >
                           Verify
                         </button>
                       </div>
-                    </div>
                   )}
                 </form>
               </div>
@@ -273,110 +285,150 @@ class DeleteTest extends Component {
         case 2:
           return (
             <>
-              <div className="w-full">
-                {!this.state.otpSent ? (
-                  <form className="rounded p-5 py-2 mb-4">
-                    <div className="mb-4">
-                      <div className="flex mb-2 items-center">
-                        <label
-                          className="block text-gray-700 text-md font-bold"
-                          htmlFor="Firstname"
-                        >
-                          Firstname
-                        </label>
-                        <p className="text-red-600 px-2 text-xs">
-                          {this.state.firstNameError}
-                        </p>
-                      </div>
-                      <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="Firstname"
-                        name="first_name"
-                        value={this.state.form.first_name}
-                        onChange={(e) => this.handleChange(e)}
-                        type="text"
-                        placeholder="Firstname"
-                      />
+              <div className="px-10 rounded justify-center items-center w-full">
+                  <form className="mb-4">
+                  <h1 className="pb-5 text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Join Casecompendium today!</h1>
+                  {/* <div className="mb-4"> */}
+                    {/* <div className="flex mb-2 items-center"> */}
+                      {/* <p className="text-red-600 px-2 text-xs">
+                      {this.state.mobileError}
+                    </p> */}
+                    {/* </div> */}
+                    {/* <div className="relative">
+                    <input
+                      className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                      id="mobile"
+                      name="mobile"
+                      // value={this.props.userMobile}
+                      type="text"
+                      placeholder=" "
+                    />
+                    <label for="mobile" className="font-roboto font-normal absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
                     </div>
-                    <div className="mb-4">
-                      <div className="flex mb-2 items-center">
-                        <label
-                          className="block text-gray-700 text-md font-bold"
-                          htmlFor="Firstname"
-                        >
-                          Lastname
-                        </label>
-                        <p className="text-red-600 px-2 text-xs">
-                          {this.state.lastNameError}
-                        </p>
-                      </div>
-                      <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="Lastname"
-                        name="last_name"
-                        onChange={(e) => this.handleChange(e)}
-                        value={this.state.form.astname}
-                        type="text"
-                        placeholder="Lastname"
-                      />
+                  </div>
+                  <div className="mb-3">
+                    <div className="flex items-center w-full">
+                      <hr className="py-[1px] mr-2 rounded-full w-1/2" style={{ backgroundColor: "rgba(148, 148, 148, 0.33)" }}/>
+                      <span className="font-normal text-[#797979] font-poppins text-base">Or</span>
+                      <hr className="bg-[#949494] py-[1px] ml-2 rounded-full w-1/2" style={{ backgroundColor: "rgba(148, 148, 148, 0.33)" }}/>
                     </div>
-                    <div className="mb-4">
-                      <div className="flex mb-2 items-center">
-                        <label
-                          className="block text-gray-700 text-md font-bold"
-                          htmlFor="Firstname"
-                        >
-                          Mobile
-                        </label>
-                        {/* <p className="text-red-600 px-2 text-xs">
-                        {this.state.mobileError}
-                      </p> */}
-                      </div>
-                      <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="Mobile"
-                        name="mobile"
-                        disabled
-                        value={this.props.userMobile}
-                        // onChange={(e) => this.handleChange(e)}
-                        type="text"
-                        placeholder="Mobile"
-                      />
+                  </div> */}
+                  <div className="mb-6">
+                    {/* <div className="flex mb-2 items-center"> */}
+                      {/* <p className="text-red-600 px-2 text-xs">
+                      {this.state.mobileError}
+                    </p> */}
+                    {/* </div> */}
+                    <div className="relative">
+                    <input
+                      className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                      id="Firstname"
+                      name="first_name"
+                      value={this.state.form.first_name}
+                      onChange={(e) => this.handleChange(e)}
+                      type="text"
+                      placeholder=" "
+                    />
+                    <label for="Firstname" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">First name</label>
                     </div>
-                    <div className="mb-4">
-                      <div className="flex mb-2 items-center">
-                        <label
-                          className="block text-gray-700 text-md font-bold"
-                          htmlFor="Firstname"
-                        >
-                          Email
-                        </label>
-                        <p className="text-red-600 px-2 text-xs">
-                          {this.state.emailError}
-                        </p>
-                      </div>
-                      <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  </div>
+                  <div className="mb-6">
+                    {/* <div className="flex mb-2 items-center"> */}
+                      {/* <p className="text-red-600 px-2 text-xs">
+                      {this.state.mobileError}
+                    </p> */}
+                    {/* </div> */}
+                    <div className="relative">
+                    <input
+                      className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                      id="Lastname"
+                      name="last_name"
+                      value={this.state.form.lastname}
+                      onChange={(e) => this.handleChange(e)}
+                      type="text"
+                      placeholder=" "
+                    />
+                    <label for="Lastname" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Last name</label>
+                    </div>
+                  </div>
+                  <div className="mb-6">
+                    {/* <div className="flex mb-2 items-center"> */}
+                      {/* <p className="text-red-600 px-2 text-xs">
+                      {this.state.mobileError}
+                    </p> */}
+                    {/* </div> */}
+                    <div className="relative">
+                    <input
+                      className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                      id="mobile"
+                      name="mobile"
+                      disabled
+                      value={this.props.userMobile}
+                      type="text"
+                      placeholder=" "
+                    />
+                    <label for="mobile" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
+                    </div>
+                  </div>
+                  <div className="mb-6">
+                    {/* <div className="flex mb-2 items-center">
+                      <p className="text-red-600 px-2 text-xs">
+                        {this.state.firstNameError}
+                      </p>
+                    </div> */}
+                    <div className="relative">
+                        <input
+                        className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
                         id="email"
                         name="email"
                         value={this.state.form.email}
                         onChange={(e) => this.handleChange(e)}
                         type="email"
-                        placeholder="Email"
+                        placeholder=" "
                       />
+                      <label for="email" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Email</label>
                     </div>
+                  </div>
+                  {/* <div className=" mb-6"> */}
+                    {/* <div className="flex mb-2 items-center">
+                      <p className="text-red-600 px-2 text-xs">
+                        {this.state.emailError}
+                      </p>
+                    </div> */}
+                    {/* <div className="grid items-center relative">
+                      <input
+                        type={`${this.state.showPassword ? "text" : "password"}`}
+                        className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                        autoComplete="off"
+                        name="password"
+                        id="password"
+                        placeholder=" "
+                      />
+                      <label for="password" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] rounded-full bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Password</label>
+                      <img
+                        onClick={this.handleShowPassword}
+                        src={this.state.showPassword ? crossEye : eye}
+                        className="absolute w-5 h-5 right-0 mr-4 cursor-pointer"
+                        title="View"
+                        alt="view"
+                      />
+                    </div> */}
+                  {/* </div> */}
 
-                    <div className="flex items-center justify-between">
-                      <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="button"
-                        onClick={(e) => this.handleSignin(e)}
-                      >
-                        Sign Up
-                      </button>
-                    </div>
-                  </form>
-                ) : (
+                  <div className="flex items-center justify-between">
+                    <button
+                      className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
+                      type="button"
+                      onClick={(e) => this.handleSignin(e)}
+                    >
+                      Continue
+                    </button>
+                  </div>
+                  <div className="font-poppins text-xs py-4">
+                    <p className="text-[#989898]">Already have an account?<a href="#" className="text-[#8F6EC5] font-semibold">Login</a></p>
+                  </div>
+                </form>
+                {/* ) : (
                   <div className="ounded p-5 py-2 mb-4">
                     <div className="mb-4">
                       <div className="flex items-center my-2">
@@ -406,7 +458,7 @@ class DeleteTest extends Component {
                       </button>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </>
           );
@@ -429,7 +481,7 @@ class DeleteTest extends Component {
                     <button
                       type="button"
                       onClick={() => this.props.updateLoginModal(false)}
-                      className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                      className="text-gray-400 bg-transparent hover:bg-gray-200 hover rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                       data-modal-toggle="popup-modal"
                     >
                       <svg
@@ -449,40 +501,46 @@ class DeleteTest extends Component {
                   {this.props.isLoggedIn ? (
                     
                     <>
-                    {this.props.is_google_verified ? 
+                    {/* {this.props.is_google_verified ?  */}
                       <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
                           <div className="mb-4">
-                            <label
+                            {/* <label
                               className="block text-gray-700 text-sm font-bold mb-2"
                               htmlFor="Email"
                             >
                               Anything else you want answered?
-                            </label>
-                            <textarea
-                              className="border-2 p-2 border-gray-100 w-full rounded"
-                              placeholder="Your Answer"
-                              // value={this.state.textAreaValue}
-                              // onChange={this.handleChange}
-                              rows={5}
-                            />
+                            </label> */}
+                            <div className="relative">
+                              <textarea
+                                className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                                placeholder=" "
+                                id="summary"
+                                name="summary"
+                                value={this.props.event.summary}
+                                onChange={(e)=>this.props.onChangeEventSumary(e)}
+                                rows={5}
+                              />
+                              <label for="summary" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Anything else you want to answered?</label>
+                            </div>
                           </div>
                           <div className="mb-4">
-                            <label
-                              className="block text-gray-700 text-sm font-bold mb-2"
+                            {/* <label
+                              className="block text-[#8F6EC5] text-sm font-bold mb-2"
                               htmlFor="Mobile"
                             >
                               Duration
-                            </label>
+                            </label> */}
                             <div className="relative">
                               <select
-                                className="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
+                                className="block appearance-none w-full bg-gray-100 border focus:outline-none focus:ring-0 focus:border-[#8F6EC5] text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
                                 id="grid-state"
+                                onChange={(e)=>this.props.onChangeEventEndDate(e)}
                               >
-                                <option>30 mins</option>
-                                <option>1 hour</option>
-                                <option>1.5 hours</option>
-                                <option>2 hours</option>
+                                <option>Select session duration</option>
+                                <option value="1">1 hour</option>
+                                <option value="2">2 hours</option>
+                                <option value="3">3 hours</option>
                               </select>
                               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <svg
@@ -497,7 +555,7 @@ class DeleteTest extends Component {
                           </div>
                           <div className="flex items-center justify-between">
                             <button
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                              className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
                               type="button"
                               onClick={(e) => this.handleUpdateCalender(e)}
                             >
@@ -506,7 +564,7 @@ class DeleteTest extends Component {
                           </div>
                         </form>
                       </div>
-                    :
+                    {/* :
                     <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
                             <label
@@ -525,7 +583,7 @@ class DeleteTest extends Component {
                           />
                         </form>
                     </div>
-                    }
+                    } */}
                     </>
                   ) : (
                     <>{allModals()}</>
@@ -561,7 +619,7 @@ const mapDispatchToProps = (dispatch) => {
     updateUserMobile: (data) => dispatch(updateUserMobile(data)),
     googleSigninRequested: (data) => dispatch(googleSigninRequested(data)),
     logOut: () => dispatch(logOut()),
-    updateCalenderEventRequested: ()=>dispatch(updateCalenderEventRequested())
+    updateCalenderEventRequested: (data)=>dispatch(updateCalenderEventRequested(data))
   };
 };
 

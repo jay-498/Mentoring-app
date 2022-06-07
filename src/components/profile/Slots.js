@@ -4,7 +4,35 @@ import { UpdateLoginModal } from "../../store/actions/booking";
 import { connect } from "react-redux";
 import calender from "../../assets/images/design/Icons/calender.png";
 class Slots extends Component {
+  constructor(props){
+    super(props);
+    this.getMonth = this.getMonth.bind(this);
+    this.getDay = this.getDay.bind(this);
+  }
+
+
+  getMonth(date){
+    return (new Date(date)).toLocaleString('en-us', { month: 'short' });
+  }
+
+  getDay(date){
+    return (new Date(date)).toLocaleString('en-us', { weekday: 'short' });
+  }
+
+
+  handleLoginModal(){
+    console.log(this.props.event)
+    if(this.props.event.startDate)
+    {
+      this.props.updateLoginModal(true);
+    }
+    else{
+      alert("Please book your date")
+    }
+  }
+
   render() {
+    const {startDates,currentStartDateIndex,currentStartTimeIndex} = this.props;
     return (
       <div className="flex-col h-[355px] md:mt-0 mt-5 p-5 lg:p-10 lg:m-10 md:m-5 items-center justify-center border border-gray-300 rounded-3xl">
         <div className="flex justify-between">
@@ -15,31 +43,14 @@ class Slots extends Component {
         </div>
         <hr className="bg-[#F2F2F2] my-3 py-[0.125rem] rounded w-FULL" />
         <div className="grid grid-cols-5 gap-x-3 mt-5">
-          <div className="flex-col font-semibold font-poppins text-center border border-[#D5D3D3] rounded">
-            <p className="text-[10px] text-[#B4B4B4]">Thur</p>
-            <p className="text-[14px] text-[#565656]">28 April</p>
-            <p className="text-[#5B6BD0] text-[10px]">2 slots</p>
-          </div>
-          <div className="flex-col font-semibold font-poppins text-center border border-[#D5D3D3] rounded">
-            <p className="text-[10px] text-[#B4B4B4]">Thur</p>
-            <p className="text-[14px] text-[#565656]">28 April</p>
-            <p className="text-[#5B6BD0] text-[10px]">2 slots</p>
-          </div>
-          <div className="flex-col font-semibold font-poppins text-center border border-[#D5D3D3] rounded">
-            <p className="text-[10px] text-[#B4B4B4]">Thur</p>
-            <p className="text-[14px] text-[#565656]">28 April</p>
-            <p className="text-[#5B6BD0] text-[10px]">2 slots</p>
-          </div>
-          <div className="flex-col font-semibold font-poppins text-center border border-[#D5D3D3] rounded">
-            <p className="text-[10px] text-[#B4B4B4]">Thur</p>
-            <p className="text-[14px] text-[#565656]">28 April</p>
-            <p className="text-[#5B6BD0] text-[10px] ">2 slots</p>
-          </div>
-          <div className="flex-col font-semibold font-poppins text-center border border-[#D5D3D3] rounded">
-            <p className="text-[10px] text-[#B4B4B4]">Thur</p>
-            <p className="text-[14px] text-[#565656]">28 April</p>
-            <p className="text-[#5B6BD0] text-[10px]">2 slots</p>
-          </div>
+          {startDates.map((eachDate,index)=>(
+              <button key={index} onClick={()=>this.props.onChangeEventStartDate(index)} 
+              className={`font-semibold ${currentStartDateIndex===index ? "border-2 border-[#8F6EC5]":"border border-[#D5D3D3]"} font-poppins text-center  rounded`}>
+              <p className="text-[10px] text-[#B4B4B4]">{this.getDay(eachDate.date)}</p>
+              <p className="text-[14px] text-[#565656]">{(new Date(eachDate.date)).getDate()} {this.getMonth(eachDate.date)}</p>
+              <p className="text-[#5B6BD0] text-[10px]">2 slots</p>
+            </button>
+          ))}
         </div>
         <div className="flex-col py-6">
           <div className="flex justify-between">
@@ -48,20 +59,26 @@ class Slots extends Component {
             </h1>
           </div>
           <div className="grid grid-cols-5 gap-x-5 mt-2">
-            <div className="flex-col font-semibold font-poppins text-center border border-[#D5D3D3] rounded">
+            {startDates[currentStartDateIndex].times.map((eachTime,index)=>(
+              <button key={index} onClick={()=>this.props.onChangeEventStartTime(index)} 
+              className={`font-semibold ${currentStartTimeIndex===index ? "border-2 border-[#8F6EC5]":"border border-[#D5D3D3]"} font-poppins text-center  rounded`}>
+                <p className="text-[10px] p-1 text-[#565656]">{eachTime>12 ? eachTime-12+" PM" :eachTime+" AM"}</p>
+              </button>
+            ))}
+            {/* <button className="font-semibold focus:outline-none focus:ring focus:ring-violet-300 font-poppins text-center border border-[#D5D3D3] rounded">
               <p className="text-[10px] p-1 text-[#565656]">10 am</p>
-            </div>
-            <div className="flex-col font-semibold font-poppins text-center border border-[#D5D3D3] rounded">
-              <p className="text-[10px] p-1 text-[#565656]">2 pm</p>
-            </div>
-            <div className="flex-col font-semibold font-poppins text-center border border-[#D5D3D3] rounded">
-              <p className="text-[10px] p-1 text-[#565656]">5 pm</p>
-            </div>
+            </button>
+            <button className="font-semibold focus:outline-none focus:ring focus:ring-violet-300 font-poppins text-center border border-[#D5D3D3] rounded">
+              <p className="text-[10px] p-1 text-[#565656]">12 pm</p>
+            </button>
+            <button className="font-semibold focus:outline-none focus:ring focus:ring-violet-300 font-poppins text-center border border-[#D5D3D3] rounded">
+              <p className="text-[10px] p-1 text-[#565656]">3 pm</p>
+            </button> */}
           </div>
         </div>
         <button
-          onClick={() => this.props.updateLoginModal(true)}
-          className="bg-[#5B6BD0] rounded-[5px] w-full text-white font-semibold py-2 font-Helvetica md:text-[18px] text-[10px]"
+          onClick={() => this.handleLoginModal()}
+          className="bg-[#8F6EC5] rounded-[5px] w-full text-white font-semibold py-2 font-Helvetica md:text-[18px] text-[10px]"
         >
           Book
         </button>

@@ -11,15 +11,56 @@ class Profile extends Component {
     super(props);
     this.state = {
       mentor: {},
+      StartDates: [
+        {
+          date: "Fri Jun 03 2022 8:00:00 GMT+0530 (India Standard Time)",
+          times: [8 ,9 ,10 ,14, 16]
+        },
+        {
+          date: "Sat Jun 04 2022 10:00:00 GMT+0530 (India Standard Time)",
+          times: [10 ,9]
+        },
+        {
+          date: "Sun Jun 05 2022 14:00:00 GMT+0530 (India Standard Time)",
+          times: [14, 16, 20]
+        },
+        {
+          date: "Mon Jun 06 2022 9:00:00 GMT+0530 (India Standard Time)",
+          times: [9 ,10 ,14, 16]
+        },
+        {
+          date: "Tue Jun 07 2022 8:00:00 GMT+0530 (India Standard Time)",
+          times: [8 ,9 ,10, 20]
+        }
+      ],
+      currentStartDateIndex : 0,
+      currentStartTimeIndex : 0,
+      event: {
+        startDate: "",
+        endDate : "",
+        summary : "",
+      }
     };
+    this.onChangeEventStartDate= this.onChangeEventStartDate.bind(this);
+    this.onChangeEventEndDate = this.onChangeEventEndDate.bind(this);
+    this.onChangeEventSumary = this.onChangeEventSumary.bind(this);
+    this.onChangeEventStartTime = this.onChangeEventStartTime.bind(this);
+    this.addHours = this.addHours.bind(this);
   }
   componentDidMount() {
     const id = this.props.params.id;
     const search = window.location.search
     const params = new URLSearchParams(search);
     const modal = params.get('modal');
+    const storageEvent = JSON.parse(localStorage.getItem('event'))
     if(modal==="true"){
      this.props.updateLoginModal(true);
+     this.setState(prev=>{
+       return{
+         ...prev,
+         event: {...storageEvent},
+       }
+     })
     }
     mainService
       .getMentorById(id)
@@ -31,13 +72,86 @@ class Profile extends Component {
         }));
       })
       .catch((err) => console.log(err));
+    this.onChangeEventStartDate(0);
   }
+
+  onChangeEventStartDate=(index)=>{
+    const {StartDates} = this.state;
+    this.setState(prev=>{
+      return{
+        ...prev,
+        currentStartDateIndex: index,
+        event: {
+          ...prev.event,
+          startDate : (StartDates[index].date),
+        }
+      }
+    })
+  }
+
+  onChangeEventStartTime=(timeIndex)=>{
+    const {startDate} = this.state.event;
+    const {StartDates,currentStartDateIndex} = this.state;
+    const newStartDate = new Date(startDate);
+    newStartDate.setHours(StartDates[currentStartDateIndex].times[timeIndex])
+    console.log(newStartDate)
+    this.setState(prev=>{
+      return{
+        ...prev,
+        currentStartTimeIndex: timeIndex,
+        event: {
+          ...prev.event,
+          startDate : String(newStartDate),
+        }
+      }
+    })
+  }
+
+  onChangeEventSumary=(e)=>{
+    this.setState(prev=>{
+      return{
+        ...prev,
+        event: {
+          ...prev.event,
+          summary : e.target.value,
+        }
+      }
+    })
+  }
+
+  addHours(numOfHours,startDate) {
+    var oldDateObj = new Date(startDate);
+    var newDateObj = new Date(startDate);
+    newDateObj.setTime(oldDateObj.getTime() + (numOfHours*60* 60 * 1000));
+    console.log(newDateObj);
+    return newDateObj;
+  }
+
+  onChangeEventEndDate=(e)=>{
+    const endDate = this.addHours(parseInt(e.target.value),this.state.event.startDate);
+    this.setState(prev=>{
+      return{
+        ...prev,
+        event: {
+          ...prev.event,
+          endDate: String(endDate)
+        }
+      }
+    })
+  }
+
+  
+
+
 
   render() {
     const { mentor } = this.state;
     return (
       <div className="flex flex-col overflow-hidden pb-10">
-        <LoginModal />
+        <LoginModal 
+        onChangeEventSumary={this.onChangeEventSumary} 
+        onChangeEventEndDate={this.onChangeEventEndDate}
+        event={this.state.event}/>
         <div>
           <img src={profiledesigns} alt="bg" className="w-full" />
         </div>
@@ -151,7 +265,13 @@ class Profile extends Component {
                 </div>
               </div>
 
-              <Slots />
+              <Slots 
+              onChangeEventStartDate={this.onChangeEventStartDate}
+              onChangeEventStartTime={this.onChangeEventStartTime}
+              startDates={this.state.StartDates}
+              event={this.state.event}
+              currentStartTimeIndex={this.state.currentStartTimeIndex}
+              currentStartDateIndex={this.state.currentStartDateIndex}/>
             </div>
           </div>
         </div>

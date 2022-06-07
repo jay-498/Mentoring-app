@@ -1,21 +1,30 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { LOGIN_REQUESTED, GOOGLE_SIGNIN_REQUESTED } from "../actionTypes/index";
+import { LOGIN_REQUESTED, GOOGLE_SIGNIN_REQUESTED,SIGNIN_REQUESTED } from "../actionTypes/index";
 import {
   loginSuccess,
   loginFailure,
   googleSigninSuccess,
   googleSigninFailure,
+  signinSuccess,
+  signinFailure,
+  signinRequested,
 } from "../actions/Login";
-import { verifyOtp, googleSignin } from "../../services/auth.service";
+import {
+  updateModalNUmber
+} from "../actions/booking";
+import { verifyOtp, googleSignin, signinUser } from "../../services/auth.service";
 
 function* loginSaga(action) {
   try {
     const auth = yield call(verifyOtp, action.payload);
-    if (auth.success) {
-      localStorage.setItem("jwt_token", auth.jwt_token);
-      localStorage.setItem("is_google_verified", auth.is_google_verified);
+    if (auth.has_user_details) {
+      localStorage.setItem("user_token", auth.jwt_token);
+      yield put(loginSuccess(auth));
+      // localStorage.setItem("is_google_verified", auth.is_google_verified);
     }
-    yield put(loginSuccess(auth));
+    else{
+      yield put(updateModalNUmber(2));
+    }
   } catch (e) {
     yield put(loginFailure("Invalid Otp"));
   }
@@ -32,22 +41,22 @@ function* googleLoginSaga(action) {
   }
 }
 
-// function* signinSaga(action) {
-//   try {
-//     const auth = yield call(signinUser, action.payload);
-//     console.log(auth);
-//     if (auth) {
-//       localStorage.setItem("user_token", auth);
-//     }
-//     yield put(signinSuccess(auth));
-//   } catch (e) {
-//     yield put(signinFailure(e));
-//   }
-// }
+function* signinSaga(action) {
+  try {
+    const auth = yield call(signinUser, action.payload);
+    if (auth.success) {
+      localStorage.setItem("user_token", auth.jwt_token);
+    }
+    yield put(signinSuccess(auth));
+  } catch (e) {
+    yield put(signinFailure(e));
+  }
+}
 
 function* userSaga() {
   yield takeEvery(LOGIN_REQUESTED, loginSaga);
   yield takeEvery(GOOGLE_SIGNIN_REQUESTED, googleLoginSaga);
+  yield takeEvery(SIGNIN_REQUESTED,signinSaga);
 }
 
 export default userSaga;

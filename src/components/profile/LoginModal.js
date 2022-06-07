@@ -19,8 +19,6 @@ import {updateCalenderEventRequested} from "../../store/actions/booking";
 import { sendOtp, signinUser } from "../../services/auth.service";
 import GoogleLogin from "react-google-login";
 import { GLOGIN_CLIENT_ID } from "../../assets/js/config";
-import eye from "../../assets/images/svgs/heye.svg";
-import crossEye from "../../assets/images/svgs/heye.svg";
 
 
 class DeleteTest extends Component {

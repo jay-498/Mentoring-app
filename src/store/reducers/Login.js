@@ -11,7 +11,7 @@ import {
   SET_ERROR_MESSAGE,
 } from "../actionTypes/index";
 
-const token = localStorage.getItem("jwt_token");
+const token = localStorage.getItem("user_token");
 const google_check = localStorage.getItem("is_google_verified");
 let user = { token };
 if (!token) {

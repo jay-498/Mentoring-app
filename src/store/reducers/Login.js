@@ -77,7 +77,7 @@ export default function (state = initialState, action) {
       };
     case LOGOUT:
       localStorage.removeItem("user_token");
-      toast.success("Logout Successfull")
+      toast.success("Logout Successfull",{position: toast.POSITION.TOP_CENTER})
       return {
         ...state,
         isLoggedIn: false,

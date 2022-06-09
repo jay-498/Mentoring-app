@@ -110,7 +110,7 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col pt-20">
+        {/* <div className="flex flex-col pt-20">
           <div className="absolute lg:w-[60px] w-[40px] mt-36 lg:ml-10 ml-4">
             <img src={dots} alt="dot" />
           </div>
@@ -122,7 +122,7 @@ class HomePage extends Component {
             </div>
             <CarouselDiscover />
           </div>
-        </div>
+        </div> */}
 
         <div className="flex mx-28 pt-28">
           <img

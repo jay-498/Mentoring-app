@@ -27,7 +27,7 @@ function* loginSaga(action) {
       yield put(updateModalNUmber(2));
     }
   } catch (e) {
-    toast.error("Invalid OTP");
+    toast.error("Invalid OTP",{position: toast.POSITION.TOP_CENTER});
     yield put(loginFailure("Invalid Otp"));
   }
 }

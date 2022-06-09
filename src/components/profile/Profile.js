@@ -158,11 +158,13 @@ class Profile extends Component {
         event={this.state.event}/>
         <div>
           <img src={profiledesigns} alt="bg" className=" w-full" />
+          {this.props.isLoggedIn &&
           <div>
             <button onClick={this.logout} className="absolute right-10 top-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-1 px-4 rounded">
                 Logout
             </button>
           </div>
+          }
         </div>
         <div className="flex-col justify-left -mt-16 mx-5 sm:mx-10 lg:mx-40 md:mx-16">
           <div className="sm:flex  items-center">
@@ -289,6 +291,12 @@ class Profile extends Component {
   }
 }
 
+const mapStateToProps = ({ booking, Login }) => {
+  return {
+    isLoggedIn: Login.isLoggedIn,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     updateLoginModal: (data) => dispatch(UpdateLoginModal(data)),
@@ -296,4 +304,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null,mapDispatchToProps)(withRouter(Profile));
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Profile));

@@ -11,11 +11,11 @@ function* updateCalenderEventSaga(action) {
     const jwt_token = localStorage.getItem("user_token");
     const auth = yield call(updateCalenderEvent, {...action.payload,jwt_token});
     if (auth.success) {
-      toast.success(auth.msg)
+      toast.success(auth.msg,{position: toast.POSITION.TOP_CENTER})
       yield put(updateCalenderEventSuccess())
     }
   } catch (e) {
-    toast.error("Failed to add the Calender Event")
+    toast.error("Failed to add the Calender Event",{position: toast.POSITION.TOP_CENTER})
   }
 }
 

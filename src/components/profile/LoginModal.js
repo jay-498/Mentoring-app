@@ -188,7 +188,7 @@ class DeleteTest extends Component {
       this.props.updateCalenderEventRequested({event:this.props.event,mentor_id: id});
     }
     else{
-      toast.warn("Please select summary and duration")
+      toast.warn("Please select summary and duration",{position: toast.POSITION.TOP_CENTER})
     } 
   }
 
@@ -214,12 +214,12 @@ class DeleteTest extends Component {
                   {!this.state.otpSent ? (
                     <div className="flex-col">
                       <div className="flex items-center mb-2">
-                        {/* <label
-                          className="block text-gray-700 text-sm font-bold"
+                        <label
+                          className="block text-gray-500 font-poppins text-sm font-semibold"
                           htmlFor="Mobile"
                         >
                           Mobile
-                        </label> */}
+                        </label>
                         {this.state.isMobilEmpty && (
                           <p className="py-1 text-sm text-red-500 px-1">
                             *Invalid

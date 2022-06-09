@@ -21,7 +21,6 @@ class Slots extends Component {
 
 
   handleLoginModal(){
-    console.log(this.props.event)
     if(this.props.event.startDate)
     {
       this.props.updateLoginModal(true);

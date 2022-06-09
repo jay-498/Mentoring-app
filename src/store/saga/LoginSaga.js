@@ -13,6 +13,7 @@ import {
   updateModalNUmber
 } from "../actions/booking";
 import { verifyOtp, googleSignin, signinUser } from "../../services/auth.service";
+import { toast } from "react-toastify";
 
 function* loginSaga(action) {
   try {
@@ -26,6 +27,7 @@ function* loginSaga(action) {
       yield put(updateModalNUmber(2));
     }
   } catch (e) {
+    toast.error("Invalid OTP");
     yield put(loginFailure("Invalid Otp"));
   }
 }

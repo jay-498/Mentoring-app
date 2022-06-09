@@ -10,6 +10,7 @@ import {
   UPDATE_USER_MOBILE,
   SET_ERROR_MESSAGE,
 } from "../actionTypes/index";
+import { toast } from "react-toastify";
 
 const token = localStorage.getItem("user_token");
 const google_check = localStorage.getItem("is_google_verified");
@@ -75,7 +76,8 @@ export default function (state = initialState, action) {
         otpMessage: action.payload,
       };
     case LOGOUT:
-      localStorage.removeItem("jwt_token");
+      localStorage.removeItem("user_token");
+      toast.success("Logout Successfull")
       return {
         ...state,
         isLoggedIn: false,

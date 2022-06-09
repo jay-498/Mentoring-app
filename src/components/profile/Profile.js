@@ -6,6 +6,7 @@ import mainService from "../../services/main.service";
 import { UpdateLoginModal } from "../../store/actions/booking";
 import { connect } from "react-redux";
 import LoginModal from "./LoginModal";
+import { logOut } from "../../store/actions/Login";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -94,7 +95,6 @@ class Profile extends Component {
     const {StartDates,currentStartDateIndex} = this.state;
     const newStartDate = new Date(startDate);
     newStartDate.setHours(StartDates[currentStartDateIndex].times[timeIndex])
-    console.log(newStartDate)
     this.setState(prev=>{
       return{
         ...prev,
@@ -123,7 +123,6 @@ class Profile extends Component {
     var oldDateObj = new Date(startDate);
     var newDateObj = new Date(startDate);
     newDateObj.setTime(oldDateObj.getTime() + (numOfHours*60* 60 * 1000));
-    console.log(newDateObj);
     return newDateObj;
   }
 
@@ -140,7 +139,12 @@ class Profile extends Component {
     })
   }
 
-  
+  logout=()=>{
+    this.props.logOut();
+    this.interval = setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
 
 
 
@@ -153,7 +157,12 @@ class Profile extends Component {
         onChangeEventEndDate={this.onChangeEventEndDate}
         event={this.state.event}/>
         <div>
-          <img src={profiledesigns} alt="bg" className="w-full" />
+          <img src={profiledesigns} alt="bg" className=" w-full" />
+          <div>
+            <button onClick={this.logout} className="absolute right-10 top-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-1 px-4 rounded">
+                Logout
+            </button>
+          </div>
         </div>
         <div className="flex-col justify-left -mt-16 mx-5 sm:mx-10 lg:mx-40 md:mx-16">
           <div className="sm:flex  items-center">
@@ -283,6 +292,7 @@ class Profile extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateLoginModal: (data) => dispatch(UpdateLoginModal(data)),
+    logOut: () => dispatch(logOut()),
   };
 };
 

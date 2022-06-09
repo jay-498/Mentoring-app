@@ -4,17 +4,18 @@ import {
   updateCalenderEventSuccess
 } from "../actions/booking";
 import { updateCalenderEvent } from "../../services/booking.service";
+import { toast } from "react-toastify";
 
 function* updateCalenderEventSaga(action) {
   try {
     const jwt_token = localStorage.getItem("user_token");
     const auth = yield call(updateCalenderEvent, {...action.payload,jwt_token});
     if (auth.success) {
-      alert(auth.msg)
+      toast.success(auth.msg)
       yield put(updateCalenderEventSuccess())
     }
   } catch (e) {
-    console.log("Failed to add the Calender Event")
+    toast.error("Failed to add the Calender Event")
   }
 }
 

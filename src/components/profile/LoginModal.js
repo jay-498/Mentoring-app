@@ -16,10 +16,11 @@ import {
   googleSigninRequested
 } from "../../store/actions/Login";
 import {updateCalenderEventRequested} from "../../store/actions/booking";
-import { sendOtp, signinUser } from "../../services/auth.service";
-import GoogleLogin from "react-google-login";
-import { GLOGIN_CLIENT_ID } from "../../assets/js/config";
-
+import { sendOtp } from "../../services/auth.service";
+// import GoogleLogin from "react-google-login";
+// import { GLOGIN_CLIENT_ID } from "../../assets/js/config";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class DeleteTest extends Component {
   constructor() {
@@ -187,7 +188,7 @@ class DeleteTest extends Component {
       this.props.updateCalenderEventRequested({event:this.props.event,mentor_id: id});
     }
     else{
-      alert("Please select summary and duration")
+      toast.warn("Please select summary and duration")
     } 
   }
 
@@ -199,6 +200,8 @@ class DeleteTest extends Component {
       }
     })
   };
+
+  
 
   render() {
     const allModals = () => {
@@ -232,7 +235,7 @@ class DeleteTest extends Component {
                           onChange={(e) => this.onChangeMobile(e)}
                           placeholder=" "
                         />
-                        <label for="mobile" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
+                        <label htmlFor="mobile" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
                       </div>
                         <button
                           className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
@@ -252,11 +255,14 @@ class DeleteTest extends Component {
                           OTP Verification
                         </label> */}
                         {(this.state.otpError !== "" ||
-                          this.props.otpMessage !== "") && (
+                          this.props.otpMessage !== "") ? 
                           <p className="py-1 text-sm text-red-500 px-1">
                             {this.state.otpError || this.props.otpMessage}
                           </p>
-                        )}
+                          :
+                          <p className="py-1 text-sm font-semibold font-poppins text-green-600 px-1">Please verify your OTP...</p>
+                        }
+                      
                       </div>
                       <div className="relative my-3">
                         <input
@@ -267,7 +273,7 @@ class DeleteTest extends Component {
                           onChange={(e) => this.onChangeOtp(e)}
                           placeholder=" "
                         />
-                        <label for="otp" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">OTP</label>
+                        <label htmlFor="otp" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">OTP</label>
                        </div> 
                         <button
                           className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
@@ -329,7 +335,7 @@ class DeleteTest extends Component {
                       type="text"
                       placeholder=" "
                     />
-                    <label for="Firstname" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">First name</label>
+                    <label htmlFor="Firstname" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">First name</label>
                     </div>
                   </div>
                   <div className="mb-6">
@@ -348,7 +354,7 @@ class DeleteTest extends Component {
                       type="text"
                       placeholder=" "
                     />
-                    <label for="Lastname" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Last name</label>
+                    <label htmlFor="Lastname" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Last name</label>
                     </div>
                   </div>
                   <div className="mb-6">
@@ -367,7 +373,7 @@ class DeleteTest extends Component {
                       type="text"
                       placeholder=" "
                     />
-                    <label for="mobile" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
+                    <label htmlFor="mobile" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
                     </div>
                   </div>
                   <div className="mb-6">
@@ -386,7 +392,7 @@ class DeleteTest extends Component {
                         type="email"
                         placeholder=" "
                       />
-                      <label for="email" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Email</label>
+                      <label htmlFor="email" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Email</label>
                     </div>
                   </div>
                   {/* <div className=" mb-6"> */}
@@ -459,6 +465,7 @@ class DeleteTest extends Component {
                     </div>
                   </div>
                 )} */}
+                
               </div>
             </>
           );
@@ -504,6 +511,7 @@ class DeleteTest extends Component {
                     {/* {this.props.is_google_verified ?  */}
                       <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
+                          <h1 className="pb-2 text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Book Your Session Here</h1>
                           <div className="mb-4">
                             {/* <label
                               className="block text-gray-700 text-sm font-bold mb-2"
@@ -521,7 +529,7 @@ class DeleteTest extends Component {
                                 onChange={(e)=>this.props.onChangeEventSumary(e)}
                                 rows={5}
                               />
-                              <label for="summary" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Anything else you want to answered?</label>
+                              <label htmlFor="summary" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Anything else you want to answered?</label>
                             </div>
                           </div>
                           <div className="mb-4">
@@ -593,6 +601,7 @@ class DeleteTest extends Component {
             </div>
           </div>
         ) : null}
+        <ToastContainer autoClose={2000} />
       </>
     );
   }

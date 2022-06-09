@@ -4,7 +4,11 @@ import { BASE_URL } from "../assets/js/config";
 export const updateCalenderEvent = (data) => {
   console.log("bookingservices",data)
   return axios
-    .post(`${BASE_URL}/api/event`, data)
+    .post(`${BASE_URL}/api/event`, data, {
+      headers : {
+        'x-auth-token' : data.jwt_token
+      }
+    })
     .then((res) => {
       return res.data;
     })

@@ -425,6 +425,7 @@ class DeleteTest extends Component {
                       />
                       <label for="password" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] rounded-full bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Password</label>
                       <img
+                        loading="lazy"
                         onClick={this.handleShowPassword}
                         src={this.state.showPassword ? crossEye : eye}
                         className="absolute w-5 h-5 right-0 mr-4 cursor-pointer"

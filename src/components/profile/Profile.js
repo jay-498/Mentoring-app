@@ -159,7 +159,7 @@ class Profile extends Component {
         onChangeEventEndDate={this.onChangeEventEndDate}
         event={this.state.event}/>
         <div>
-          <img src={profiledesigns} alt="bg" className=" w-full" />
+          <img src={profiledesigns} alt="bg" className=" w-full" loading="lazy"/>
           {this.props.isLoggedIn &&
           <div>
             <button onClick={this.logout} className="absolute right-10 top-3 bg-[#8F6EC5] text-white font-bold py-1 px-4 rounded">
@@ -173,6 +173,7 @@ class Profile extends Component {
             {Object.keys(mentor).length!==0 &&
             <img
               src={mentor.profile_picture}
+              loading="lazy"
               alt="mentor"
               className="rounded-full border-solid border-white w-24 h-24 sm:w-44 sm:h-44 md:w-52 md:h-52 border-8 sm:-mt-5 mt-4"
             />
@@ -214,6 +215,7 @@ class Profile extends Component {
                       <div className="flex items-center mt-2">
                         <img
                           src={company.image_url}
+                          loading="lazy"
                           alt="ProfileImage"
                           className="w-[38px] h-[38px]"
                         />
@@ -239,6 +241,7 @@ class Profile extends Component {
                       <div className="flex items-center mt-2">
                         <img
                           src={college.image_url}
+                          loading="lazy"
                           alt="ProfileImage"
                           className="w-[38px] h-[38px]"
                         />

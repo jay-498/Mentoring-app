@@ -61,6 +61,7 @@ export default class Testimonials extends Component {
                 </p>
                 <div className="flex flex-row items-center pl-10 py-5">
                   <img
+                    loading="lazy"
                     className="w-12 h-12 rounded-full shadow-lg overflow-hidden"
                     src={img1}
                     alt="profile"

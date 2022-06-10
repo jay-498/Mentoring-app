@@ -89,7 +89,7 @@ class CarouselDiscover extends Component {
           onClick={this.previous}
         >
           <button className="button">
-            <img src={left} alt="left" className="h-6 w-6 mt-2 ml-3" />
+            <img src={left} alt="left" className="h-6 w-6 mt-2 ml-3" loading="lazy"/>
           </button>
         </div>
         }
@@ -104,6 +104,7 @@ class CarouselDiscover extends Component {
                   <div className="flex flex-col">
                     <img
                       src={mentor.profile_picture}
+                      loading="lazy"
                       alt="1"
                       className="pb-0 mb-0 rounded-t-[20px]"
                     />
@@ -136,7 +137,7 @@ class CarouselDiscover extends Component {
           onClick={this.next}
         >
           <button className="button rounded-2xl h-[65px] w-[69px] p-4 pl-5">
-            <img src={right} alt="left" className="h-6 w-6" />
+            <img src={right} alt="left" className="h-6 w-6" loading="lazy"/>
           </button>
         </div>
         }

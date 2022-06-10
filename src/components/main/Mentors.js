@@ -41,6 +41,7 @@ export default class Mentors extends Component {
             key={index}
           >
             <img
+              loading="lazy"
               src={logo.image}
               alt="1"
               className="w-[150px] h-[60px] hover:grayscale"

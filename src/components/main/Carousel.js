@@ -114,7 +114,7 @@ export default class Gallery extends Component {
           onClick={this.previous}
         >
           <button className="button">
-            <img src={left} alt="left" className="h-6 w-6" />
+            <img src={left} alt="left" className="h-6 w-6" loading="lazy"/>
           </button>
         </div>
         }
@@ -131,7 +131,7 @@ export default class Gallery extends Component {
                   </h1>
                 </a>
                 <a href="#" className="relative">
-                  <img src={mentor.image} alt="1" />
+                  <img src={mentor.image} alt="1"loading="lazy" />
                 </a>
               </div>
             </div>
@@ -141,7 +141,7 @@ export default class Gallery extends Component {
         {this.state.categories.length>4 && 
         <div className="absolute right-3 top-[105px]" onClick={this.next}>
           <button className="button bg-gray-50 rounded-2xl h-15 w-15 p-4">
-            <img src={right} alt="left" className="rounded-3xl h-6 w-6" />
+            <img src={right} alt="left" className="rounded-3xl h-6 w-6" loading="lazy"/>
           </button>
         </div>
         }

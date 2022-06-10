@@ -39,6 +39,7 @@ export default class ExploreCarousel extends Component {
             >
               <div className="z-10 flex flex-col items-center justify-center">
                 <img
+                  loading="lazy"
                   src={mentor.image_url}
                   alt="1"
                   className="w-30 h-28 px-20"

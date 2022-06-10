@@ -19,7 +19,7 @@ export default function Navbar({ fixed }) {
                 className="text-[28px] font-semibold font-poppins leading-relaxed inline-block mr-4 py-2 whitespace-nowrap  text-gray"
                 href="#pablo"
               >
-                Company Name
+                Menteezy
               </a>
             </div>
             <div>
@@ -28,7 +28,7 @@ export default function Navbar({ fixed }) {
                 type="button"
                 onClick={() => setNavbarOpen(!navbarOpen)}
               >
-                <img src={navbarOpen ? menuclose : menuopen2} alt="menuopen" />
+                <img src={navbarOpen ? menuclose : menuopen2} alt="menuopen" loading="lazy"/>
               </button>
             </div>
           </div>
@@ -98,7 +98,7 @@ export default function Navbar({ fixed }) {
                 className="flex absolute inset-y-0 left-0 items-center pl-3 pt-1 
               pointer-events-none"
               >
-                <img src={search} alt="search" className="w-5 h-5 opacity-40" />
+                <img src={search} alt="search" className="w-5 h-5 opacity-40" loading="lazy"/>
               </div>
               <input
                 type="text"

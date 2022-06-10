@@ -38,8 +38,8 @@ class HomePage extends Component {
               </p>
               <div className="flex first-letter:my-2">
                 <div className="rounded-l-lg relative md:mr-0">
-                  <div className="flex absolute inset-y-0 left-0 items-center pl-7 pointer-events-none">
-                    <img src={search} alt="search" />
+                  <div className="flex absolute inset-y-0 left-0 items-center sm:pl-7 pl-4 pointer-events-none">
+                    <img src={search} alt="search" loading="lazy"/>
                   </div>
                   <input
                     type="text"
@@ -59,7 +59,7 @@ class HomePage extends Component {
           </div>
           <div className="lg:visible invisible flex-col  justify-center items-center pt-8">
             <div className="h-[590px] w-full">
-              <img src={profile} className="relative h-[750px] w-full" alt="profile" />
+              <img src={profile} className="relative h-[750px] w-full" alt="profile" loading="lazy"/>
             </div>
             <h1 className="font-Helvetica text-xl font-normal text-center">
               Pragyan Pandey, Software Engineer
@@ -98,7 +98,7 @@ class HomePage extends Component {
 
         <div className="flex flex-col sm:pt-20 pt-10">
           <div className="absolute sm:w-[60px] w-[40px] mt-36 sm:ml-10 ml-10">
-            <img src={dots} alt="dot" />
+            <img src={dots} alt="dot" loading="lazy"/>
           </div>
           <div className="flex flex-col lg:mx-10 sm:mx-6 mx-2">
             <div className="flex">
@@ -112,7 +112,7 @@ class HomePage extends Component {
 
         {/* <div className="flex flex-col pt-20">
           <div className="absolute lg:w-[60px] w-[40px] mt-36 lg:ml-10 ml-4">
-            <img src={dots} alt="dot" />
+            <img src={dots} alt="dot" loading="lazy"/>
           </div>
           <div className="flex flex-col lg:mx-10 mx-6">
             <div className="flex">
@@ -126,6 +126,7 @@ class HomePage extends Component {
 
         <div className="flex mx-28 sm:pt-28 pt-10">
           <img
+            loading="lazy"
             src={plane1}
             alt="plane1"
             className="sm:w-[163px] w-[100px] h-[50px] sm:h-[83px] ml-auto"
@@ -134,7 +135,7 @@ class HomePage extends Component {
 
         <div className="flex flex-col sm:pt-10 pt-5">
           <div className="absolute sm:left-[-40px] left-[-70px]">
-            <img src={plane2} alt="plane2" className="w-[113px] h-[100px]" />
+            <img src={plane2} alt="plane2" loading="lazy" className="w-[113px] h-[100px]" />
           </div>
           <div className="flex-col lg:mx-20 sm:mx-6 mx-2">
             <h1 className="text-[#646464] sm:text-3xl text-2xl sm:pb-10 font-medium font-poppins text-center">
@@ -148,7 +149,7 @@ class HomePage extends Component {
           <div className="flex justify-center items-center">
             <div className="flex bg-[#A36EBA] rounded-[28px]">
               <div className="flex-col lg:p-28 p-10">
-                <h1 className="sm:text-5xl text-3xl  text-slate-100 font-bold font-Helvetica">
+                <h1 className="sm:text-5xl text-2xl  text-slate-100 font-bold font-Helvetica">
                   Sign in to our book
                 </h1>
                 <p className="font-normal text-white sm:text-xl text-md font-Helvetica py-6">
@@ -173,7 +174,7 @@ class HomePage extends Component {
                 </div>
               </div>
               <div className="p-4 pr-10 opacity-60 hidden lg:block">
-                <img src={sign} alt="design" />
+                <img src={sign} alt="design" loading="lazy"/>
               </div>
             </div>
           </div>
@@ -237,7 +238,7 @@ class HomePage extends Component {
                       className="py-2 flex items-center  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="facebook" src={facebook} className="w-4 h-4" />
+                      <img alt="facebook" src={facebook} className="w-4 h-4" loading="lazy" />
                     </a>
                   </li>
                   <li>
@@ -245,7 +246,7 @@ class HomePage extends Component {
                       className="px-5 py-2 flex items-centerfont-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="linkedin" src={linkedin} className="w-4 h-4" />
+                      <img alt="linkedin" src={linkedin} className="w-4 h-4" loading="lazy"/>
                     </a>
                   </li>
                   <li>
@@ -253,7 +254,7 @@ class HomePage extends Component {
                       className="px-3 py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="twitter" src={twitter} className="w-4 h-4" />
+                      <img alt="twitter" src={twitter} className="w-4 h-4" loading="lazy"/>
                     </a>
                   </li>
                   <li>
@@ -261,7 +262,7 @@ class HomePage extends Component {
                       className="px-3 py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="youtube" src={youtube} className="w-4 h-4" />
+                      <img alt="youtube" src={youtube} className="w-4 h-4" loading="lazy"/>
                     </a>
                   </li>
                   <li>
@@ -270,6 +271,7 @@ class HomePage extends Component {
                       href="#pablo"
                     >
                       <img
+                        loading="lazy"
                         alt="instagram"
                         src={instagram}
                         className="w-4 h-4"

@@ -38,7 +38,7 @@ class Slots extends Component {
           <h1 className="font-poppins text-[#565656] font-semibold md:text-[20px] text-md">
             Available Slots
           </h1>
-          <img src={calender} alt="calender" title="calender" />
+          <img src={calender} alt="calender" title="calender" loading="lazy"/>
         </div>
         <hr className="bg-[#F2F2F2] my-3 py-[0.125rem] rounded w-FULL" />
         <div className="grid grid-cols-5 gap-x-3 mt-5">

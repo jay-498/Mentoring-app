@@ -83,7 +83,7 @@ class CarouselDiscover extends Component {
     };
     return (
       <div className="relative pt-5 px-[31px]">
-        {this.state.mentorDetails.length>4 && 
+        {(this.state.mentorDetails.length>4 || window.innerWidth < 720) && 
         <div
           className="absolute top-56 left-2 z-10 bg-white rounded-2xl h-[65px] w-[69px] p-3 bg-gray-50 cursor-pointer"
           onClick={this.previous}
@@ -131,7 +131,7 @@ class CarouselDiscover extends Component {
           ))}
         </Slider>
 
-        {this.state.mentorDetails.length>4 && 
+        {(this.state.mentorDetails.length>4 || window.innerWidth < 720) && 
         <div
           className="absolute right-1 top-56 bg-gray-50 rounded-2xl"
           onClick={this.next}

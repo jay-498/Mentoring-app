@@ -97,7 +97,7 @@ class HomePage extends Component {
         </div>
 
         <div className="flex flex-col sm:pt-20 pt-10">
-          <div className="absolute sm:w-[60px] w-[40px] mt-36 sm:ml-10 ml-10">
+          <div className="absolute sm:w-[60px] w-[40px] mt-36 sm:ml-10 ml-4">
             <img src={dots} alt="dot" loading="lazy"/>
           </div>
           <div className="flex flex-col lg:mx-10 sm:mx-6 mx-2">
@@ -180,7 +180,7 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col lg:py-28 sm:py-20 py-10">
+        <div className="flex flex-col lg:py-28 sm:py-20 py-5 pt-10">
           <div className="flex flex-col px-7">
             <h1 className="text-[#646464] sm:text-3xl text-2xl font-medium font-poppins text-center">
               TESTIMONIAL
@@ -191,7 +191,7 @@ class HomePage extends Component {
 
         <div className="flex flex-col lg:p-10 p-5 bg-[#F9EFFD]">
           <div className="flex flex-col lg:mx-36 mx-5">
-            <h1 className="text-[#939EA4] text-[14px] font-medium font-Roboto pb-14">
+            <h1 className="text-[#939EA4] text-[14px] font-medium font-Roboto sm:pb-14 pb-7">
               Your company
             </h1>
             <hr style={{ backgroundColor: "#CDD1D4", height: "1px" }} />
@@ -284,8 +284,8 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col py-10">
-          <div className="flex flex-col mx-20">
+        <div className="flex flex-col sm:py-10 py-5">
+          <div className="flex flex-col sm:mx-20 mx-10">
             <p className="text-slate-400 text-xl font-normal font-Helvetica text-center">
               © 2020. All rights reserved
             </p>

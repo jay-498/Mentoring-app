@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import "./slick.css";
 import "./Testimonials.css";
-import "slick-carousel/slick/slick-theme.css";
+import "./slick-theme.css";
 import img1 from "../../assets/images/mentee/1.png";
 
 export default class Testimonials extends Component {
@@ -48,15 +48,15 @@ export default class Testimonials extends Component {
         <Slider {...settings}>
           {this.state.testimonials.map((mentor, index) => (
             <div
-              className="justify-center items-center lg:py-10 lg:pb-20"
-              style={window.innerWidth < 720?{ width: 270 }:{width:800}}
+              className="justify-center items-center lg:py-10 lg:pb-20 pb-10"
+              style={window.innerWidth < 720?{ width: 280 }:{width:800}}
               key={index}
             >
               <div
                 className="text-center justify-center shadow-xl shadow-[#DBDEE1] 
               lg:px-20 lg:pt-16 lg:pb-8 sm:p-10  sm:rounded-3xl rounded-2xl"
               >
-                <p className="sm:text-xl text-sm p-2 sm:p-2 text-[#273150] font-Helvetica font-normal text-center">
+                <p className="sm:text-xl text-sm p-3 sm:p-2 text-[#273150] font-Helvetica font-normal text-center">
                   {mentor.description}
                 </p>
                 <div className="flex flex-row items-center sm:pl-10 pl-5 py-5">

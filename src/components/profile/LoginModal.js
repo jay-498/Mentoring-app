@@ -206,6 +206,12 @@ class DeleteTest extends Component {
     this.setState({otpSent: false})
   }
 
+  handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  }
+
   
 
   render() {
@@ -215,7 +221,7 @@ class DeleteTest extends Component {
           return (
             <>
               <div className="w-full">
-                <form className="rounded p-5 py-1 mb-4">
+                <form className="rounded p-5 py-1 mb-4" >
                   {!this.state.otpSent ? (
                     <div className="flex-col">
                       <div className="flex justify-center items-center mb-2">
@@ -236,6 +242,7 @@ class DeleteTest extends Component {
                           className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
                           id="mobile"
                           type="mobile"
+                          onKeyDown={this.handleKeyDown}
                           value={this.state.mobile}
                           onChange={(e) => this.onChangeMobile(e)}
                           placeholder=" "
@@ -275,6 +282,7 @@ class DeleteTest extends Component {
                           id="otp"
                           type="text"
                           value={this.state.otp}
+                          onKeyDown={this.handleKeyDown}
                           onChange={(e) => this.onChangeOtp(e)}
                           placeholder=" "
                         />
@@ -297,7 +305,7 @@ class DeleteTest extends Component {
           return (
             <>
               <div className="px-10 rounded justify-center items-center w-full">
-                  <form className="mb-9">
+                  <form className="mb-9" >
                   <h1 className="pb-5 text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Join Menteezy today!</h1>
                   {/* <div className="mb-4"> */}
                     {/* <div className="flex mb-2 items-center"> */}

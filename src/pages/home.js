@@ -58,8 +58,8 @@ class HomePage extends Component {
             </div>
           </div>
           <div className="lg:visible invisible flex-col  justify-center items-center pt-8">
-            <div className="h-[590px] pl-14">
-              <img src={profile} className="relative h-[750px]" alt="profile" />
+            <div className="h-[590px] w-full">
+              <img src={profile} className="relative h-[750px] w-full" alt="profile" />
             </div>
             <h1 className="font-Helvetica text-xl font-normal text-center">
               Pragyan Pandey, Software Engineer
@@ -70,8 +70,8 @@ class HomePage extends Component {
         <div className="relative justify-center items-center py-10 mt-0">
           <div className="flex-col lg:mx-20 mx-6">
             <h1
-              className="text-[#1D2538] text-center md:text-md sm:text-sm 
-            lg:text-[40px] font-semibold font-poppins tracking-[-0.04em] py-5 pb-8"
+              className="text-[#1D2538] text-center  text-[20px]
+            sm:text-[40px] font-semibold font-poppins tracking-[-0.04em] py-5 sm:pb-8"
             >
               Mentors we’ve work with
             </h1>
@@ -80,7 +80,7 @@ class HomePage extends Component {
         </div>
 
         <div
-          className="flex flex-col pt-10"
+          className="flex flex-col sm:pt-10"
           style={{
             backgroundImage: `url(${bg})`,
             backgroundPosition: "center",
@@ -88,21 +88,21 @@ class HomePage extends Component {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <div className="flex flex-col lg:mx-10 mx-6 mt-16">
-            <h1 className="text-[#646464] text-3xl pl-[44px] font-medium font-poppins">
+          <div className="flex flex-col lg:mx-10 sm:mx-6 mx-2 sm:mt-16 mt-8">
+            <h1 className="text-[#646464] sm:text-3xl text-2xl sm:pl-[44px] pl-[30px] font-medium font-poppins">
               CATEGORIES
             </h1>
             <Gallery />
           </div>
         </div>
 
-        <div className="flex flex-col pt-20">
-          <div className="absolute lg:w-[60px] w-[40px] mt-36 lg:ml-10 ml-4">
+        <div className="flex flex-col sm:pt-20 pt-10">
+          <div className="absolute sm:w-[60px] w-[40px] mt-36 sm:ml-10 ml-10">
             <img src={dots} alt="dot" />
           </div>
-          <div className="flex flex-col lg:mx-10 mx-6">
+          <div className="flex flex-col lg:mx-10 sm:mx-6 mx-2">
             <div className="flex">
-              <h1 className="text-[#646464] pl-[44px] text-3xl font-medium font-poppins">
+              <h1 className="text-[#646464] pl-[44px] sm:text-3xl text-2xl font-medium font-poppins">
                 DISCOVER TOP MENTORS
               </h1>
             </div>
@@ -124,20 +124,20 @@ class HomePage extends Component {
           </div>
         </div> */}
 
-        <div className="flex mx-28 pt-28">
+        <div className="flex mx-28 sm:pt-28 pt-10">
           <img
             src={plane1}
             alt="plane1"
-            className="w-[163px] h-[83px] ml-auto"
+            className="sm:w-[163px] w-[100px] h-[50px] sm:h-[83px] ml-auto"
           />
         </div>
 
-        <div className="flex flex-col pt-10">
-          <div className="absolute left-[-40px]">
+        <div className="flex flex-col sm:pt-10 pt-5">
+          <div className="absolute sm:left-[-40px] left-[-70px]">
             <img src={plane2} alt="plane2" className="w-[113px] h-[100px]" />
           </div>
-          <div className="flex flex-col lg:mx-20 mx-6">
-            <h1 className="text-[#646464] text-3xl pb-10 font-medium font-poppins text-center">
+          <div className="flex-col lg:mx-20 sm:mx-6 mx-2">
+            <h1 className="text-[#646464] sm:text-3xl text-2xl sm:pb-10 font-medium font-poppins text-center">
               EXPLORE CONSULTING COMPANIES
             </h1>
             <ExploreCarousel />
@@ -179,9 +179,9 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col lg:py-28 py-20">
+        <div className="flex flex-col lg:py-28 sm:py-20 py-10">
           <div className="flex flex-col px-7">
-            <h1 className="text-[#646464] text-3xl font-medium font-poppins text-center">
+            <h1 className="text-[#646464] sm:text-3xl text-2xl font-medium font-poppins text-center">
               TESTIMONIAL
             </h1>
             <Testimonials />

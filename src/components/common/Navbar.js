@@ -11,7 +11,7 @@ export default function Navbar({ fixed }) {
   const location = useLocation().pathname;
   return (
     <>
-      <nav className="relative flex flex-wrap md:mx-20 mx-10 items-center justify-between py-3">
+      <nav className="relative flex flex-wrap md:mx-20 mx-5 items-center justify-between py-3">
         <div className="flex flex-row w-full xl:w-0 items-center mr-auto">
           <div className="w-full relative flex justify-between items-center lg:w-auto lg:static lg:block lg:justify-start">
             <div>

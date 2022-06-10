@@ -21,13 +21,13 @@ import Navbar from "../components/common/Navbar";
 class HomePage extends Component {
   render() {
     return (
-      <div className="flex flex-col mx-auto h-[937px] bg-[#FFE8EB]">
+      <div className="flex-col mx-auto sm:h-[937px] h-[650px] bg-[#FFE8EB]">
         <Navbar />
-        <div className="grid lg:grid-cols-2 h-[840px] mx-20">
+        <div className="grid lg:grid-cols-2 sm:h-[840px] h-[540px] sm:mx-20 mx-5">
           <div className="flex flex-col pt-[30%] gap-y-4">
             <div className="flex justify-start leading-[64px]">
-              <p className="text-[#8F6EC5] font-bold text-[52px] font-poppins">
-                Learn and grow from <br />
+              <p className="text-[#8F6EC5] sm:w-[600px] font-bold sm:text-[52px] text-[42px] font-poppins">
+                Learn and grow from
                 the best in industry
               </p>
             </div>
@@ -37,21 +37,21 @@ class HomePage extends Component {
                 <br /> next case
               </p>
               <div className="flex first-letter:my-2">
-                <div className="hidden rounded-l-lg relative md:mr-0 md:block">
+                <div className="rounded-l-lg relative md:mr-0">
                   <div className="flex absolute inset-y-0 left-0 items-center pl-7 pointer-events-none">
                     <img src={search} alt="search" />
                   </div>
                   <input
                     type="text"
                     id="email-adress-icon"
-                    className="block p-2 pl-16 w-[417px] py-3 text-[#797373] 
-                          rounded-l-lg md:text-md text-[20px]
+                    className="block p-2 pl-16 sm:w-[417px] py-3 text-[#797373] 
+                          rounded-l-lg md:text-md sm:text-[20px] text-[14px]
                           dark:bg-[#fff] placeholder:text-[#797373] placeholder:font-medium 
                           placeholder:font-nunito"
                     placeholder="Find your mentor"
                   />
                 </div>
-                <button className="bg-[#8F6EC5] text-white font-bold py-3 px-12 rounded-r-lg">
+                <button className="bg-[#8F6EC5] text-white font-bold sm:py-3 py-2 sm:px-12 px-7 rounded-r-lg">
                   Search
                 </button>
               </div>
@@ -67,8 +67,8 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="relative flex flex-col py-10 mt-48">
-          <div className="flex flex-col lg:mx-20 mx-6">
+        <div className="relative justify-center items-center py-10 mt-0">
+          <div className="flex-col lg:mx-20 mx-6">
             <h1
               className="text-[#1D2538] text-center md:text-md sm:text-sm 
             lg:text-[40px] font-semibold font-poppins tracking-[-0.04em] py-5 pb-8"
@@ -144,14 +144,14 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col pt-28">
+        <div className="flex justify-center items-center sm:pt-28 pt-10 m-5">
           <div className="flex justify-center items-center">
-            <div className="flex bg-[#A36EBA] h-[380px] rounded-[28px]">
-              <div className="z-10 flex flex-col lg:p-28 p-24">
-                <h1 className="text-5xl text-slate-100 font-bold font-Helvetica">
+            <div className="flex bg-[#A36EBA] rounded-[28px]">
+              <div className="flex-col lg:p-28 p-10">
+                <h1 className="sm:text-5xl text-3xl  text-slate-100 font-bold font-Helvetica">
                   Sign in to our book
                 </h1>
-                <p className="font-normal text-white text-xl font-Helvetica py-6">
+                <p className="font-normal text-white sm:text-xl text-md font-Helvetica py-6">
                   Craven omni memoria patriae zombieland clairvius
                   <br /> narcisse religionis sunt diri undead historiarum.
                 </p>
@@ -160,14 +160,14 @@ class HomePage extends Component {
                     <input
                       type="text"
                       id="email-adress-icon"
-                      className="block p-2 pl-10 w-[380px] h-[54px] text-[#fff] 
-                              rounded-l-lg text-[16px] font-normal font-Helvetica
+                      className="block p-2 pl-10 sm:w-[380px] sm:h-[54px] text-[#fff] 
+                              rounded-l-lg sm:text-[16px] text-[12px] font-normal font-Helvetica
                               placeholder-opacitywhite border border-[#FFACFF] outline-none"
                       placeholder="email address"
                       style={{ background: "rgba(255, 208, 255, 0.15)" }}
                     />
                   </div>
-                  <button className="bg-[#FFACFF] font-Helvetica text-white font-bold py-2 px-4 rounded-r-lg">
+                  <button className="bg-[#FFACFF] sm:text-[16px] text-[12px] font-Helvetica text-white font-bold py-2 px-4 rounded-r-lg">
                     Download
                   </button>
                 </div>

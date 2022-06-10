@@ -34,10 +34,10 @@ export default class Mentors extends Component {
   }
   render() {
     return (
-      <div className="grid grid-cols lg:grid-cols-4 grid-cols-1 pt-10 gap-y-2">
+      <div className="grid sm:grid-cols-2 md:grid-cols-4 grid-cols-1 pt-10 gap-y-2">
         {this.state.companies.map((logo, index) => (
           <div
-            className="flex flex-col py-2 items-center justify-center"
+            className="flex py-2 items-center justify-center"
             key={index}
           >
             <img

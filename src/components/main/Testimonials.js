@@ -49,17 +49,17 @@ export default class Testimonials extends Component {
           {this.state.testimonials.map((mentor, index) => (
             <div
               className="justify-center items-center lg:py-10 lg:pb-20"
-              style={{ width: 800 }}
+              style={window.innerWidth < 720?{ width: 270 }:{width:800}}
               key={index}
             >
               <div
                 className="text-center justify-center shadow-xl shadow-[#DBDEE1] 
-              lg:px-20 lg:pt-16 lg:pb-8 sm:p-10  rounded-3xl"
+              lg:px-20 lg:pt-16 lg:pb-8 sm:p-10  sm:rounded-3xl rounded-2xl"
               >
-                <p className="text-xl text-[#273150] font-Helvetica font-normal text-center">
+                <p className="sm:text-xl text-sm p-2 sm:p-2 text-[#273150] font-Helvetica font-normal text-center">
                   {mentor.description}
                 </p>
-                <div className="flex flex-row items-center pl-10 py-5">
+                <div className="flex flex-row items-center sm:pl-10 pl-5 py-5">
                   <img
                     loading="lazy"
                     className="w-12 h-12 rounded-full shadow-lg overflow-hidden"

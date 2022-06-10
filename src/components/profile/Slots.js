@@ -33,7 +33,7 @@ class Slots extends Component {
   render() {
     const {startDates,currentStartDateIndex,currentStartTimeIndex} = this.props;
     return (
-      <div className="flex-col h-[355px] md:mt-0 mt-5 p-5 lg:p-10 lg:m-10 md:m-5 items-center justify-center border border-gray-300 rounded-3xl">
+      <div className="flex-col h-[355px] p-5 lg:p-10 lg:m-10 md:m-5 items-center justify-center border border-gray-300 rounded-3xl">
         <div className="flex justify-between">
           <h1 className="font-poppins text-[#565656] font-semibold md:text-[20px] text-md">
             Available Slots

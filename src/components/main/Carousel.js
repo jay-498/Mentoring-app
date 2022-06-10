@@ -67,7 +67,7 @@ export default class Gallery extends Component {
       infinite: true,
       speed: 500,
       slidesToShow: 4,
-      slidesToScroll: 2,
+      slidesToScroll: 1,
       responsive: [
         {
           breakpoint: 1024,
@@ -108,6 +108,7 @@ export default class Gallery extends Component {
 
     return (
       <div className="relative pt-5">
+        {this.state.categories.length>4 && 
         <div
           className="absolute top-[105px] left-5 z-10 bg-gray-50 rounded-2xl h-15 w-15 p-3"
           onClick={this.previous}
@@ -116,6 +117,7 @@ export default class Gallery extends Component {
             <img src={left} alt="left" className="h-6 w-6" />
           </button>
         </div>
+        }
         <Slider ref={(c) => (this.slider = c)} {...settings}>
           {this.state.categories.map((mentor, index) => (
             <div key={index}>
@@ -135,12 +137,14 @@ export default class Gallery extends Component {
             </div>
           ))}
         </Slider>
-
+        
+        {this.state.categories.length>4 && 
         <div className="absolute right-3 top-[105px]" onClick={this.next}>
           <button className="button bg-gray-50 rounded-2xl h-15 w-15 p-4">
             <img src={right} alt="left" className="rounded-3xl h-6 w-6" />
           </button>
         </div>
+        }
       </div>
     );
   }

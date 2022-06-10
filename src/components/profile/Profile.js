@@ -162,19 +162,21 @@ class Profile extends Component {
           <img src={profiledesigns} alt="bg" className=" w-full" />
           {this.props.isLoggedIn &&
           <div>
-            <button onClick={this.logout} className="absolute right-10 top-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-1 px-4 rounded">
+            <button onClick={this.logout} className="absolute right-10 top-3 bg-[#8F6EC5] text-white font-bold py-1 px-4 rounded">
                 Logout
             </button>
           </div>
           }
         </div>
-        <div className="flex-col justify-left -mt-16 mx-5 sm:mx-10 lg:mx-40 md:mx-16">
+        <div className="flex-col justify-left -mt-16 mx-5 sm:mx-10 lg:mx-32 md:mx-16">
           <div className="sm:flex  items-center">
+            {Object.keys(mentor).length!==0 &&
             <img
               src={mentor.profile_picture}
-              alt="ProfileImage"
+              alt="mentor"
               className="rounded-full border-solid border-white w-24 h-24 sm:w-44 sm:h-44 md:w-52 md:h-52 border-8 sm:-mt-5 mt-4"
             />
+            }
             <div className="flex-col sm:pt-8 text-left items-center sm:pl-10">
               <p className="text-[32px] font-bold text-[#797979] font-poppins pt-1">
                 {mentor.name}
@@ -195,7 +197,7 @@ class Profile extends Component {
               <hr className="bg-[#F2F2F2] mt-3 py-[2px] rounded w-full" />
             </div>
             <div className="grid md:grid-cols-2">
-              <div className="grid gap-y-3">
+              <div className="gap-y-3">
                 <p className="font-Helvetica font-normal text-[#273150] py-5 lg:text-xl md:text-lg sm:text-md text-sm">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -277,14 +279,15 @@ class Profile extends Component {
                   </div>
                 </div>
               </div>
-
-              <Slots 
-              onChangeEventStartDate={this.onChangeEventStartDate}
-              onChangeEventStartTime={this.onChangeEventStartTime}
-              startDates={this.state.StartDates}
-              event={this.state.event}
-              currentStartTimeIndex={this.state.currentStartTimeIndex}
-              currentStartDateIndex={this.state.currentStartDateIndex}/>
+              <div className="pt-5 sm:p-0">
+                  <Slots 
+                  onChangeEventStartDate={this.onChangeEventStartDate}
+                  onChangeEventStartTime={this.onChangeEventStartTime}
+                  startDates={this.state.StartDates}
+                  event={this.state.event}
+                  currentStartTimeIndex={this.state.currentStartTimeIndex}
+                  currentStartDateIndex={this.state.currentStartDateIndex}/>
+              </div>
             </div>
           </div>
         </div>

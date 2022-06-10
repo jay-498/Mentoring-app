@@ -201,6 +201,11 @@ class DeleteTest extends Component {
     })
   };
 
+  loginRedirect=()=>{
+    this.props.updateLoginModal(1);
+    this.setState({otpSent: false})
+  }
+
   
 
   render() {
@@ -213,12 +218,12 @@ class DeleteTest extends Component {
                 <form className="rounded p-5 py-1 mb-4">
                   {!this.state.otpSent ? (
                     <div className="flex-col">
-                      <div className="flex items-center mb-2">
+                      <div className="flex justify-center items-center mb-2">
                         <label
-                          className="block text-gray-500 font-poppins text-sm font-semibold"
-                          htmlFor="Mobile"
+                          className="text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md"
+                          htmlFor="Login"
                         >
-                          Mobile
+                          Login to Menteezy
                         </label>
                         {this.state.isMobilEmpty && (
                           <p className="py-1 text-sm text-red-500 px-1">
@@ -260,7 +265,7 @@ class DeleteTest extends Component {
                             {this.state.otpError || this.props.otpMessage}
                           </p>
                           :
-                          <p className="py-1 text-sm font-semibold font-poppins text-green-600 px-1">Please verify your OTP...</p>
+                          <p className="py-1 text-sm font-semibold font-poppins text-[#8F6EC5] px-1">Please verify your OTP...</p>
                         }
                       
                       </div>
@@ -292,8 +297,8 @@ class DeleteTest extends Component {
           return (
             <>
               <div className="px-10 rounded justify-center items-center w-full">
-                  <form className="mb-4">
-                  <h1 className="pb-5 text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Join Casecompendium today!</h1>
+                  <form className="mb-9">
+                  <h1 className="pb-5 text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Join Menteezy today!</h1>
                   {/* <div className="mb-4"> */}
                     {/* <div className="flex mb-2 items-center"> */}
                       {/* <p className="text-red-600 px-2 text-xs">
@@ -430,9 +435,9 @@ class DeleteTest extends Component {
                       Continue
                     </button>
                   </div>
-                  <div className="font-poppins text-xs py-4">
-                    <p className="text-[#989898]">Already have an account?<a href="#" className="text-[#8F6EC5] font-semibold">Login</a></p>
-                  </div>
+                  {/* <div className="flex font-poppins text-xs py-4">
+                    <p className="text-[#989898]">Already have an account?</p><button onClick={()=>this.loginRedirect()} className="text-[#8F6EC5] font-semibold">Login</button>
+                  </div> */}
                 </form>
                 {/* ) : (
                   <div className="ounded p-5 py-2 mb-4">
@@ -511,7 +516,7 @@ class DeleteTest extends Component {
                     {/* {this.props.is_google_verified ?  */}
                       <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
-                          <h1 className="pb-2 text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Book Your Session Here</h1>
+                          <h1 className="text-center pb-5 font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Book Your Session Here</h1>
                           <div className="mb-4">
                             {/* <label
                               className="block text-gray-700 text-sm font-bold mb-2"

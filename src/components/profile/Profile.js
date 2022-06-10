@@ -39,6 +39,7 @@ class Profile extends Component {
       event: {
         startDate: "",
         endDate : "",
+        duration: "",
         summary : "",
       }
     };
@@ -133,7 +134,8 @@ class Profile extends Component {
         ...prev,
         event: {
           ...prev.event,
-          endDate: String(endDate)
+          endDate: String(endDate),
+          duration: (e.target.value*60),
         }
       }
     })

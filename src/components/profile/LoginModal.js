@@ -534,7 +534,7 @@ class DeleteTest extends Component {
                                 onChange={(e)=>this.props.onChangeEventSumary(e)}
                                 rows={5}
                               />
-                              <label htmlFor="summary" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Anything else you want to answered?</label>
+                              <label htmlFor="summary" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Anything you want to get answered?</label>
                             </div>
                           </div>
                           <div className="mb-4">

@@ -1,14 +1,35 @@
-import React from "react";
+import React, { Component } from "react";
 import { useState } from "react";
 import menuopen from "../../assets/svgs/menuopen.svg";
 import search from "../../assets/images/design/Search.png";
 import menuopen2 from "../../assets/svgs/menuopen3.svg";
 import menuclose from "../../assets/svgs/menuclose.svg";
 import { useLocation } from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter } from "../../utils/withRouter";
+import { logOut } from "../../store/actions/Login";
+import { UpdateLoginModal } from "../../store/actions/booking";
 
-export default function Navbar({ fixed }) {
-  const [navbarOpen, setNavbarOpen] = useState(false);
-  const location = useLocation().pathname;
+class Navbar extends Component {
+  constructor(){
+    super();
+      this.state={
+        navbarOpen: false,
+        location: ""
+      }
+  }
+
+  onChangeNavbar=()=>{
+    this.setState(prev=>{
+      return{
+        ...prev.state,
+        navbarOpen: !prev.navbarOpen
+      }
+    })
+  }
+  // const [navbarOpen, setNavbarOpen] = useState(false);
+  // const location = useLocation().pathname;
+  render(){
   return (
     <>
       <nav className="relative flex flex-wrap md:mx-20 mx-5 items-center justify-between py-3">
@@ -26,9 +47,9 @@ export default function Navbar({ fixed }) {
               <button
                 className="cursor-pointer text-xl leading-none px-3 py-1 rounded block lg:hidden outline-none focus:outline-none"
                 type="button"
-                onClick={() => setNavbarOpen(!navbarOpen)}
+                onClick={() => this.onChangeNavbar()}
               >
-                <img src={navbarOpen ? menuclose : menuopen2} alt="menuopen" loading="lazy"/>
+                <img src={this.state.navbarOpen ? menuclose : menuopen2} alt="menuopen" loading="lazy"/>
               </button>
             </div>
           </div>
@@ -36,7 +57,7 @@ export default function Navbar({ fixed }) {
         <div
           className={
             "lg:flex items-center justify-start xs:flex-col " +
-            (navbarOpen ? " flex" : " hidden")
+            (this.state.navbarOpen ? "flex-col" : " hidden")
           }
           id="example-navbar-danger"
         >
@@ -44,56 +65,39 @@ export default function Navbar({ fixed }) {
             <li className="nav-item">
               <a
                 className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
-                href="#pablo"
+                href="#casecompendium"
               >
                 <span
                   className={`ml-2 ${
-                    location === "/" ? "text-[#A36EBA]" : "text-[#999FAE]"
+                    this.state.location === "/" ? "text-[#A36EBA]" : "text-[#999FAE]"
                   } font-normal font-Helvetica hover:text-[#A36EBA]`}
                 >
-                  Home
+                  Case Compendium
                 </span>
               </a>
             </li>
             <li className="nav-item">
               <a
                 className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
-                href="#pablo"
+                href="#companies"
               >
                 <span
                   className={`ml-2 ${
-                    location === "/about" ? "text-[#A36EBA]" : "text-[#999FAE]"
+                    this.state.location === "/about" ? "text-[#A36EBA]" : "text-[#999FAE]"
                   } font-normal font-Helvetica hover:text-[#A36EBA]`}
                 >
-                  About
-                </span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
-                href="#pablo"
-              >
-                <span
-                  className={`ml-2 ${
-                    location === "/pricing"
-                      ? "text-[#A36EBA]"
-                      : "text-[#999FAE]"
-                  } font-normal font-Helvetica hover:text-[#A36EBA]`}
-                >
-                  Pricing
+                  Companies
                 </span>
               </a>
             </li>
           </ul>
           <div
             className={
-              "lg:flex rounded my-4 pl-10 hidden" +
-              (navbarOpen ? " flex" : " hidden")
+              "flex rounded my-4 pl-10"
             }
             id="example-navbar-danger"
           >
-            <div className="hidden rounded relative  md:mr-0 md:block">
+            <div className="rounded relative  md:mr-0">
               <div
                 className="flex absolute inset-y-0 left-0 items-center pl-3 pt-1 
               pointer-events-none"
@@ -109,12 +113,13 @@ export default function Navbar({ fixed }) {
                 style={{ backgroundColor: "rgba(114, 114, 114,0.1)" }}
               />
             </div>
-            <div className="hidden relative lg:ml-6 md:mr-0 md:block">
+            <div className="relative lg:ml-6 md:mr-0">
               <button
                 className="bg-[#8F6EC5] text-[18px] h-[40px] text-center font-Helvetica 
-              text-white font-bold py-2 w-[112px] rounded-[5px]"
+              text-white font-bold py-2 w-[100px] rounded-[5px]"
+              onClick={!this.props.isLoggedIn?()=>this.props.updateLoginModal(true):()=>this.props.logOut()}
               >
-                Sign Up
+                {!this.props.isLoggedIn?"Login":"Logout"}
               </button>
             </div>
           </div>
@@ -122,4 +127,24 @@ export default function Navbar({ fixed }) {
       </nav>
     </>
   );
+  }
 }
+
+const mapStateToProps = ({ booking, Login }) => {
+  return {
+    isLoggedIn: Login.isLoggedIn,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOut: () => dispatch(logOut()),
+    updateLoginModal: (data) => dispatch(UpdateLoginModal(data)),
+  };
+};
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Navbar));

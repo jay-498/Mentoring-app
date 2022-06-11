@@ -108,21 +108,23 @@ class CarouselDiscover extends Component {
                       alt="1"
                       className="pb-0 mb-0 rounded-t-[20px]"
                     />
-                    <div className="flex flex-col bg-white rounded-b-[20px]">
-                      <div className="grid grid-cols-2 items-center">
-                        <p className="text-xl text-[#646464] pl-5 font-Manrope font-black pt-1">
+                    <div className="flex-col bg-white rounded-b-[20px]">
+                      <div className="flex justify-between px-4 items-center">
+                        <p className="text-xl text-[#646464] font-Manrope font-black pt-1">
                           {mentor.name}
                         </p>
-                        <span className="text-[#FB89A1] font-semibold pl-[76px] font-poppins lg:text-xl text-sm">
+                        <span className="text-[#FB89A1] font-semibold font-poppins lg:text-xl text-sm">
                           RS {mentor.session_rate}
                         </span>
                       </div>
-                      <p className="text-sm font-medium text-[#0C2054] pl-5 font-Manrope">
-                        {mentor.description}
-                      </p>
-                      <p className="text-[10px] font-light text-[#0C2054] pl-5 pb-2 font-poppins">
-                        {mentor.colleges[0].name}
-                      </p>
+                      <div className="flex-col px-4">
+                        <p className="text-sm font-medium text-[#0C2054] font-Manrope">
+                          {mentor.description}
+                        </p>
+                        <p className="text-[10px] font-light text-[#0C2054] pb-2 font-poppins">
+                          {mentor.colleges[0].name}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </a>

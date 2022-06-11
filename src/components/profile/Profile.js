@@ -39,7 +39,7 @@ class Profile extends Component {
       event: {
         startDate: "",
         endDate : "",
-        duration: "",
+        duration: "60",
         summary : "",
       }
     };
@@ -157,7 +157,9 @@ class Profile extends Component {
         <LoginModal 
         onChangeEventSumary={this.onChangeEventSumary} 
         onChangeEventEndDate={this.onChangeEventEndDate}
-        event={this.state.event}/>
+        event={this.state.event}
+        mentor={this.state.mentor}
+        isBooking="true"/>
         <div>
           <img src={profiledesigns} alt="bg" className=" w-full" loading="lazy"/>
           {this.props.isLoggedIn &&

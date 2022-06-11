@@ -20,6 +20,7 @@ function* loginSaga(action) {
     const auth = yield call(verifyOtp, action.payload);
     if (auth.has_user_details) {
       localStorage.setItem("user_token", auth.jwt_token);
+      toast.success("Login Successfull",{position: toast.POSITION.TOP_CENTER})
       yield put(loginSuccess(auth));
       // localStorage.setItem("is_google_verified", auth.is_google_verified);
     }

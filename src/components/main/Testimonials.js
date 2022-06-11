@@ -49,7 +49,7 @@ export default class Testimonials extends Component {
           {this.state.testimonials.map((mentor, index) => (
             <div
               className="justify-center items-center lg:py-10 lg:pb-20 pb-10"
-              style={window.innerWidth < 720?{ width: 280 }:{width:800}}
+              style={window.innerWidth < 720?{ width: 310 }:{width:800}}
               key={index}
             >
               <div

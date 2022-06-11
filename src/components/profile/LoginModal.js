@@ -21,6 +21,7 @@ import { sendOtp } from "../../services/auth.service";
 // import { GLOGIN_CLIENT_ID } from "../../assets/js/config";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import rupee from "../../assets/svgs/rupee.svg";
 
 class DeleteTest extends Component {
   constructor() {
@@ -113,6 +114,9 @@ class DeleteTest extends Component {
       this.props.setErrorMessage("*OTP length should be 6");
     } else {
       this.props.loginRequested({ otp, mobile: userMobile });
+      if(this.props.isBooking==="false"){
+        this.props.updateLoginModal(false);
+      }
       this.setState({
         otp: "",
       });
@@ -180,7 +184,7 @@ class DeleteTest extends Component {
     }
   }
 
-  handleUpdateCalender(e){
+  handleUpdateCalender(){
     const id = this.props.params.id;
     const {event} = this.props;
     if(event.startDate && event.endDate && event.summary)
@@ -519,7 +523,7 @@ class DeleteTest extends Component {
                       </svg>
                     </button>
                   </div>
-                  {this.props.isLoggedIn ? (
+                  {this.props.isLoggedIn && this.props.isBooking==="true" ? (
                     
                     <>
                     {/* {this.props.is_google_verified ?  */}
@@ -559,7 +563,6 @@ class DeleteTest extends Component {
                                 id="grid-state"
                                 onChange={(e)=>this.props.onChangeEventEndDate(e)}
                               >
-                                <option>Select session duration</option>
                                 <option value="1">1 hour</option>
                                 <option value="2">2 hours</option>
                                 <option value="3">3 hours</option>
@@ -575,14 +578,20 @@ class DeleteTest extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center justify-between">
-                            <button
-                              className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
+                          <div onClick={() => this.handleUpdateCalender()} className="flex cursor-pointer text-[16px] w-full items-center justify-between bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px] px-4">
+                              <span>
+                               PAY NOW
+                              </span>
+                              <span className="flex items-center justify-center">
+                              <img src={rupee} className="w-4 h-4" alt="Rs"/>{this.props.mentor.session_rate*parseInt(this.props.event.duration)/60}
+                              </span>
+                            {/* <button
+                              className="flex justify-center items-center w-full bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px]"
                               type="button"
-                              onClick={(e) => this.handleUpdateCalender(e)}
+                              onClick={() => this.handleUpdateCalender()}
                             >
-                              Book Slot
-                            </button>
+                              <img src={rupee} className="w-4 h-4" alt="Rs"/><span>435</span>Book Slot
+                            </button> */}
                           </div>
                         </form>
                       </div>

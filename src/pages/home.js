@@ -17,12 +17,44 @@ import twitter from "../assets/images/icons/twitter.png";
 import youtube from "../assets/images/icons/youtube.png";
 import bg from "../assets/images/bg.png";
 import Navbar from "../components/common/Navbar";
+import LoginModal from "../components/profile/LoginModal";
+import { connect } from "react-redux";
+import { withRouter } from "../utils/withRouter";
+import { UpdateLoginModal } from "../store/actions/booking";
+import { logOut } from "../store/actions/Login";
 
 class HomePage extends Component {
+  constructor(){
+    super();
+    this.state={
+       email: "",
+       search: "",
+       isEmailValid: false
+    }
+  }
+
+  handleChange=(e)=>{
+    this.setState(prev=>{
+      return{
+        ...prev,
+        [e.target.name]: e.target.value,
+      }
+    })
+    if(e.target.name==="email"){
+    this.setState(prev=>{
+      return{
+        ...prev,
+        isEmailValid: (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value) === true),
+      }
+    })
+    }
+  }
+
   render() {
     return (
       <div className="flex-col mx-auto sm:h-[937px] h-[650px] bg-[#FFE8EB]">
         <Navbar />
+        <LoginModal isBooking="false"/>
         <div className="grid lg:grid-cols-2 sm:h-[840px] h-[540px] sm:mx-20 mx-5">
           <div className="flex flex-col pt-[30%] gap-y-4">
             <div className="flex justify-start leading-[64px]">
@@ -43,6 +75,8 @@ class HomePage extends Component {
                   </div>
                   <input
                     type="text"
+                    name="search"
+                    onChange={(e)=>this.handleChange(e)}
                     id="email-adress-icon"
                     className="block p-2 pl-16 sm:w-[417px] py-3 text-[#797373] 
                           rounded-l-lg md:text-md sm:text-[20px] text-[14px]
@@ -133,7 +167,7 @@ class HomePage extends Component {
           />
         </div>
 
-        <div className="flex flex-col sm:pt-10 pt-5">
+        <div className="flex flex-col sm:pt-10 pt-5" id="companies">
           <div className="absolute sm:left-[-40px] left-[-70px]">
             <img src={plane2} alt="plane2" loading="lazy" className="w-[113px] h-[100px]" />
           </div>
@@ -145,7 +179,7 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex justify-center items-center sm:pt-28 pt-10 m-5">
+        <div className="flex justify-center items-center sm:pt-28 pt-10 m-5" id="casecompendium">
           <div className="flex justify-center items-center">
             <div className="flex bg-[#A36EBA] rounded-[28px]">
               <div className="flex-col lg:p-28 p-10">
@@ -159,16 +193,20 @@ class HomePage extends Component {
                 <div className="flex first-letter:my-2">
                   <div className="rounded-l-lg relative md:mr-0">
                     <input
-                      type="text"
+                      type="email"
+                      name="email"
                       id="email-adress-icon"
                       className="block p-2 pl-10 sm:w-[380px] sm:h-[54px] text-[#fff] 
                               rounded-l-lg sm:text-[16px] text-[12px] font-normal font-Helvetica
                               placeholder-opacitywhite border border-[#FFACFF] outline-none"
-                      placeholder="email address"
+                      placeholder="Email Address"
+                      onChange={this.handleChange}
                       style={{ background: "rgba(255, 208, 255, 0.15)" }}
                     />
                   </div>
-                  <button className="bg-[#FFACFF] sm:text-[16px] text-[12px] font-Helvetica text-white font-bold py-2 px-4 rounded-r-lg">
+                  <button 
+                  className={`${!this.state.isEmailValid && "opacity-70"} bg-[#FFACFF] sm:text-[16px] text-[12px] font-Helvetica text-white font-bold py-2 px-4 rounded-r-lg`}
+                  disabled={!this.state.isEmailValid}>
                     Download
                   </button>
                 </div>
@@ -181,7 +219,7 @@ class HomePage extends Component {
         </div>
 
         <div className="flex flex-col lg:py-28 sm:py-20 py-5 pt-10">
-          <div className="flex flex-col px-7">
+          <div className="flex flex-col sm:px-7">
             <h1 className="text-[#646464] sm:text-3xl text-2xl font-medium font-poppins text-center">
               TESTIMONIAL
             </h1>
@@ -296,4 +334,17 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = ({ booking, Login }) => {
+  return {
+    isLoggedIn: Login.isLoggedIn,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOut: () => dispatch(logOut()),
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(HomePage));
+

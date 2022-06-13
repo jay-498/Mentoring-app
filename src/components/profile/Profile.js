@@ -3,7 +3,7 @@ import profiledesigns from "../../assets/images/design/profiledesigns.png";
 import Slots from "./Slots";
 import { withRouter } from "../../utils/withRouter";
 import mainService from "../../services/main.service";
-import { UpdateLoginModal } from "../../store/actions/booking";
+import { getMentorAvailabilityRequested, UpdateLoginModal } from "../../store/actions/booking";
 import { connect } from "react-redux";
 import LoginModal from "./LoginModal";
 import { logOut } from "../../store/actions/Login";
@@ -64,6 +64,7 @@ class Profile extends Component {
        }
      })
     }
+    this.props.getMentorAvailabilityRequested({id});
     mainService
       .getMentorById(id)
       .then((response) => {
@@ -311,6 +312,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateLoginModal: (data) => dispatch(UpdateLoginModal(data)),
     logOut: () => dispatch(logOut()),
+    getMentorAvailabilityRequested: (data)=>dispatch(getMentorAvailabilityRequested(data)),
   };
 };
 

@@ -4,12 +4,20 @@ import {
   UPDATE_LOGIN_MODAL,
   UPDATE_MODAL_NUMBER,
   UPDATE_CALENDER_EVENT_REQUESTED,
-  UPDATE_CALENDER_EVENT_SUCCESS
+  UPDATE_CALENDER_EVENT_SUCCESS,
+  GET_MENTOR_AVAILABILITY_REQUESTED
 } from "../actionTypes/index";
 
 export const updateCalenderEventRequested = (data) => {
   return {
     type: UPDATE_CALENDER_EVENT_REQUESTED,
+    payload: data,
+  };
+};
+
+export const getMentorAvailabilityRequested = (data) => {
+  return {
+    type: GET_MENTOR_AVAILABILITY_REQUESTED,
     payload: data,
   };
 };

@@ -56,19 +56,19 @@ class Navbar extends Component {
         </div>
         <div
           className={
-            "lg:flex items-center justify-start xs:flex-col " +
+            "md:flex items-center justify-start xs:flex-col " +
             (this.state.navbarOpen ? "flex-col" : " hidden")
           }
           id="example-navbar-danger"
         >
-          <ul className="flex flex-col md:flex-row list-none xl:ml-auto gap-x-8">
+          <ul className="flex-col md:flex-row list-none xl:ml-auto gap-x-8">
             <li className="nav-item">
               <a
                 className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
                 href="#casecompendium"
               >
                 <span
-                  className={`ml-2 ${
+                  className={`sm:ml-2 ${
                     this.state.location === "/" ? "text-[#A36EBA]" : "text-[#999FAE]"
                   } font-normal font-Helvetica hover:text-[#A36EBA]`}
                 >
@@ -82,7 +82,7 @@ class Navbar extends Component {
                 href="#companies"
               >
                 <span
-                  className={`ml-2 ${
+                  className={`sm:ml-2 ${
                     this.state.location === "/about" ? "text-[#A36EBA]" : "text-[#999FAE]"
                   } font-normal font-Helvetica hover:text-[#A36EBA]`}
                 >
@@ -93,7 +93,7 @@ class Navbar extends Component {
           </ul>
           <div
             className={
-              "flex rounded my-4 pl-10"
+              "flex rounded my-4 sm:pl-10"
             }
             id="example-navbar-danger"
           >
@@ -107,7 +107,7 @@ class Navbar extends Component {
               <input
                 type="text"
                 id="email-adress-icon"
-                className="block p-2 pl-10 w-[417px] outline-none h-10 text-[#999FAE] placeholder:font-normal placeholder:text-[16px] 
+                className="block p-2 pl-10 sm:w-[417px] outline-none h-10 text-[#999FAE] placeholder:font-normal placeholder:text-[16px] 
                     placeholder:text-[#999FAE] rounded-[5px] placeholder:tracking-[-0.04em]"
                 placeholder="Search"
                 style={{ backgroundColor: "rgba(114, 114, 114,0.1)" }}

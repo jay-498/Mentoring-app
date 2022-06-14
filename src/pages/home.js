@@ -233,7 +233,7 @@ class HomePage extends Component {
               Your company
             </h1>
             <hr style={{ backgroundColor: "#CDD1D4", height: "1px" }} />
-            <div className="flex xs:flex-col">
+            <div className="sm:flex flex-col">
               <div className="flex flex-grow">
                 <ul className="flex flex-row lg:flex-row list-none lg:mr-auto">
                   <li>

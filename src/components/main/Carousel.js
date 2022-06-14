@@ -110,7 +110,7 @@ export default class Gallery extends Component {
       <div className="relative pt-5">
         {this.state.categories.length>4 && 
         <div
-          className="absolute top-[105px] left-5 z-10 bg-gray-50 rounded-2xl h-15 w-15 p-3"
+          className="absolute sm:top-[105px] top-[124px] left-5 z-10 bg-gray-50 rounded-2xl h-15 w-15 p-3"
           onClick={this.previous}
         >
           <button className="button">
@@ -139,7 +139,7 @@ export default class Gallery extends Component {
         </Slider>
         
         {this.state.categories.length>4 && 
-        <div className="absolute right-3 top-[105px]" onClick={this.next}>
+        <div className="absolute right-3 sm:top-[105px] top-[124px]" onClick={this.next}>
           <button className="button bg-gray-50 rounded-2xl h-15 w-15 p-4">
             <img src={right} alt="left" className="rounded-3xl h-6 w-6" loading="lazy"/>
           </button>

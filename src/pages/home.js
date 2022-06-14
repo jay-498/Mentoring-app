@@ -218,8 +218,8 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col lg:py-28 sm:py-20 py-5 pt-10">
-          <div className="flex flex-col sm:px-7">
+        <div className="flex-col lg:py-28 sm:py-20 py-5 pt-10">
+          <div className="flex-col sm:px-7">
             <h1 className="text-[#646464] sm:text-3xl text-2xl font-medium font-poppins text-center">
               TESTIMONIAL
             </h1>
@@ -269,43 +269,43 @@ class HomePage extends Component {
                 </ul>
               </div>
 
-              <div className={"flex flex-grow justify-start"}>
-                <ul className="flex flex-row lg:flex-row list-none lg:ml-auto">
-                  <li>
+              <div className={"flex justify-start"}>
+                <ul className="flex list-none lg:ml-auto">
+                  <li className="flex items-center justify-center">
                     <a
-                      className="py-2 flex items-center  font-bold leading-snug text-gray hover:opacity-75"
+                      className="py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
                       <img alt="facebook" src={facebook} className="w-4 h-4" loading="lazy" />
                     </a>
                   </li>
-                  <li>
+                  <li className="flex items-center justify-center">
                     <a
-                      className="px-5 py-2 flex items-centerfont-bold leading-snug text-gray hover:opacity-75"
+                      className="px-5 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
                       <img alt="linkedin" src={linkedin} className="w-4 h-4" loading="lazy"/>
                     </a>
                   </li>
-                  <li>
+                  <li className="flex items-center justify-center">
                     <a
-                      className="px-3 py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
+                      className="px-3 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
                       <img alt="twitter" src={twitter} className="w-4 h-4" loading="lazy"/>
                     </a>
                   </li>
-                  <li>
+                  <li className="flex items-center justify-center">
                     <a
-                      className="px-3 py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
+                      className="px-3 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
                       <img alt="youtube" src={youtube} className="w-4 h-4" loading="lazy"/>
                     </a>
                   </li>
-                  <li>
+                  <li className="flex items-center justify-center">
                     <a
-                      className="px-3 py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
+                      className="px-3 py-2 font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
                       <img
@@ -322,7 +322,7 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col sm:py-10 py-5">
+         <div className="flex-col sm:py-10 py-5">
           <div className="flex flex-col sm:mx-20 mx-10">
             <p className="text-slate-400 text-xl font-normal font-Helvetica text-center">
               © 2020. All rights reserved

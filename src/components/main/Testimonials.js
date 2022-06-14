@@ -34,6 +34,7 @@ export default class Testimonials extends Component {
   render() {
     const settings = {
       swipe: true,
+      arrows: false,
       className: "center slider variable-width",
       centerMode: true,
       infinite: true,
@@ -48,7 +49,7 @@ export default class Testimonials extends Component {
         <Slider {...settings}>
           {this.state.testimonials.map((mentor, index) => (
             <div
-              className="justify-center items-center lg:py-10 lg:pb-20 pb-10"
+              className="flex justify-center items-center lg:py-10 lg:pb-20 pb-10"
               style={window.innerWidth < 720?{ width: 310 }:{width:800}}
               key={index}
             >
@@ -59,20 +60,20 @@ export default class Testimonials extends Component {
                 <p className="sm:text-xl text-sm p-3 sm:p-2 text-[#273150] font-Helvetica font-normal text-center">
                   {mentor.description}
                 </p>
-                <div className="flex flex-row items-center sm:pl-10 pl-5 py-5">
+                <div className="flex items-center sm:pl-10 pl-5 py-5">
                   <img
                     loading="lazy"
                     className="w-12 h-12 rounded-full shadow-lg overflow-hidden"
                     src={img1}
                     alt="profile"
                   />
-                  <div className="flex flex-col px-4 items-start">
-                    <h5 className="mb-1 text-xl font-bold font-Helvetica text-gray-900">
+                  <div className="flex-col px-4 text-left">
+                    <h5 className="sm:mb-1 text-xl font-bold font-Helvetica text-gray-900">
                       {mentor.name}
                     </h5>
-                    <span className="text-sm text-gray-500 font-poppins font-normal">
+                    <h5 className="text-sm text-gray-500 font-poppins font-normal">
                       {mentor.qualification}
-                    </span>
+                    </h5>
                   </div>
                 </div>
               </div>

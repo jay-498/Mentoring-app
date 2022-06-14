@@ -1,21 +1,18 @@
 import React, { Component } from "react";
-import { useState } from "react";
-import menuopen from "../../assets/svgs/menuopen.svg";
 import search from "../../assets/images/design/Search.png";
 import menuopen2 from "../../assets/svgs/menuopen3.svg";
 import menuclose from "../../assets/svgs/menuclose.svg";
-import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "../../utils/withRouter";
 import { logOut } from "../../store/actions/Login";
 import { UpdateLoginModal } from "../../store/actions/booking";
-
+import RoundedUser from "./RoundedNav";
 class Navbar extends Component {
   constructor(){
     super();
       this.state={
         navbarOpen: false,
-        location: ""
+        searchQuery: "",
       }
   }
 
@@ -27,17 +24,38 @@ class Navbar extends Component {
       }
     })
   }
-  // const [navbarOpen, setNavbarOpen] = useState(false);
-  // const location = useLocation().pathname;
+
+  onChangeSearchQuery=(e)=>{
+    this.setState(prev=>{
+      return{
+        ...prev,
+        searchQuery: e.target.value,
+      }
+    })
+  }
+
+  onKeyPress=(e)=>{
+    if(e.key==="Enter"){
+      this.props.navigate(`/search?mentor=${this.state.searchQuery}`)
+      this.setState(prev=>{
+        return{
+          ...prev,
+          searchQuery: "",
+        }
+      })
+    }
+  }
+
   render(){
+  const {pathname} = this.props.location;
   return (
     <>
-      <nav className="relative flex flex-wrap md:mx-20 mx-5 items-center justify-between py-3">
-        <div className="flex flex-row w-full xl:w-0 items-center mr-auto">
-          <div className="w-full relative flex justify-between items-center lg:w-auto lg:static lg:block lg:justify-start">
+      <nav className={`relative flex flex-wrap md:px-20 px-5 items-center ${pathname==="/" ? "bg-[#FFE8EB]" : "bg-[#fafafa]"} justify-between`}>
+        <div className="flex w-full md:w-0  items-center">
+          <div className="flex w-full relative justify-between items-center">
             <div>
               <a
-                className="text-[28px] font-semibold font-poppins leading-relaxed inline-block mr-4 py-2 whitespace-nowrap  text-gray"
+                className="text-[28px] font-semibold font-poppins leading-relaxed inline-block py-2  text-gray"
                 href="#pablo"
               >
                 Menteezy
@@ -56,20 +74,20 @@ class Navbar extends Component {
         </div>
         <div
           className={
-            "md:flex items-center justify-start xs:flex-col " +
-            (this.state.navbarOpen ? "flex-col" : " hidden")
+            "lg:flex items-center justify-start xs:flex-col " +
+            (this.state.navbarOpen ? "flex-col absolute top-16" : " hidden")
           }
           id="example-navbar-danger"
         >
-          <ul className="flex-col md:flex-row list-none xl:ml-auto gap-x-8">
+          <ul className="flex flex-col md:flex-row list-none gap-x-8">
             <li className="nav-item">
               <a
-                className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
+                className="sm:px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
                 href="#casecompendium"
               >
                 <span
                   className={`sm:ml-2 ${
-                    this.state.location === "/" ? "text-[#A36EBA]" : "text-[#999FAE]"
+                    this.props.location === "/" ? "text-[#A36EBA]" : "text-[#999FAE]"
                   } font-normal font-Helvetica hover:text-[#A36EBA]`}
                 >
                   Case Compendium
@@ -78,12 +96,12 @@ class Navbar extends Component {
             </li>
             <li className="nav-item">
               <a
-                className="px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
+                className="sm:px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
                 href="#companies"
               >
                 <span
                   className={`sm:ml-2 ${
-                    this.state.location === "/about" ? "text-[#A36EBA]" : "text-[#999FAE]"
+                    this.props.location === "/about" ? "text-[#A36EBA]" : "text-[#999FAE]"
                   } font-normal font-Helvetica hover:text-[#A36EBA]`}
                 >
                   Companies
@@ -93,7 +111,7 @@ class Navbar extends Component {
           </ul>
           <div
             className={
-              "flex rounded my-4 sm:pl-10"
+              "flex rounded justify-center items-center sm:my-4 my-1 sm:pl-10"
             }
             id="example-navbar-danger"
           >
@@ -110,6 +128,9 @@ class Navbar extends Component {
                 className="block p-2 pl-10 sm:w-[417px] outline-none h-10 text-[#999FAE] placeholder:font-normal placeholder:text-[16px] 
                     placeholder:text-[#999FAE] rounded-[5px] placeholder:tracking-[-0.04em]"
                 placeholder="Search"
+                value={this.state.searchQuery}
+                onChange={this.onChangeSearchQuery}
+                onKeyPress={this.onKeyPress}
                 style={{ backgroundColor: "rgba(114, 114, 114,0.1)" }}
               />
             </div>
@@ -121,6 +142,9 @@ class Navbar extends Component {
               >
                 {!this.props.isLoggedIn?"Login":"Logout"}
               </button>
+            </div>
+            <div className="flex justify-center items-center mx-6 cursor-pointer rounded-full p-[3px] border-[1px] border-[#8f6ec5]">
+                <RoundedUser logOut={()=>this.props.logOut()}/>
             </div>
           </div>
         </div>

@@ -52,8 +52,8 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="flex-col mx-auto sm:h-[937px] h-[650px] bg-[#FFE8EB]">
-        <Navbar />
+      <div className="flex-col mx-auto sm:h-[870px] h-[650px] bg-[#FFE8EB]">
+        {/* <Navbar /> */}
         <LoginModal isBooking="false"/>
         <div className="grid lg:grid-cols-2 sm:h-[840px] h-[540px] sm:mx-20 mx-5">
           <div className="flex flex-col pt-[30%] gap-y-4">
@@ -78,8 +78,8 @@ class HomePage extends Component {
                     name="search"
                     onChange={(e)=>this.handleChange(e)}
                     id="email-adress-icon"
-                    className="block p-2 pl-16 sm:w-[417px] py-3 text-[#797373] 
-                          rounded-l-lg md:text-md sm:text-[20px] text-[14px]
+                    className="block p-2 sm:pl-16 pl-12 sm:w-[417px] py-3 text-[#797373] 
+                          rounded-l-lg md:text-md sm:text-[20px] text-[17px]
                           dark:bg-[#fff] placeholder:text-[#797373] placeholder:font-medium 
                           placeholder:font-nunito"
                     placeholder="Find your mentor"
@@ -140,23 +140,9 @@ class HomePage extends Component {
                 DISCOVER TOP MENTORS
               </h1>
             </div>
-            <CarouselDiscover />
+            <CarouselDiscover isSlider="true"/>
           </div>
         </div>
-
-        {/* <div className="flex flex-col pt-20">
-          <div className="absolute lg:w-[60px] w-[40px] mt-36 lg:ml-10 ml-4">
-            <img src={dots} alt="dot" loading="lazy"/>
-          </div>
-          <div className="flex flex-col lg:mx-10 mx-6">
-            <div className="flex">
-              <h1 className="text-[#646464] pl-[44px] text-3xl font-medium font-poppins">
-                DISCOVER TOP MENTORS
-              </h1>
-            </div>
-            <CarouselDiscover />
-          </div>
-        </div> */}
 
         <div className="flex mx-28 sm:pt-28 pt-10">
           <img
@@ -234,8 +220,8 @@ class HomePage extends Component {
             </h1>
             <hr style={{ backgroundColor: "#CDD1D4", height: "1px" }} />
             <div className="sm:flex flex-col">
-              <div className="flex flex-grow">
-                <ul className="flex flex-row lg:flex-row list-none lg:mr-auto">
+              <div className="flex-col sm:flex">
+                <ul className="flex list-none lg:mr-auto">
                   <li>
                     <a
                       className="py-2 flex items-center font-bold leading-snug text-gray hover:opacity-75"
@@ -267,9 +253,6 @@ class HomePage extends Component {
                     </a>
                   </li>
                 </ul>
-              </div>
-
-              <div className={"flex justify-start"}>
                 <ul className="flex list-none lg:ml-auto">
                   <li className="flex items-center justify-center">
                     <a

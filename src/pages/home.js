@@ -22,6 +22,7 @@ import { connect } from "react-redux";
 import { withRouter } from "../utils/withRouter";
 import { UpdateLoginModal } from "../store/actions/booking";
 import { logOut } from "../store/actions/Login";
+import MyBookings from "../components/bookings/MyBookings";
 
 class HomePage extends Component {
   constructor(){
@@ -29,8 +30,9 @@ class HomePage extends Component {
     this.state={
        email: "",
        search: "",
-       isEmailValid: false
+       isEmailValid: false,
     }
+    this.handleChange=this.handleChange.bind(this);
   }
 
   handleChange=(e)=>{
@@ -53,8 +55,8 @@ class HomePage extends Component {
   render() {
     return (
       <div className="flex-col mx-auto sm:h-[870px] h-[650px] bg-[#FFE8EB]">
-        {/* <Navbar /> */}
         <LoginModal isBooking="false"/>
+        {this.props.bookingModal!==0 && <MyBookings />}
         <div className="grid lg:grid-cols-2 sm:h-[840px] h-[540px] sm:mx-20 mx-5">
           <div className="flex flex-col pt-[30%] gap-y-4">
             <div className="flex justify-start leading-[64px]">
@@ -320,6 +322,7 @@ class HomePage extends Component {
 const mapStateToProps = ({ booking, Login }) => {
   return {
     isLoggedIn: Login.isLoggedIn,
+    bookingModal: booking.bookingModal
   };
 };
 

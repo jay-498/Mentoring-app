@@ -4,12 +4,20 @@ import {
   UPDATE_LOGIN_MODAL,
   UPDATE_MODAL_NUMBER,
   UPDATE_CALENDER_EVENT_REQUESTED,
-  UPDATE_CALENDER_EVENT_SUCCESS
+  UPDATE_CALENDER_EVENT_SUCCESS,
+  UPDATE_BOOKING_MODAL
 } from "../actionTypes/index";
 
 export const updateCalenderEventRequested = (data) => {
   return {
     type: UPDATE_CALENDER_EVENT_REQUESTED,
+    payload: data,
+  };
+};
+
+export const updateBookingModal = (data) => {
+  return {
+    type: UPDATE_BOOKING_MODAL,
     payload: data,
   };
 };

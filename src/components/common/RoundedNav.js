@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import avatar from "../../assets/images/mentee/1.png";
 import cross from "../../assets/images/svgs/cross.png";
 import downarrow from "../../assets/images/svgs/downarrow.png";
+import { updateBookingModal } from "../../store/actions/booking";
+import { withRouter } from "../../utils/withRouter";
 
-export default class RoundedUser extends Component {
+class RoundedUser extends Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
@@ -53,10 +56,9 @@ export default class RoundedUser extends Component {
             data-dropdown-toggle="dropdown"
             onClick={this.handleDropDown}
           >
-            <span className="sr-only">Open user menu</span>
             <img
               className="w-[42px] h-[42px] rounded-full"
-              src={avatar}
+              src={`https://ui-avatars.com/api/?name=mentor&bold=true&rounded=true&background=8f6ec5`}
               title="Profile"
               alt=""
             />
@@ -69,7 +71,7 @@ export default class RoundedUser extends Component {
           >
             <div className="flex justify-between items-center py-3">
               <div>
-                    <img src={avatar} className="w-[42px] h-[42px] rounded-full" alt="Avatar"/>
+                    <img src={`https://ui-avatars.com/api/?name=mentor&bold=true&rounded=true&background=8f6ec5`} className="w-[42px] h-[42px] rounded-full" alt="Avatar"/>
               </div>
               <div className="flex justify-center items-center gap-x-3">
                     <select
@@ -85,7 +87,6 @@ export default class RoundedUser extends Component {
             <div className="flex-col divide-y">
                 <div className="pb-2 font-roboto">
                     <p className="text-[20px] font-medium">Mentee Name</p>
-                    <p className="text-[14px] font-medium" style={{color: "rgba(0, 0, 0, 0.6)"}}>Level</p>
                 </div>
                 <div className="flex-col relative w-full inline-block text-left px-2">
                     <div className="flex w-full justify-between items-center"  onClick={this.handleBookingDropdown}>
@@ -101,17 +102,21 @@ export default class RoundedUser extends Component {
                     >
                         <div className="bg-gray-300 h-[84px] w-[1px]"></div>
                         <div className="flex-col justify-between items-center py-1 text-[14px] font-medium">
-                            <div className="flex items-center justify-center py-1">
+                            {/* <div className="flex items-center justify-center py-1">
                                 <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
-                                <p>Upcoming</p>
+                                <p onClick={()=>this.props.updateBookingModal(true)}>All</p>
+                            </div> */}
+                            <div className="flex items-center justify-start py-1">
+                                <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
+                                <p onClick={()=>this.props.updateBookingModal(1)}>All</p>
                             </div>
                             <div className="flex items-center justify-center py-1">
                                 <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
-                                <p>Past</p>
+                                <p onClick={()=>this.props.updateBookingModal(2)}>Upcoming</p>
                             </div>
-                            <div className="flex items-center justify-center py-1">
+                            <div className="flex items-center justify-start py-1">
                                 <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
-                                <p>Next</p>
+                                <p onClick={()=>this.props.updateBookingModal(3)}>Past</p>
                             </div>
                         </div>
                     </div>
@@ -123,3 +128,20 @@ export default class RoundedUser extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ booking }) => {
+  return {
+    bookingModal: booking.bookingModal,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateBookingModal: (data) => dispatch(updateBookingModal(data)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(RoundedUser));

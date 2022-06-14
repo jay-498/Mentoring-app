@@ -3,41 +3,29 @@ import {
   SET_BOOKING_DATE,
   UPDATE_LOGIN_MODAL,
   UPDATE_MODAL_NUMBER,
-  UPDATE_CALENDER_EVENT_SUCCESS
+  UPDATE_CALENDER_EVENT_SUCCESS,
+  UPDATE_BOOKING_MODAL
 } from "../actionTypes/index";
 
 const initialState = {
-  timings: [
-    "8:00",
-    "9:00",
-    "10:00",
-    "11:00",
-    "2:00",
-    "3:00",
-    "5:00",
-    "6:00",
-    "7:00",
-  ],
-  booking_time: null,
-  booking_date: null,
+  bookingModal: 0,
   showLoginModal: false,
   currentModalNumber: 1,
-  unbooked_dates: ["03/14/2022", "03/16/2022", "03/18/2022"],
 };
 
 const bookingReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_BOOKING_TIME:
-      return { ...state, booking_time: action.payload };
-
-    case SET_BOOKING_DATE:
-      return { ...state, booking_date: action.payload };
-
     case UPDATE_LOGIN_MODAL:
       return {
         ...state,
         showLoginModal: action.payload,
       };
+
+    case UPDATE_BOOKING_MODAL:
+      return {
+        ...state,
+        bookingModal: action.payload,
+      }
 
     case UPDATE_CALENDER_EVENT_SUCCESS:
       return{

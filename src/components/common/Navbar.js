@@ -143,9 +143,11 @@ class Navbar extends Component {
                 {!this.props.isLoggedIn?"Login":"Logout"}
               </button>
             </div>
+            {this.props.isLoggedIn &&
             <div className="flex justify-center items-center mx-6 cursor-pointer rounded-full p-[3px] border-[1px] border-[#8f6ec5]">
                 <RoundedUser logOut={()=>this.props.logOut()}/>
             </div>
+            }
           </div>
         </div>
       </nav>

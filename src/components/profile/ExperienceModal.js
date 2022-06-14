@@ -45,7 +45,7 @@ class ExperienceModal extends Component {
                   <h1 className="text-center p-1.5 pl-3.5 font-poppins tracking-[0.18px] font-semibold text-[#989898] text-[20px]">Add Experience</h1>
                     <button
                       type="button"
-                      onClick={()=>this.props.handleshowEditModal()}
+                      onClick={()=>this.props.handleExperienceModal()}
                       className="text-gray-400 bg-transparent hover:bg-gray-200 hover rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                       data-modal-toggle="popup-modal"
                     >

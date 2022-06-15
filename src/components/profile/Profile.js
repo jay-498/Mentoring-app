@@ -5,6 +5,7 @@ import pencil from "../../assets/images/svgs/pencil.png";
 import Slots from "./Slots";
 import { withRouter } from "../../utils/withRouter";
 import mainService from "../../services/main.service";
+import {mentorAvailability} from "../../services/booking.service";
 import { UpdateLoginModal } from "../../store/actions/booking";
 import { connect } from "react-redux";
 import LoginModal from "./LoginModal";
@@ -18,6 +19,7 @@ class Profile extends Component {
       showExperienceModal : false,
       showEducationModal : false,
       mentor: {},
+      availableDates: [],
       StartDates: [
         {
           date: "Fri Jun 03 2022 8:00:00 GMT+0530 (India Standard Time)",
@@ -54,6 +56,7 @@ class Profile extends Component {
     this.onChangeEventSumary = this.onChangeEventSumary.bind(this);
     this.onChangeEventStartTime = this.onChangeEventStartTime.bind(this);
     this.addHours = this.addHours.bind(this);
+    this.formatDate = this.formatDate.bind(this);
   }
   componentDidMount() {
     const id = this.props.params.id;
@@ -80,35 +83,100 @@ class Profile extends Component {
         }));
       })
       .catch((err) => console.log(err));
-    this.onChangeEventStartDate(0);
+    mentorAvailability(id).then((res)=>{
+      this.setState(prev=>{
+        return{
+          ...prev,
+          availableDates: [...res.data.data],
+        }
+      })
+    })
+  }
+
+  componentDidUpdate(prevProps,prevState){
+    if(this.state.availableDates.length!==prevState.availableDates.length){
+      this.onChangeEventStartDate(0);
+    }
   }
 
   onChangeEventStartDate=(index)=>{
-    const {StartDates} = this.state;
+    const {availableDates} = this.state;
+    if(availableDates.length)
+    {
     this.setState(prev=>{
       return{
         ...prev,
         currentStartDateIndex: index,
         event: {
           ...prev.event,
-          startDate : (StartDates[index].date),
+          startDate : this.formatDate(availableDates[index].date),
         }
       }
-    })
+    },()=>this.onChangeEventStartTime(index))
+    }
+  }
+
+  formatDate=(date)=>{
+    var dateParts = date.split("-");
+    var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+    return dateObject.toString();
+  }
+
+  startTimesCalculate(timeIndex){
+    const {startDate} = this.state.event;
+    const {availableDates,currentStartDateIndex} = this.state;
+    const newStartDate = new Date(startDate);
+    const newTime = new Date(newStartDate.getTime())
+    const times = availableDates[currentStartDateIndex].times
+    const splitStartTimes = times[timeIndex].start_time.split("-");
+    newTime.setHours(parseInt(splitStartTimes[0]));
+    newTime.setMinutes(parseInt(splitStartTimes[1]));
+    return String(newTime);
+  }
+
+  endTimesCalculate(timeIndex){
+    const {startDate} = this.state.event;
+    const {availableDates,currentStartDateIndex} = this.state;
+    const newStartDate = new Date(startDate);
+    const newTime = new Date(newStartDate.getTime())
+    const times = availableDates[currentStartDateIndex].times
+    const splitStartTimes = times[timeIndex].end_time.split(":");
+    newTime.setHours(parseInt(splitStartTimes[0]));
+    newTime.setMinutes(parseInt(splitStartTimes[1]));
+    return String(newTime);
   }
 
   onChangeEventStartTime=(timeIndex)=>{
-    const {startDate} = this.state.event;
-    const {StartDates,currentStartDateIndex} = this.state;
-    const newStartDate = new Date(startDate);
-    newStartDate.setHours(StartDates[currentStartDateIndex].times[timeIndex])
     this.setState(prev=>{
       return{
         ...prev,
         currentStartTimeIndex: timeIndex,
         event: {
           ...prev.event,
-          startDate : String(newStartDate),
+          startDate : this.startTimesCalculate(timeIndex),
+          endDate   : this.endTimesCalculate(timeIndex),
+        }
+      }
+    },()=>this.durationCalculation())
+  }
+
+  diff_hours(dt2, dt1) 
+ {
+  var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+  diff /= (60 * 60);
+  return Math.abs(Math.round(diff));
+ }
+
+  durationCalculation(){
+    const {startDate,endDate} = this.state.event;
+    let dt1 = new Date(endDate);
+    let dt2 = new Date(startDate);
+    this.setState(prev=>{
+      return{
+        ...prev,
+        event: {
+          ...prev.event,
+          duration: this.diff_hours(dt1,dt2)*60
         }
       }
     })
@@ -183,7 +251,7 @@ class Profile extends Component {
         onChangeEventEndDate={this.onChangeEventEndDate}
         event={this.state.event}
         mentor={this.state.mentor}
-        isBooking="true"/>
+        isBooking={true}/>
         <div>
         {showExperienceModal && <ExperienceModal handleExperienceModal={this.handleExperienceModal}/>}
         {showEducationModal && <EducationModal handleEducationModal={this.handleEducationModal}/>}
@@ -234,7 +302,6 @@ class Profile extends Component {
                   laboris nisi.”
                 </p>
                 <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
-                {console.log(mentor)}
                 {mentor.companies &&
                   mentor.companies.length !== 0 &&
                   mentor.companies.map((company, index) => (
@@ -329,9 +396,11 @@ class Profile extends Component {
               </div>
               <div className="pt-5 sm:p-0">
                   <Slots 
+                  formatDate={this.formatDate}
                   onChangeEventStartDate={this.onChangeEventStartDate}
                   onChangeEventStartTime={this.onChangeEventStartTime}
                   startDates={this.state.StartDates}
+                  availableDates={this.state.availableDates}
                   event={this.state.event}
                   currentStartTimeIndex={this.state.currentStartTimeIndex}
                   currentStartDateIndex={this.state.currentStartDateIndex}/>

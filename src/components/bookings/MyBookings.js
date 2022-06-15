@@ -9,10 +9,11 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import calender from "../../assets/images/svgs/mybooking.png";
 
-class EducationModal extends Component {
+class MyBookingModal extends Component {
   render() {
     return (
       <>
+      {this.props.bookingModal && 
           <div
             className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}
             id="popup-modal"
@@ -97,6 +98,7 @@ class EducationModal extends Component {
               </div>
             </div>
           </div>
+      }
       </>
     );
   }
@@ -117,4 +119,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(EducationModal));
+)(withRouter(MyBookingModal));

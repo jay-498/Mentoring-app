@@ -24,6 +24,8 @@ class CarouselDiscover extends Component {
   }
 
   componentDidMount() {
+    if(this.props.isSlider)
+    {
     MainService.discoverTopMentors()
       .then((response) => {
         let tempMentors = [...response.data];
@@ -33,6 +35,17 @@ class CarouselDiscover extends Component {
         }));
       })
       .catch((err) => console.log(err));
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.mentorDetails && (prevProps.mentorDetails.length!==this.props.mentorDetails.length))
+    {
+      this.setState((prevState) => ({
+        ...prevState,
+        mentorDetails: [...this.props.mentorDetails],
+      }));
+    }
   }
 
   render() {
@@ -81,6 +94,7 @@ class CarouselDiscover extends Component {
         },
       ],
     };
+    console.log(this.state.mentorDetails)
     return (
       <div className="relative px-[31px]">
         {this.props.isSlider ?
@@ -148,14 +162,15 @@ class CarouselDiscover extends Component {
         </>
         :
         <>
+        <div className="grid grid-cols-4 gap-5">
         {this.state.mentorDetails.map((mentor, index) => (
             <div
-              className="shadow-lg shadow-slate-500/40 rounded-b-[20px]"
+              className=" shadow-lg my-5 shadow-slate-500/40 rounded-b-[20px]"
               key={index}
             >
               <div className="relative">
                 <a href={`/profile/${mentor._id}`} className="relative">
-                  <div className="flex flex-col">
+                  <div className="flex-col">
                     <img
                       src={mentor.profile_picture}
                       loading="lazy"
@@ -185,6 +200,7 @@ class CarouselDiscover extends Component {
               </div>
             </div>
           ))}
+          </div>
         </>
         }
       </div>

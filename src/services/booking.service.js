@@ -15,3 +15,11 @@ export const updateCalenderEvent = (data) => {
       throw Error(error.response.data);
     });
 };
+
+export const mentorAvailability = (id) => {
+  return axios.get(`${BASE_URL}/api/mentoravailability?mentor=${id}`);
+};
+
+export const mentorSearch = (query) => {
+  return axios.get(`${BASE_URL}/api/mentor/search?q=${query}`);
+};

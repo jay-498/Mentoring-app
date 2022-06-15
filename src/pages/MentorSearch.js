@@ -1,16 +1,6 @@
 import React, { Component } from "react";
-import profile from "../assets/images/profile/Profil1.png";
 import CarouselDiscover from "../components/main/CarouselDiscover";
-import Gallery from "../components/main/Carousel";
-import ExploreCarousel from "../components/main/ExploreCarousel";
-import Testimonials from "../components/main/Testimonials";
-import Mentors from "../components/main/Mentors";
-import sign from "../assets/images/mentee/sign.png";
-import plane1 from "../assets/images/design/plane1.png";
-import plane2 from "../assets/images/design/plane3.png";
-import dots from "../assets/images/design/Dots.png";
 import facebook from "../assets/images/icons/facebook.png";
-import search from "../assets/images/design/Search.png";
 import instagram from "../assets/images/icons/Instagram.png";
 import linkedin from "../assets/images/icons/linkedin.png";
 import twitter from "../assets/images/icons/twitter.png";
@@ -18,15 +8,48 @@ import youtube from "../assets/images/icons/youtube.png";
 import { connect } from "react-redux";
 import { withRouter } from "../utils/withRouter";
 import { logOut } from "../store/actions/Login";
-
+import {mentorSearch} from "../services/booking.service";
+import MyBookings from "../components/bookings/MyBookings";
+import LoginModal from "../components/profile/LoginModal";
 class HomePage extends Component {
   constructor(){
     super();
     this.state={
        email: "",
        search: "",
-       isEmailValid: false
+       query: "",
+       isEmailValid: false,
+       mentorDetails: [],
     }
+  }
+
+  componentDidMount(){
+    const search = window.location.search
+    const params = new URLSearchParams(search);
+    const query = params.get('mentor');
+    this.fetchMentorDetails(query);
+  }
+
+  componentDidUpdate(prevProps){
+    const search = window.location.search
+    const params = new URLSearchParams(search);
+    const query = params.get('mentor');
+    console.log("check")
+    if(this.state.query !== query) {
+      this.fetchMentorDetails(query);
+    }
+  }
+
+  fetchMentorDetails(query){
+    mentorSearch(query).then((res)=>{
+        this.setState((prevState) => ({
+          ...prevState,
+          query,
+          mentorDetails: res.data.data,
+        }));
+    }).catch((err)=>{
+      console.log(err)
+    })
   }
 
   handleChange=(e)=>{
@@ -49,10 +72,11 @@ class HomePage extends Component {
   render() {
     return (
       <div className="flex-col mx-auto">
+        <LoginModal isBooking="false"/>
+        <MyBookings />
         <div className="flex-col">
           <div className="flex-col lg:mx-10 sm:mx-6 mx-2">
-            <CarouselDiscover isSlider="false"/>
-            <CarouselDiscover isSlider="false"/>
+            <CarouselDiscover isSlider={false} mentorDetails={this.state.mentorDetails}/>
           </div>
         </div>
 

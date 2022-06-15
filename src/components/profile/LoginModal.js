@@ -187,12 +187,13 @@ class DeleteTest extends Component {
   handleUpdateCalender(){
     const id = this.props.params.id;
     const {event} = this.props;
+    console.log("last",event)
     if(event.startDate && event.endDate && event.summary)
     {
       this.props.updateCalenderEventRequested({event:this.props.event,mentor_id: id});
     }
     else{
-      toast.warn("Please select summary and duration",{position: toast.POSITION.TOP_CENTER})
+      toast.warn("Please select your slot first",{position: toast.POSITION.TOP_CENTER})
     } 
   }
 
@@ -523,7 +524,7 @@ class DeleteTest extends Component {
                       </svg>
                     </button>
                   </div>
-                  {this.props.isLoggedIn && this.props.isBooking==="true" ? (
+                  {this.props.isLoggedIn && this.props.isBooking ? (
                     
                     <>
                     {/* {this.props.is_google_verified ?  */}
@@ -550,14 +551,14 @@ class DeleteTest extends Component {
                               <label htmlFor="summary" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Anything you want to get answered?</label>
                             </div>
                           </div>
-                          <div className="mb-4">
+                          {/* <div className="mb-4"> */}
                             {/* <label
                               className="block text-[#8F6EC5] text-sm font-bold mb-2"
                               htmlFor="Mobile"
                             >
                               Duration
                             </label> */}
-                            <div className="relative">
+                            {/* <div className="relative">
                               <select
                                 className="block appearance-none w-full bg-gray-100 border focus:outline-none focus:ring-0 focus:border-[#8F6EC5] text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
                                 id="grid-state"
@@ -577,7 +578,7 @@ class DeleteTest extends Component {
                                 </svg>
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                           <div onClick={() => this.handleUpdateCalender()} className="flex cursor-pointer text-[16px] w-full items-center justify-between bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px] px-4">
                               <span>
                                PAY NOW

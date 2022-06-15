@@ -7,6 +7,7 @@ import { withRouter } from "../../utils/withRouter";
 import { logOut } from "../../store/actions/Login";
 import { UpdateLoginModal } from "../../store/actions/booking";
 import RoundedUser from "./RoundedNav";
+import {mentorAvailability} from "../../services/booking.service";
 class Navbar extends Component {
   constructor(){
     super();
@@ -37,12 +38,6 @@ class Navbar extends Component {
   onKeyPress=(e)=>{
     if(e.key==="Enter"){
       this.props.navigate(`/search?mentor=${this.state.searchQuery}`)
-      this.setState(prev=>{
-        return{
-          ...prev,
-          searchQuery: "",
-        }
-      })
     }
   }
 

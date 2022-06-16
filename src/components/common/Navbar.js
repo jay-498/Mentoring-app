@@ -78,7 +78,7 @@ class Navbar extends Component {
             <li className="nav-item">
               <a
                 className="sm:px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
-                href="#casecompendium"
+                href="/#casecompendium"
               >
                 <span
                   className={`sm:ml-2 ${
@@ -92,7 +92,7 @@ class Navbar extends Component {
             <li className="nav-item">
               <a
                 className="sm:px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
-                href="#companies"
+                href="/#companies"
               >
                 <span
                   className={`sm:ml-2 ${

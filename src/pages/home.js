@@ -29,10 +29,20 @@ class HomePage extends Component {
     super();
     this.state={
        email: "",
-       search: "",
+       searchQuery: "",
        isEmailValid: false,
     }
     this.handleChange=this.handleChange.bind(this);
+  }
+
+  onSearch=()=>{
+    this.props.navigate(`/search?mentor=${this.state.searchQuery}`)
+  }
+
+  onKeyPress=(e)=>{
+    if(e.key==="Enter"){
+      this.props.navigate(`/search?mentor=${this.state.searchQuery}`)
+    }
   }
 
   handleChange=(e)=>{
@@ -77,17 +87,18 @@ class HomePage extends Component {
                   </div>
                   <input
                     type="text"
-                    name="search"
+                    name="searchQuery"
+                    onKeyPress={this.onKeyPress}
                     onChange={(e)=>this.handleChange(e)}
                     id="email-adress-icon"
-                    className="block p-2 sm:pl-16 pl-12 sm:w-[417px] py-3 text-[#797373] 
+                    className="p-2 sm:pl-16 pl-12 sm:w-[417px] py-3 text-[#797373] 
                           rounded-l-lg md:text-md sm:text-[20px] text-[17px]
                           dark:bg-[#fff] placeholder:text-[#797373] placeholder:font-medium 
-                          placeholder:font-nunito"
+                          placeholder:font-nunito focus:ring-0"
                     placeholder="Find your mentor"
                   />
                 </div>
-                <button className="bg-[#8F6EC5] text-white font-bold sm:py-3 py-2 sm:px-12 px-7 rounded-r-lg">
+                <button onClick={this.onSearch} className={`${this.state.searchQuery==="" && "opacity-60"} bg-[#8F6EC5] text-white font-bold sm:py-3 py-2 sm:px-12 px-7 rounded-r-lg`}>
                   Search
                 </button>
               </div>

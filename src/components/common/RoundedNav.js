@@ -74,13 +74,13 @@ class RoundedUser extends Component {
                     <img src={`https://ui-avatars.com/api/?name=mentor&bold=true&rounded=true&background=8f6ec5`} className="w-[42px] h-[42px] rounded-full" alt="Avatar"/>
               </div>
               <div className="flex justify-center items-center gap-x-3">
-                    <select
+                    {/* <select
                         className="flex items-center cursor-pointer justify-center w-full text-gray-700 py-2 px-1 rounded"
                         id="grid-state"
                         >
                         <option value="E">Eng</option>
                         <option value="H">Hin</option>
-                    </select>
+                    </select> */}
                     <img src={cross} alt="close" onClick={this.handleDropDown}/>
               </div>
             </div>

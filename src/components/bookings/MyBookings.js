@@ -13,7 +13,7 @@ class MyBookingModal extends Component {
   render() {
     return (
       <>
-      {this.props.bookingModal && 
+      {this.props.bookingModal!==0 && 
           <div
             className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}
             id="popup-modal"
@@ -45,7 +45,6 @@ class MyBookingModal extends Component {
                     </button>
                   </div>
                     <div className="flex-col w-full py-5">
-                        {console.log(this.props.bookingModal)}
                         <div className="flex font-poppins gap-x-10 py-2">
                             <a onClick={()=>this.props.updateBookingModal(1)} className={`cursor-pointer font-medium ${this.props.bookingModal===1?"text-[#8f6ec5]":"text-[#8c8c8c]"} px-3`}>All</a>
                             <a onClick={()=>this.props.updateBookingModal(2)} className={`cursor-pointer font-medium ${this.props.bookingModal===2?"text-[#8f6ec5]":"text-[#8c8c8c]"} px-1`}>Upcoming</a>
@@ -74,7 +73,7 @@ class MyBookingModal extends Component {
                         <div className="flex-col p-5 mt-5 w-full border rounded-lg">
                             <div className="flex justify-between items-center">
                                 <p className="font-Manrope font-medium text-[#888585] text-[14px]">Designer</p>
-                                <span className="text-[#e7783e] bg-[#ffcfb6] text-[12px] font-semibold mr-2 px-2.5 py-0.5 rounded">Pending</span>
+                                <span className="text-[#e7783e] bg-[#ffcfb6] text-[12px] font-semibold mr-2 px-2.5 py-0.5 rounded">Join Meet</span>
                             </div>
                             <div className="flex items-center mb-3">
                                 <p className="font-Manrope font-black text-[#535353] text-[16px]">Garvit Goswami</p>
@@ -88,10 +87,10 @@ class MyBookingModal extends Component {
                                 <img src={calender} alt="c"/>
                                 <p className="font-Manrope font-medium text-[#bbb9b9] text-[12px]">Fees - 1500 INR</p>
                             </div>
-                            <div className="flex rounded-b-lg bg-[#f8f8f8] justify-end items-center gap-x-3 py-2 pr-5">
+                            {/* <div className="flex rounded-b-lg bg-[#f8f8f8] justify-end items-center gap-x-3 py-2 pr-5">
                                  <button type="button" className="bg-[#8f6ec5] text-white text-[14px] font-Manrope font-semibold py-1 px-3 rounded-lg">Make Payment</button>   
                                  <button type="button" className="text-[#8f6ec5] text-[14px] font-Manrope font-semibold py-1 px-3 rounded-lg" style={{background: "rgba(68,61,246,0.1)"}}>Cancel</button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

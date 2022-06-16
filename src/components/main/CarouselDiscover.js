@@ -94,7 +94,6 @@ class CarouselDiscover extends Component {
         },
       ],
     };
-    console.log(this.state.mentorDetails)
     return (
       <div className="relative px-[31px]">
         {this.props.isSlider ?

@@ -47,7 +47,7 @@ class Profile extends Component {
       event: {
         startDate: "",
         endDate : "",
-        duration: "60",
+        duration: 0,
         summary : "",
       }
     };
@@ -90,6 +90,7 @@ class Profile extends Component {
           availableDates: [...res.data.data],
         }
       })
+      // this.onChangeEventStartDate(0);
     })
   }
 
@@ -97,12 +98,20 @@ class Profile extends Component {
     if(this.state.availableDates.length!==prevState.availableDates.length){
       this.onChangeEventStartDate(0);
     }
+    if(prevState.event.startDate==="" && this.state.event.startDate!==""){
+      this.onChangeEventStartTime(0);
+    }
+    if(prevState.event.startDate!==this.state.event.startDate){
+      this.onChangeEventStartTime(this.state.currentStartTimeIndex);
+    }
   }
+
 
   onChangeEventStartDate=(index)=>{
     const {availableDates} = this.state;
     if(availableDates.length)
     {
+    console.log("event",this.formatDate(availableDates[index].date))
     this.setState(prev=>{
       return{
         ...prev,
@@ -112,7 +121,7 @@ class Profile extends Component {
           startDate : this.formatDate(availableDates[index].date),
         }
       }
-    },()=>this.onChangeEventStartTime(index))
+    })
     }
   }
 
@@ -124,6 +133,7 @@ class Profile extends Component {
 
   startTimesCalculate(timeIndex){
     const {startDate} = this.state.event;
+    console.log("stimes",this.state.event)
     const {availableDates,currentStartDateIndex} = this.state;
     const newStartDate = new Date(startDate);
     const newTime = new Date(newStartDate.getTime())
@@ -256,13 +266,13 @@ class Profile extends Component {
         {showExperienceModal && <ExperienceModal handleExperienceModal={this.handleExperienceModal}/>}
         {showEducationModal && <EducationModal handleEducationModal={this.handleEducationModal}/>}
           <img src={profiledesigns} alt="bg" className=" w-full" loading="lazy"/>
-          {this.props.isLoggedIn &&
+          {/* {this.props.isLoggedIn &&
           <div>
             <button onClick={this.logout} className="absolute right-10 top-3 bg-[#8F6EC5] text-white font-bold py-1 px-4 rounded">
                 Logout
             </button>
           </div>
-          }
+          } */}
         </div>
         <div className="flex-col justify-left -mt-16 mx-5 sm:mx-10 lg:mx-32 md:mx-16">
           <div className="flex  items-center">

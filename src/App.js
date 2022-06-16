@@ -10,17 +10,16 @@ function App() {
   return (
     <div className="flex flex-col">
       <div>
+        <Navbar />
         <Routes>
           <Route path="/"element={
               <Fragment>
-                  <Navbar />
                   <HomePage />
               </Fragment>
             }/>
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/search"element={
               <Fragment>
-                  <Navbar />
                   <MentorSearch />
               </Fragment>
             }/>

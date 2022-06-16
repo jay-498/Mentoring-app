@@ -7,10 +7,48 @@ import {
     updateBookingModal,
 } from "../../store/actions/booking";
 import "react-toastify/dist/ReactToastify.css";
-import calender from "../../assets/images/svgs/mybooking.png";
+import EventCards from "./EventCards";
 
 class MyBookingModal extends Component {
+
+  handleAllEvents=()=>{
+    this.props.updateBookingModal(1)
+  }
+
+  handleUpcomingEvents=()=>{
+    this.props.updateBookingModal(2)
+  }
+
+  handlePastEvents=()=>{
+    this.props.updateBookingModal(3)
+  }
+
   render() {
+    const {AllEvents,UpcomingEvents,PastEvents} = this.props;
+    const Events = () => {
+      switch (this.props.bookingModal) {
+        case 1:
+          return (
+            <>
+              <EventCards events={AllEvents}/>
+            </>
+          );
+        case 2:
+          return (
+            <>
+              <EventCards events={UpcomingEvents}/>
+            </>
+          );
+        case 3:
+          return (
+            <>
+              <EventCards events={PastEvents}/>
+            </>
+          );
+        default:
+          return <></>;
+      }
+    };
     return (
       <>
       {this.props.bookingModal!==0 && 
@@ -46,9 +84,9 @@ class MyBookingModal extends Component {
                   </div>
                     <div className="flex-col w-full py-5">
                         <div className="flex font-poppins gap-x-10 py-2">
-                            <a onClick={()=>this.props.updateBookingModal(1)} className={`cursor-pointer font-medium ${this.props.bookingModal===1?"text-[#8f6ec5]":"text-[#8c8c8c]"} px-3`}>All</a>
-                            <a onClick={()=>this.props.updateBookingModal(2)} className={`cursor-pointer font-medium ${this.props.bookingModal===2?"text-[#8f6ec5]":"text-[#8c8c8c]"} px-1`}>Upcoming</a>
-                            <a onClick={()=>this.props.updateBookingModal(3)} className={`cursor-pointer font-medium ${this.props.bookingModal===3?"text-[#8f6ec5]":"text-[#8c8c8c]"} px-1`}>Past</a>
+                            <a onClick={this.handleAllEvents} className={`cursor-pointer font-medium ${this.props.bookingModal===1?"text-[#8f6ec5]":"text-[#8c8c8c]"} px-3`}>All</a>
+                            <a onClick={this.handleUpcomingEvents} className={`cursor-pointer font-medium ${this.props.bookingModal===2?"text-[#8f6ec5]":"text-[#8c8c8c]"} px-1`}>Upcoming</a>
+                            <a onClick={this.handlePastEvents} className={`cursor-pointer font-medium ${this.props.bookingModal===3?"text-[#8f6ec5]":"text-[#8c8c8c]"} px-1`}>Past</a>
                         </div>
                         {this.props.bookingModal===1 &&
                         <div className="flex">
@@ -70,34 +108,17 @@ class MyBookingModal extends Component {
                             <hr className="w-full rounded bg-[#f2f2f2] py-[1px]"/>
                         </div>
                         }
-                        <div className="flex-col p-5 mt-5 w-full border rounded-lg">
-                            <div className="flex justify-between items-center">
-                                <p className="font-Manrope font-medium text-[#888585] text-[14px]">Designer</p>
-                                <span className="text-[#e7783e] bg-[#ffcfb6] text-[12px] font-semibold mr-2 px-2.5 py-0.5 rounded">Join Meet</span>
-                            </div>
-                            <div className="flex items-center mb-3">
-                                <p className="font-Manrope font-black text-[#535353] text-[16px]">Garvit Goswami</p>
-                            </div>
-                            <hr className="w-full"/>
-                            <div className="flex items-center gap-x-3 pt-3">
-                                <img src={calender} alt="c"/>
-                                <p className="font-Manrope font-medium text-[#bbb9b9] text-[12px]">Date - 14 June 2022  I  14:30</p>
-                            </div>
-                            <div className="flex items-center gap-x-3 pt-2 pb-4">
-                                <img src={calender} alt="c"/>
-                                <p className="font-Manrope font-medium text-[#bbb9b9] text-[12px]">Fees - 1500 INR</p>
-                            </div>
-                            {/* <div className="flex rounded-b-lg bg-[#f8f8f8] justify-end items-center gap-x-3 py-2 pr-5">
-                                 <button type="button" className="bg-[#8f6ec5] text-white text-[14px] font-Manrope font-semibold py-1 px-3 rounded-lg">Make Payment</button>   
-                                 <button type="button" className="text-[#8f6ec5] text-[14px] font-Manrope font-semibold py-1 px-3 rounded-lg" style={{background: "rgba(68,61,246,0.1)"}}>Cancel</button>
-                            </div> */}
+                        <>
+                        <div className="overflow-auto h-[400px] pr-3">
+                        {<Events />}
                         </div>
+                        </>
                     </div>
                 </div>
               </div>
             </div>
           </div>
-      }
+        }
       </>
     );
   }
@@ -106,6 +127,9 @@ class MyBookingModal extends Component {
 const mapStateToProps = ({ booking }) => {
   return {
     bookingModal: booking.bookingModal,
+    AllEvents: booking.AllEvents,
+    UpcomingEvents: booking.UpcomingEvents,
+    PastEvents: booking.PastEvents
   };
 };
 

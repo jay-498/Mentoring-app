@@ -4,13 +4,17 @@ import {
   UPDATE_LOGIN_MODAL,
   UPDATE_MODAL_NUMBER,
   UPDATE_CALENDER_EVENT_SUCCESS,
-  UPDATE_BOOKING_MODAL
+  UPDATE_BOOKING_MODAL,
+  FETCH_MENTOR_EVENTS_SUCCESS
 } from "../actionTypes/index";
 
 const initialState = {
   bookingModal: 0,
   showLoginModal: false,
   currentModalNumber: 1,
+  AllEvents: [],
+  UpcomingEvents: [],
+  PastEvents: []
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -20,6 +24,26 @@ const bookingReducer = (state = initialState, action) => {
         ...state,
         showLoginModal: action.payload,
       };
+    
+    case FETCH_MENTOR_EVENTS_SUCCESS:
+      if(action.payload.type==='U'){
+        return{
+          ...state,
+          UpcomingEvents: [...action.payload.data]
+        }
+      }
+      else if(action.payload.type==='P'){
+        return{
+          ...state,
+          PastEvents: [...action.payload.data]
+        }
+      }
+      else{
+        return{
+          ...state,
+          AllEvents: [...action.payload.data]
+        }
+      }
 
     case UPDATE_BOOKING_MODAL:
       return {

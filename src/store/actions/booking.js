@@ -5,12 +5,28 @@ import {
   UPDATE_MODAL_NUMBER,
   UPDATE_CALENDER_EVENT_REQUESTED,
   UPDATE_CALENDER_EVENT_SUCCESS,
-  UPDATE_BOOKING_MODAL
+  UPDATE_BOOKING_MODAL,
+  FETCH_MENTOR_EVENTS_REQUESTED,
+  FETCH_MENTOR_EVENTS_SUCCESS
 } from "../actionTypes/index";
 
 export const updateCalenderEventRequested = (data) => {
   return {
     type: UPDATE_CALENDER_EVENT_REQUESTED,
+    payload: data,
+  };
+};
+
+export const  fetchMentorEventRequested= (data) => {
+  return {
+    type: FETCH_MENTOR_EVENTS_REQUESTED,
+    payload: data,
+  };
+};
+
+export const  fetchMentorEventSuccess= (data) => {
+  return {
+    type: FETCH_MENTOR_EVENTS_SUCCESS,
     payload: data,
   };
 };

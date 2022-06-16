@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import avatar from "../../assets/images/mentee/1.png";
 import cross from "../../assets/images/svgs/cross.png";
 import downarrow from "../../assets/images/svgs/downarrow.png";
-import { updateBookingModal } from "../../store/actions/booking";
+import { fetchMentorEventRequested, updateBookingModal } from "../../store/actions/booking";
 import { withRouter } from "../../utils/withRouter";
 
 class RoundedUser extends Component {
@@ -16,6 +16,9 @@ class RoundedUser extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchMentorEventRequested({type:'A'});
+    this.props.fetchMentorEventRequested({type:'U'});
+    this.props.fetchMentorEventRequested({type:'P'});
     window.addEventListener("click", this.handleClickOutside);
   }
 
@@ -132,12 +135,14 @@ class RoundedUser extends Component {
 const mapStateToProps = ({ booking }) => {
   return {
     bookingModal: booking.bookingModal,
+    AllEvents: booking.AllEvents,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateBookingModal: (data) => dispatch(updateBookingModal(data)),
+    fetchMentorEventRequested: (data) => dispatch(fetchMentorEventRequested(data)),
   };
 };
 

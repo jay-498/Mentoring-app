@@ -49,6 +49,7 @@ function* signinSaga(action) {
     const auth = yield call(signinUser, action.payload);
     if (auth.success) {
       localStorage.setItem("user_token", auth.jwt_token);
+      toast.success("Login Successfull",{position: toast.POSITION.TOP_CENTER})
     }
     yield put(signinSuccess(auth));
   } catch (e) {

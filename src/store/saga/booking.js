@@ -1,9 +1,11 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { UPDATE_CALENDER_EVENT_REQUESTED } from "../actionTypes/index";
+import { UPDATE_CALENDER_EVENT_REQUESTED ,FETCH_MENTOR_EVENTS_REQUESTED} from "../actionTypes/index";
 import {
+  fetchMentorEventRequested,
+  fetchMentorEventSuccess,
   updateCalenderEventSuccess
 } from "../actions/booking";
-import { updateCalenderEvent } from "../../services/booking.service";
+import { getAllSlots, updateCalenderEvent } from "../../services/booking.service";
 import { toast } from "react-toastify";
 
 function* updateCalenderEventSaga(action) {
@@ -19,8 +21,20 @@ function* updateCalenderEventSaga(action) {
   }
 }
 
+function* fetchMentorEventsSaga(action) {
+  try {
+    const res = yield call(getAllSlots, {...action.payload});
+    if(res.success){
+      yield put(fetchMentorEventSuccess({type:action.payload.type,data:res.data}))
+    }
+  } catch (e) {
+    toast.error(e.message)
+  }
+}
+
 function* bookingSaga() {
   yield takeEvery(UPDATE_CALENDER_EVENT_REQUESTED, updateCalenderEventSaga);
+  yield takeEvery(FETCH_MENTOR_EVENTS_REQUESTED,fetchMentorEventsSaga);
 }
 
 export default bookingSaga;

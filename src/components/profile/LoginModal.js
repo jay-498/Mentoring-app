@@ -46,9 +46,12 @@ class DeleteTest extends Component {
     this.onGoogleLoginSuccess = this.onGoogleLoginSuccess.bind(this);
   }
 
-  componentDidUpdate(){
-    console.log("login",this.props.event)
+  componentDidUpdate(prevProps){
+    if(this.props.isLoggedIn){
+      this.props.updateLoginModal(false);
+    }
   }
+
 
 
   handleChange = (e) => {
@@ -118,9 +121,6 @@ class DeleteTest extends Component {
       this.props.setErrorMessage("*OTP length should be 6");
     } else {
       this.props.loginRequested({ otp, mobile: userMobile });
-      if(!this.props.isBooking){
-        this.props.updateLoginModal(false);
-      }
       this.setState({
         otp: "",
       });

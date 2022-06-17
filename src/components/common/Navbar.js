@@ -8,6 +8,7 @@ import { logOut } from "../../store/actions/Login";
 import { UpdateLoginModal } from "../../store/actions/booking";
 import RoundedUser from "./RoundedNav";
 import {mentorAvailability} from "../../services/booking.service";
+import MyBookings from "../bookings/MyBookings";
 class Navbar extends Component {
   constructor(){
     super();
@@ -45,6 +46,7 @@ class Navbar extends Component {
   const {pathname} = this.props.location;
   return (
     <>
+      <MyBookings />
       <nav className={`relative flex flex-wrap md:px-20 px-5 items-center ${pathname==="/" ? "bg-[#FFE8EB]" : "bg-[#fafafa]"} justify-between`}>
         <div className="flex w-full md:w-0  items-center">
           <div className="flex w-full relative justify-between items-center">
@@ -56,9 +58,15 @@ class Navbar extends Component {
                 Menteezy
               </a>
             </div>
-            <div>
+
+            <div className="flex justify-center items-center lg:hidden">
+              {this.props.isLoggedIn &&
+              <div className="justify-center mx-2 items-center cursor-pointer rounded-full p-[3px] border-[1px] border-[#8f6ec5]">
+                  <RoundedUser logOut={()=>this.props.logOut()}/>
+              </div>
+              }
               <button
-                className="cursor-pointer text-xl leading-none px-3 py-1 rounded block lg:hidden outline-none focus:outline-none"
+                className="cursor-pointer text-xl leading-none px-3 py-1 rounded block outline-none focus:outline-none"
                 type="button"
                 onClick={() => this.onChangeNavbar()}
               >
@@ -129,7 +137,12 @@ class Navbar extends Component {
                 style={{ backgroundColor: "rgba(114, 114, 114,0.1)" }}
               />
             </div>
-            <div className="relative lg:ml-6 md:mr-0">
+            {this.props.isLoggedIn &&
+            <div className="flex hidden lg:block justify-center items-center ml-6 cursor-pointer rounded-full p-[3px] border-[1px] border-[#8f6ec5]">
+                <RoundedUser logOut={()=>this.props.logOut()}/>
+            </div>
+            }
+            <div className="relative lg:ml-6 ml-2 md:mr-0">
               <button
                 className="bg-[#8F6EC5] text-[18px] h-[40px] text-center font-Helvetica 
               text-white font-bold py-2 w-[100px] rounded-[5px]"
@@ -138,11 +151,6 @@ class Navbar extends Component {
                 {!this.props.isLoggedIn?"Login":"Logout"}
               </button>
             </div>
-            {this.props.isLoggedIn &&
-            <div className="flex justify-center items-center mx-6 cursor-pointer rounded-full p-[3px] border-[1px] border-[#8f6ec5]">
-                <RoundedUser logOut={()=>this.props.logOut()}/>
-            </div>
-            }
           </div>
         </div>
       </nav>

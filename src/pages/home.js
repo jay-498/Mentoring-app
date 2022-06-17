@@ -66,7 +66,6 @@ class HomePage extends Component {
     return (
       <div className="flex-col mx-auto sm:h-[870px] h-[650px] bg-[#FFE8EB]">
         <LoginModal isBooking={false}/>
-        <MyBookings />
         <div className="grid lg:grid-cols-2 sm:h-[840px] h-[540px] sm:mx-20 mx-5">
           <div className="flex flex-col pt-[30%] gap-y-4">
             <div className="flex justify-start leading-[64px]">

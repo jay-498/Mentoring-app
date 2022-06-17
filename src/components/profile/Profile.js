@@ -6,12 +6,13 @@ import Slots from "./Slots";
 import { withRouter } from "../../utils/withRouter";
 import mainService from "../../services/main.service";
 import {mentorAvailability} from "../../services/booking.service";
-import { UpdateLoginModal } from "../../store/actions/booking";
+import { updateCalenderEventRequested, UpdateLoginModal } from "../../store/actions/booking";
 import { connect } from "react-redux";
 import LoginModal from "./LoginModal";
 import { logOut } from "../../store/actions/Login";
 import ExperienceModal from "./ExperienceModal";
 import EducationModal from "./EducationModal";
+import { toast } from "react-toastify";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -57,6 +58,7 @@ class Profile extends Component {
     this.onChangeEventStartTime = this.onChangeEventStartTime.bind(this);
     this.addHours = this.addHours.bind(this);
     this.formatDate = this.formatDate.bind(this);
+    this.handleUpdateCalender=this.handleUpdateCalender.bind(this);
   }
   componentDidMount() {
     const id = this.props.params.id;
@@ -111,7 +113,6 @@ class Profile extends Component {
     const {availableDates} = this.state;
     if(availableDates.length)
     {
-    console.log("event",this.formatDate(availableDates[index].date))
     this.setState(prev=>{
       return{
         ...prev,
@@ -133,12 +134,11 @@ class Profile extends Component {
 
   startTimesCalculate(timeIndex){
     const {startDate} = this.state.event;
-    console.log("stimes",this.state.event)
     const {availableDates,currentStartDateIndex} = this.state;
     const newStartDate = new Date(startDate);
     const newTime = new Date(newStartDate.getTime())
     const times = availableDates[currentStartDateIndex].times
-    const splitStartTimes = times[timeIndex].start_time.split("-");
+    const splitStartTimes = times[timeIndex].start_time.split(":");
     newTime.setHours(parseInt(splitStartTimes[0]));
     newTime.setMinutes(parseInt(splitStartTimes[1]));
     return String(newTime);
@@ -190,6 +190,20 @@ class Profile extends Component {
         }
       }
     })
+  }
+
+  handleUpdateCalender=(rate)=>{
+    console.log("last",this.state.event)
+
+    const id = this.props.params.id;
+    const {event} = this.state;
+    if(event.startDate && event.endDate)
+    {
+      this.props.updateCalenderEventRequested({event:{...event,amount:parseInt(rate)*event.duration/60},mentor_id: id});
+    }
+    else{
+      toast.warn("Please select your slot",{position: toast.POSITION.TOP_CENTER})
+    } 
   }
 
   onChangeEventSumary=(e)=>{
@@ -259,6 +273,7 @@ class Profile extends Component {
         <LoginModal 
         onChangeEventSumary={this.onChangeEventSumary} 
         onChangeEventEndDate={this.onChangeEventEndDate}
+        handleUpdateCalender={this.handleUpdateCalender}
         event={this.state.event}
         mentor={this.state.mentor}
         isBooking={true}/>
@@ -433,6 +448,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateLoginModal: (data) => dispatch(UpdateLoginModal(data)),
     logOut: () => dispatch(logOut()),
+    updateCalenderEventRequested: (data)=>dispatch(updateCalenderEventRequested(data))
   };
 };
 

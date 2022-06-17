@@ -53,7 +53,7 @@ class RoundedUser extends Component {
           <button
             type="button"
             // ref={this.roundref}
-            className="flex mr-3 rounded-full md:mr-0"
+            className="flex rounded-full"
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="dropdown"

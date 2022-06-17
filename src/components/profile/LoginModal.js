@@ -47,7 +47,7 @@ class DeleteTest extends Component {
   }
 
   componentDidUpdate(prevProps){
-    if(this.props.isLoggedIn){
+    if(this.props.isLoggedIn && !this.props.isBooking){
       this.props.updateLoginModal(false);
     }
   }
@@ -188,18 +188,18 @@ class DeleteTest extends Component {
     }
   }
 
-  handleUpdateCalender(){
-    const id = this.props.params.id;
-    const {event} = this.props;
-    console.log("last",event)
-    if(event.startDate && event.endDate && event.summary)
-    {
-      this.props.updateCalenderEventRequested({event:this.props.event,mentor_id: id});
-    }
-    else{
-      toast.warn("Please select your slot first",{position: toast.POSITION.TOP_CENTER})
-    } 
-  }
+  // handleUpdateCalender(){
+  //   const id = this.props.params.id;
+  //   const {event} = this.props;
+  //   console.log("last",event)
+  //   if(event.startDate && event.endDate && event.summary)
+  //   {
+  //     this.props.updateCalenderEventRequested({event:this.props.event,mentor_id: id});
+  //   }
+  //   else{
+  //     toast.warn("Please select your slot first",{position: toast.POSITION.TOP_CENTER})
+  //   } 
+  // }
 
   handleShowPassword = () => {
     this.setState(prev=>{
@@ -217,7 +217,14 @@ class DeleteTest extends Component {
 
   handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
+      // event.preventDefault();
+      this.handleOtp(event)
+    }
+  }
+
+  handleKeyDownMobile = (event) => {
+    if (event.key === 'Enter') {
+      this.handleLogin(event);
     }
   }
 
@@ -230,7 +237,7 @@ class DeleteTest extends Component {
           return (
             <>
               <div className="w-full">
-                <form className="rounded p-5 py-1 mb-4" >
+                <div className="rounded p-5 py-1 mb-4" >
                   {!this.state.otpSent ? (
                     <div className="flex-col">
                       <div className="flex justify-center items-center mb-2">
@@ -251,7 +258,7 @@ class DeleteTest extends Component {
                           className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
                           id="mobile"
                           type="mobile"
-                          onKeyDown={this.handleKeyDown}
+                          onKeyDown={this.handleKeyDownMobile}
                           value={this.state.mobile}
                           onChange={(e) => this.onChangeMobile(e)}
                           placeholder=" "
@@ -306,7 +313,7 @@ class DeleteTest extends Component {
                         </button>
                       </div>
                   )}
-                </form>
+                </div>
               </div>
             </>
           );
@@ -498,6 +505,7 @@ class DeleteTest extends Component {
     };
     return (
       <>
+      {console.log("modal",this.props.showModal)}
         {this.props.showModal ? (
           <div
             className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}
@@ -583,7 +591,7 @@ class DeleteTest extends Component {
                               </div>
                             </div>
                           </div> */}
-                          <div onClick={() => this.handleUpdateCalender()} className="flex cursor-pointer text-[16px] w-full items-center justify-between bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px] px-4">
+                          <div onClick={() => this.props.handleUpdateCalender(this.props.mentor.session_rate)} className="flex cursor-pointer text-[16px] w-full items-center justify-between bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px] px-4">
                               <span>
                                PAY NOW
                               </span>

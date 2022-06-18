@@ -25,53 +25,54 @@ import { logOut } from "../store/actions/Login";
 import MyBookings from "../components/bookings/MyBookings";
 
 class HomePage extends Component {
-  constructor(){
+  constructor() {
     super();
-    this.state={
-       email: "",
-       searchQuery: "",
-       isEmailValid: false,
+    this.state = {
+      email: "",
+      searchQuery: "",
+      isEmailValid: false,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  onSearch = () => {
+    this.props.navigate(`/search?mentor=${this.state.searchQuery}`);
+  };
+
+  onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      this.props.navigate(`/search?mentor=${this.state.searchQuery}`);
     }
-    this.handleChange=this.handleChange.bind(this);
-  }
+  };
 
-  onSearch=()=>{
-    this.props.navigate(`/search?mentor=${this.state.searchQuery}`)
-  }
-
-  onKeyPress=(e)=>{
-    if(e.key==="Enter"){
-      this.props.navigate(`/search?mentor=${this.state.searchQuery}`)
-    }
-  }
-
-  handleChange=(e)=>{
-    this.setState(prev=>{
-      return{
+  handleChange = (e) => {
+    this.setState((prev) => {
+      return {
         ...prev,
         [e.target.name]: e.target.value,
-      }
-    })
-    if(e.target.name==="email"){
-    this.setState(prev=>{
-      return{
-        ...prev,
-        isEmailValid: (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value) === true),
-      }
-    })
+      };
+    });
+    if (e.target.name === "email") {
+      this.setState((prev) => {
+        return {
+          ...prev,
+          isEmailValid:
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+              e.target.value
+            ) === true,
+        };
+      });
     }
-  }
+  };
 
   render() {
     return (
       <div className="flex-col mx-auto sm:h-[870px] h-[650px] bg-[#FFE8EB]">
-        <LoginModal isBooking={false}/>
         <div className="grid lg:grid-cols-2 sm:h-[840px] h-[540px] sm:mx-20 mx-5">
           <div className="flex flex-col pt-[30%] gap-y-4">
             <div className="flex justify-start leading-[64px]">
               <p className="text-[#8F6EC5] sm:w-[600px] font-bold sm:text-[52px] text-[42px] font-poppins">
-                Learn and grow from
-                the best in industry
+                Learn and grow from the best in industry
               </p>
             </div>
             <div className="flex flex-col gap-y-4">
@@ -82,13 +83,13 @@ class HomePage extends Component {
               <div className="flex first-letter:my-2">
                 <div className="rounded-l-lg relative md:mr-0">
                   <div className="flex absolute inset-y-0 left-0 items-center sm:pl-7 pl-4 pointer-events-none">
-                    <img src={search} alt="search" loading="lazy"/>
+                    <img src={search} alt="search" loading="lazy" />
                   </div>
                   <input
                     type="text"
                     name="searchQuery"
                     onKeyPress={this.onKeyPress}
-                    onChange={(e)=>this.handleChange(e)}
+                    onChange={(e) => this.handleChange(e)}
                     id="email-adress-icon"
                     className="p-2 sm:pl-16 pl-12 sm:w-[417px] py-3 text-[#797373] 
                           rounded-l-lg md:text-md sm:text-[20px] text-[17px]
@@ -97,7 +98,12 @@ class HomePage extends Component {
                     placeholder="Find your mentor"
                   />
                 </div>
-                <button onClick={this.onSearch} className={`${this.state.searchQuery==="" && "opacity-60"} bg-[#8F6EC5] text-white font-bold sm:py-3 py-2 sm:px-12 px-7 rounded-r-lg`}>
+                <button
+                  onClick={this.onSearch}
+                  className={`${
+                    this.state.searchQuery === "" && "opacity-60"
+                  } bg-[#8F6EC5] text-white font-bold sm:py-3 py-2 sm:px-12 px-7 rounded-r-lg`}
+                >
                   Search
                 </button>
               </div>
@@ -105,7 +111,12 @@ class HomePage extends Component {
           </div>
           <div className="lg:visible invisible flex-col  justify-center items-center pt-8">
             <div className="h-[590px] w-full">
-              <img src={profile} className="relative h-[750px] w-full" alt="profile" loading="lazy"/>
+              <img
+                src={profile}
+                className="relative h-[750px] w-full"
+                alt="profile"
+                loading="lazy"
+              />
             </div>
             <h1 className="font-Helvetica text-xl font-normal text-center">
               Pragyan Pandey, Software Engineer
@@ -143,8 +154,8 @@ class HomePage extends Component {
         </div>
 
         <div className="flex flex-col sm:pt-20 pt-10">
-          <div className="absolute sm:w-[60px] w-[40px] mt-36 sm:ml-10 ml-4">
-            <img src={dots} alt="dot" loading="lazy"/>
+          <div className="absolute sm:w-[60px] w-[40px] mt-32 sm:ml-10 ml-4">
+            <img src={dots} alt="dot" loading="lazy" />
           </div>
           <div className="flex flex-col lg:mx-10 sm:mx-6 mx-2">
             <div className="flex">
@@ -152,7 +163,7 @@ class HomePage extends Component {
                 DISCOVER TOP MENTORS
               </h1>
             </div>
-            <CarouselDiscover isSlider="true"/>
+            <CarouselDiscover isSlider="true" />
           </div>
         </div>
 
@@ -167,7 +178,12 @@ class HomePage extends Component {
 
         <div className="flex flex-col sm:pt-10 pt-5" id="companies">
           <div className="absolute sm:left-[-40px] left-[-70px]">
-            <img src={plane2} alt="plane2" loading="lazy" className="w-[113px] h-[100px]" />
+            <img
+              src={plane2}
+              alt="plane2"
+              loading="lazy"
+              className="w-[113px] h-[100px]"
+            />
           </div>
           <div className="flex-col lg:mx-20 sm:mx-6 mx-2">
             <h1 className="text-[#646464] sm:text-3xl text-2xl sm:pb-10 font-medium font-poppins text-center">
@@ -177,7 +193,10 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex justify-center items-center sm:pt-28 pt-10 m-5" id="casecompendium">
+        <div
+          className="flex justify-center items-center sm:pt-28 pt-10 m-5"
+          id="casecompendium"
+        >
           <div className="flex justify-center items-center">
             <div className="flex bg-[#A36EBA] rounded-[28px]">
               <div className="flex-col lg:p-28 p-10">
@@ -202,15 +221,20 @@ class HomePage extends Component {
                       style={{ background: "rgba(255, 208, 255, 0.15)" }}
                     />
                   </div>
-                  <button 
-                  className={`${!this.state.isEmailValid && "opacity-70"} bg-[#FFACFF] sm:text-[16px] text-[12px] font-Helvetica text-white font-bold py-2 px-4 rounded-r-lg`}
-                  disabled={!this.state.isEmailValid}>
+                  <a
+                    href="https://menteezy.com/downloads/casecompendium.pdf"
+                    target="blank"
+                    className={`${
+                      !this.state.isEmailValid && "opacity-70"
+                    } flex items-center justify-center bg-[#FFACFF] sm:text-[16px] text-[12px] font-Helvetica text-white font-bold py-2 px-4 rounded-r-lg`}
+                    disabled={!this.state.isEmailValid}
+                  >
                     Download
-                  </button>
+                  </a>
                 </div>
               </div>
               <div className="p-4 pr-10 opacity-60 hidden lg:block">
-                <img src={sign} alt="design" loading="lazy"/>
+                <img src={sign} alt="design" loading="lazy" />
               </div>
             </div>
           </div>
@@ -271,7 +295,12 @@ class HomePage extends Component {
                       className="py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="facebook" src={facebook} className="w-4 h-4" loading="lazy" />
+                      <img
+                        alt="facebook"
+                        src={facebook}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                     </a>
                   </li>
                   <li className="flex items-center justify-center">
@@ -279,7 +308,12 @@ class HomePage extends Component {
                       className="px-5 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="linkedin" src={linkedin} className="w-4 h-4" loading="lazy"/>
+                      <img
+                        alt="linkedin"
+                        src={linkedin}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                     </a>
                   </li>
                   <li className="flex items-center justify-center">
@@ -287,7 +321,12 @@ class HomePage extends Component {
                       className="px-3 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="twitter" src={twitter} className="w-4 h-4" loading="lazy"/>
+                      <img
+                        alt="twitter"
+                        src={twitter}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                     </a>
                   </li>
                   <li className="flex items-center justify-center">
@@ -295,7 +334,12 @@ class HomePage extends Component {
                       className="px-3 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="youtube" src={youtube} className="w-4 h-4" loading="lazy"/>
+                      <img
+                        alt="youtube"
+                        src={youtube}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                     </a>
                   </li>
                   <li className="flex items-center justify-center">
@@ -317,7 +361,7 @@ class HomePage extends Component {
           </div>
         </div>
 
-         <div className="flex-col sm:py-10 py-5">
+        <div className="flex-col sm:py-10 py-5">
           <div className="flex flex-col sm:mx-20 mx-10">
             <p className="text-slate-400 text-xl font-normal font-Helvetica text-center">
               © 2020. All rights reserved
@@ -332,7 +376,7 @@ class HomePage extends Component {
 const mapStateToProps = ({ booking, Login }) => {
   return {
     isLoggedIn: Login.isLoggedIn,
-    bookingModal: booking.bookingModal
+    bookingModal: booking.bookingModal,
   };
 };
 
@@ -342,5 +386,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(withRouter(HomePage));
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(HomePage));

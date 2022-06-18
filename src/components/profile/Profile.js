@@ -5,8 +5,11 @@ import pencil from "../../assets/images/svgs/pencil.png";
 import Slots from "./Slots";
 import { withRouter } from "../../utils/withRouter";
 import mainService from "../../services/main.service";
-import {mentorAvailability} from "../../services/booking.service";
-import { updateCalenderEventRequested, UpdateLoginModal } from "../../store/actions/booking";
+import { mentorAvailability } from "../../services/booking.service";
+import {
+  updateCalenderEventRequested,
+  UpdateLoginModal,
+} from "../../store/actions/booking";
 import { connect } from "react-redux";
 import LoginModal from "./LoginModal";
 import { logOut } from "../../store/actions/Login";
@@ -17,63 +20,63 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showExperienceModal : false,
-      showEducationModal : false,
+      showExperienceModal: false,
+      showEducationModal: false,
       mentor: {},
       availableDates: [],
       StartDates: [
         {
           date: "Fri Jun 03 2022 8:00:00 GMT+0530 (India Standard Time)",
-          times: [8 ,9 ,10 ,14, 16]
+          times: [8, 9, 10, 14, 16],
         },
         {
           date: "Sat Jun 04 2022 10:00:00 GMT+0530 (India Standard Time)",
-          times: [10 ,9]
+          times: [10, 9],
         },
         {
           date: "Sun Jun 05 2022 14:00:00 GMT+0530 (India Standard Time)",
-          times: [14, 16, 20]
+          times: [14, 16, 20],
         },
         {
           date: "Mon Jun 06 2022 9:00:00 GMT+0530 (India Standard Time)",
-          times: [9 ,10 ,14, 16]
+          times: [9, 10, 14, 16],
         },
         {
           date: "Tue Jun 07 2022 8:00:00 GMT+0530 (India Standard Time)",
-          times: [8 ,9 ,10, 20]
-        }
+          times: [8, 9, 10, 20],
+        },
       ],
-      currentStartDateIndex : 0,
-      currentStartTimeIndex : 0,
+      currentStartDateIndex: 0,
+      currentStartTimeIndex: 0,
       event: {
         startDate: "",
-        endDate : "",
+        endDate: "",
         duration: 0,
-        summary : "",
-      }
+        summary: "",
+      },
     };
-    this.onChangeEventStartDate= this.onChangeEventStartDate.bind(this);
+    this.onChangeEventStartDate = this.onChangeEventStartDate.bind(this);
     this.onChangeEventEndDate = this.onChangeEventEndDate.bind(this);
     this.onChangeEventSumary = this.onChangeEventSumary.bind(this);
     this.onChangeEventStartTime = this.onChangeEventStartTime.bind(this);
     this.addHours = this.addHours.bind(this);
     this.formatDate = this.formatDate.bind(this);
-    this.handleUpdateCalender=this.handleUpdateCalender.bind(this);
+    this.handleUpdateCalender = this.handleUpdateCalender.bind(this);
   }
   componentDidMount() {
     const id = this.props.params.id;
-    const search = window.location.search
+    const search = window.location.search;
     const params = new URLSearchParams(search);
-    const modal = params.get('modal');
-    const storageEvent = JSON.parse(localStorage.getItem('event'))
-    if(modal==="true"){
-     this.props.updateLoginModal(true);
-     this.setState(prev=>{
-       return{
-         ...prev,
-         event: {...storageEvent},
-       }
-     })
+    const modal = params.get("modal");
+    const storageEvent = JSON.parse(localStorage.getItem("event"));
+    if (modal === "true") {
+      this.props.updateLoginModal(true);
+      this.setState((prev) => {
+        return {
+          ...prev,
+          event: { ...storageEvent },
+        };
+      });
     }
     mainService
       .getMentorById(id)
@@ -85,202 +88,218 @@ class Profile extends Component {
         }));
       })
       .catch((err) => console.log(err));
-    mentorAvailability(id).then((res)=>{
-      this.setState(prev=>{
-        return{
+    mentorAvailability(id).then((res) => {
+      this.setState((prev) => {
+        return {
           ...prev,
           availableDates: [...res.data.data],
-        }
-      })
+        };
+      });
       // this.onChangeEventStartDate(0);
-    })
+    });
   }
 
-  componentDidUpdate(prevProps,prevState){
-    if(this.state.availableDates.length!==prevState.availableDates.length){
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.availableDates.length !== prevState.availableDates.length) {
       this.onChangeEventStartDate(0);
     }
-    if(prevState.event.startDate==="" && this.state.event.startDate!==""){
+    if (prevState.event.startDate === "" && this.state.event.startDate !== "") {
       this.onChangeEventStartTime(0);
     }
-    if(prevState.event.startDate!==this.state.event.startDate){
+    if (prevState.event.startDate !== this.state.event.startDate) {
       this.onChangeEventStartTime(this.state.currentStartTimeIndex);
     }
   }
 
-
-  onChangeEventStartDate=(index)=>{
-    const {availableDates} = this.state;
-    if(availableDates.length)
-    {
-    this.setState(prev=>{
-      return{
-        ...prev,
-        currentStartDateIndex: index,
-        event: {
-          ...prev.event,
-          startDate : this.formatDate(availableDates[index].date),
-        }
-      }
-    })
+  onChangeEventStartDate = (index) => {
+    const { availableDates } = this.state;
+    if (availableDates.length) {
+      this.setState((prev) => {
+        return {
+          ...prev,
+          currentStartDateIndex: index,
+          event: {
+            ...prev.event,
+            startDate: this.formatDate(availableDates[index].date),
+          },
+        };
+      });
     }
-  }
+  };
 
-  formatDate=(date)=>{
+  formatDate = (date) => {
     var dateParts = date.split("-");
-    var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+    var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
     return dateObject.toString();
-  }
+  };
 
-  startTimesCalculate(timeIndex){
-    const {startDate} = this.state.event;
-    const {availableDates,currentStartDateIndex} = this.state;
+  startTimesCalculate(timeIndex) {
+    const { startDate } = this.state.event;
+    const { availableDates, currentStartDateIndex } = this.state;
     const newStartDate = new Date(startDate);
-    const newTime = new Date(newStartDate.getTime())
-    const times = availableDates[currentStartDateIndex].times
+    const newTime = new Date(newStartDate.getTime());
+    const times = availableDates[currentStartDateIndex].times;
     const splitStartTimes = times[timeIndex].start_time.split(":");
     newTime.setHours(parseInt(splitStartTimes[0]));
     newTime.setMinutes(parseInt(splitStartTimes[1]));
     return String(newTime);
   }
 
-  endTimesCalculate(timeIndex){
-    const {startDate} = this.state.event;
-    const {availableDates,currentStartDateIndex} = this.state;
+  endTimesCalculate(timeIndex) {
+    const { startDate } = this.state.event;
+    const { availableDates, currentStartDateIndex } = this.state;
     const newStartDate = new Date(startDate);
-    const newTime = new Date(newStartDate.getTime())
-    const times = availableDates[currentStartDateIndex].times
+    const newTime = new Date(newStartDate.getTime());
+    const times = availableDates[currentStartDateIndex].times;
     const splitStartTimes = times[timeIndex].end_time.split(":");
     newTime.setHours(parseInt(splitStartTimes[0]));
     newTime.setMinutes(parseInt(splitStartTimes[1]));
     return String(newTime);
   }
 
-  onChangeEventStartTime=(timeIndex)=>{
-    this.setState(prev=>{
-      return{
-        ...prev,
-        currentStartTimeIndex: timeIndex,
-        event: {
-          ...prev.event,
-          startDate : this.startTimesCalculate(timeIndex),
-          endDate   : this.endTimesCalculate(timeIndex),
-        }
-      }
-    },()=>this.durationCalculation())
+  onChangeEventStartTime = (timeIndex) => {
+    this.setState(
+      (prev) => {
+        return {
+          ...prev,
+          currentStartTimeIndex: timeIndex,
+          event: {
+            ...prev.event,
+            startDate: this.startTimesCalculate(timeIndex),
+            endDate: this.endTimesCalculate(timeIndex),
+          },
+        };
+      },
+      () => this.durationCalculation()
+    );
+  };
+
+  diff_hours(dt2, dt1) {
+    var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+    diff /= 60 * 60;
+    return Math.abs(Math.round(diff));
   }
 
-  diff_hours(dt2, dt1) 
- {
-  var diff =(dt2.getTime() - dt1.getTime()) / 1000;
-  diff /= (60 * 60);
-  return Math.abs(Math.round(diff));
- }
-
-  durationCalculation(){
-    const {startDate,endDate} = this.state.event;
+  durationCalculation() {
+    const { startDate, endDate } = this.state.event;
     let dt1 = new Date(endDate);
     let dt2 = new Date(startDate);
-    this.setState(prev=>{
-      return{
+    this.setState((prev) => {
+      return {
         ...prev,
         event: {
           ...prev.event,
-          duration: this.diff_hours(dt1,dt2)*60
-        }
-      }
-    })
+          duration: this.diff_hours(dt1, dt2) * 60,
+        },
+      };
+    });
   }
 
-  handleUpdateCalender=(rate)=>{
-    console.log("last",this.state.event)
+  handleUpdateCalender = (rate) => {
+    console.log("last", this.state.event);
 
     const id = this.props.params.id;
-    const {event} = this.state;
-    if(event.startDate && event.endDate)
-    {
-      this.props.updateCalenderEventRequested({event:{...event,amount:parseInt(rate)*event.duration/60},mentor_id: id});
+    const { event } = this.state;
+    if (event.startDate && event.endDate) {
+      this.props.updateCalenderEventRequested({
+        event: { ...event, amount: (parseInt(rate) * event.duration) / 60 },
+        mentor_id: id,
+      });
+    } else {
+      toast.warn("Please select your slot", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
-    else{
-      toast.warn("Please select your slot",{position: toast.POSITION.TOP_CENTER})
-    } 
-  }
+  };
 
-  onChangeEventSumary=(e)=>{
-    this.setState(prev=>{
-      return{
+  onChangeEventSumary = (e) => {
+    this.setState((prev) => {
+      return {
         ...prev,
         event: {
           ...prev.event,
-          summary : e.target.value,
-        }
-      }
-    })
-  }
+          summary: e.target.value,
+        },
+      };
+    });
+  };
 
-  addHours(numOfHours,startDate) {
+  addHours(numOfHours, startDate) {
     var oldDateObj = new Date(startDate);
     var newDateObj = new Date(startDate);
-    newDateObj.setTime(oldDateObj.getTime() + (numOfHours*60* 60 * 1000));
+    newDateObj.setTime(oldDateObj.getTime() + numOfHours * 60 * 60 * 1000);
     return newDateObj;
   }
 
-  onChangeEventEndDate=(e)=>{
-    const endDate = this.addHours(parseInt(e.target.value),this.state.event.startDate);
-    this.setState(prev=>{
-      return{
+  onChangeEventEndDate = (e) => {
+    const endDate = this.addHours(
+      parseInt(e.target.value),
+      this.state.event.startDate
+    );
+    this.setState((prev) => {
+      return {
         ...prev,
         event: {
           ...prev.event,
           endDate: String(endDate),
-          duration: (e.target.value*60),
-        }
-      }
-    })
-  }
+          duration: e.target.value * 60,
+        },
+      };
+    });
+  };
 
-  logout=()=>{
+  logout = () => {
     this.props.logOut();
     this.interval = setTimeout(() => {
       window.location.reload();
     }, 2000);
-  }
+  };
 
-  handleExperienceModal=()=>{
-    this.setState(prev=>{
-      return{
-          ...prev,
-          showExperienceModal: !prev.showExperienceModal,
-      }
-    })
-  }
+  handleExperienceModal = () => {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        showExperienceModal: !prev.showExperienceModal,
+      };
+    });
+  };
 
-  handleEducationModal=()=>{
-    this.setState(prev=>{
-      return{
-          ...prev,
-          showEducationModal: !prev.showEducationModal,
-      }
-    })
-  }
-
-
+  handleEducationModal = () => {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        showEducationModal: !prev.showEducationModal,
+      };
+    });
+  };
 
   render() {
-    const { mentor,showExperienceModal ,showEducationModal} = this.state;
+    const { mentor, showExperienceModal, showEducationModal } = this.state;
     return (
       <div className="flex flex-col overflow-hidden pb-10">
-        <LoginModal 
-        onChangeEventSumary={this.onChangeEventSumary} 
-        onChangeEventEndDate={this.onChangeEventEndDate}
-        handleUpdateCalender={this.handleUpdateCalender}
-        event={this.state.event}
-        mentor={this.state.mentor}
-        isBooking={true}/>
+        <LoginModal
+          onChangeEventSumary={this.onChangeEventSumary}
+          onChangeEventEndDate={this.onChangeEventEndDate}
+          handleUpdateCalender={this.handleUpdateCalender}
+          event={this.state.event}
+          mentor={this.state.mentor}
+          isBooking={true}
+        />
         <div>
-        {showExperienceModal && <ExperienceModal handleExperienceModal={this.handleExperienceModal}/>}
-        {showEducationModal && <EducationModal handleEducationModal={this.handleEducationModal}/>}
-          <img src={profiledesigns} alt="bg" className=" w-full" loading="lazy"/>
+          {showExperienceModal && (
+            <ExperienceModal
+              handleExperienceModal={this.handleExperienceModal}
+            />
+          )}
+          {showEducationModal && (
+            <EducationModal handleEducationModal={this.handleEducationModal} />
+          )}
+          <img
+            src={profiledesigns}
+            alt="bg"
+            className=" w-full"
+            loading="lazy"
+          />
           {/* {this.props.isLoggedIn &&
           <div>
             <button onClick={this.logout} className="absolute right-10 top-3 bg-[#8F6EC5] text-white font-bold py-1 px-4 rounded">
@@ -291,14 +310,14 @@ class Profile extends Component {
         </div>
         <div className="flex-col justify-left -mt-16 mx-5 sm:mx-10 lg:mx-32 md:mx-16">
           <div className="flex  items-center">
-            {Object.keys(mentor).length!==0 &&
-            <img
-              src={mentor.profile_picture}
-              loading="lazy"
-              alt="mentor"
-              className="rounded-full border-solid border-white w-24 h-24 sm:w-44 sm:h-44 md:w-52 md:h-52 border-8 sm:-mt-5 mt-5"
-            />
-            }
+            {Object.keys(mentor).length !== 0 && (
+              <img
+                src={mentor.profile_picture}
+                loading="lazy"
+                alt="mentor"
+                className="rounded-full border-solid border-white w-24 h-24 sm:w-44 sm:h-44 md:w-52 md:h-52 border-8 sm:-mt-5 mt-5"
+              />
+            )}
             <div className="flex-col pt-10 sm:pt-8 text-left items-center sm:pl-10 pl-3">
               <p className="sm:text-[32px] text-[20px] font-bold text-[#797979] font-poppins pt-1">
                 {mentor.name}
@@ -331,14 +350,14 @@ class Profile extends Component {
                   mentor.companies.length !== 0 &&
                   mentor.companies.map((company, index) => (
                     <div className="grid gap-y-2" key={company._id}>
-                      <div className="flex w-full justify-between items-center"> 
+                      <div className="flex w-full justify-between items-center">
                         <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
                           Experience
                         </h1>
-                        <div className="flex items-center justify-center gap-x-5">
+                        {/* <div className="flex items-center justify-center gap-x-5">
                           <img src={plus} alt="+" title="Add" className="cursor-pointer" onClick={this.handleExperienceModal}/>
                           <img src={pencil} alt="edit" title="Edit" className="cursor-pointer" onClick={this.handleExperienceModal}/>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="flex items-center mt-2">
                         <img
@@ -360,19 +379,18 @@ class Profile extends Component {
                     </div>
                   ))}
 
-
                 {mentor.colleges &&
                   mentor.colleges.length !== 0 &&
                   mentor.colleges.map((college, index) => (
                     <div className="grid gap-y-2 my-2" key={college._id}>
-                      <div className="flex w-full justify-between items-center"> 
+                      <div className="flex w-full justify-between items-center">
                         <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
                           Education
                         </h1>
-                        <div className="flex items-center justify-center gap-x-5">
+                        {/* <div className="flex items-center justify-center gap-x-5">
                           <img src={plus} alt="+" title="Add" className="cursor-pointer" onClick={this.handleEducationModal}/>
                           <img src={pencil} alt="edit" title="Edit" className="cursor-pointer" onClick={this.handleEducationModal}/>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="flex items-center">
                         <img
@@ -392,7 +410,7 @@ class Profile extends Component {
                       </div>
                     </div>
                   ))}
-                  <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
+                <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
                 <div className="grid gap-y-2 my-2">
                   <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
                     Expertise
@@ -420,7 +438,7 @@ class Profile extends Component {
                 </div>
               </div>
               <div className="pt-5 sm:p-0">
-                  <Slots 
+                <Slots
                   formatDate={this.formatDate}
                   onChangeEventStartDate={this.onChangeEventStartDate}
                   onChangeEventStartTime={this.onChangeEventStartTime}
@@ -428,7 +446,8 @@ class Profile extends Component {
                   availableDates={this.state.availableDates}
                   event={this.state.event}
                   currentStartTimeIndex={this.state.currentStartTimeIndex}
-                  currentStartDateIndex={this.state.currentStartDateIndex}/>
+                  currentStartDateIndex={this.state.currentStartDateIndex}
+                />
               </div>
             </div>
           </div>
@@ -448,8 +467,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateLoginModal: (data) => dispatch(UpdateLoginModal(data)),
     logOut: () => dispatch(logOut()),
-    updateCalenderEventRequested: (data)=>dispatch(updateCalenderEventRequested(data))
+    updateCalenderEventRequested: (data) =>
+      dispatch(updateCalenderEventRequested(data)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Profile));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Profile));

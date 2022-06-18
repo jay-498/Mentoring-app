@@ -9,6 +9,7 @@ import { UpdateLoginModal } from "../../store/actions/booking";
 import RoundedUser from "./RoundedNav";
 import { mentorAvailability } from "../../services/booking.service";
 import MyBookings from "../bookings/MyBookings";
+import LoginModal from "../profile/LoginModal";
 class Navbar extends Component {
   constructor() {
     super();
@@ -47,6 +48,7 @@ class Navbar extends Component {
     return (
       <>
         <MyBookings />
+        <LoginModal isBooking={false} />
         <nav
           className={`relative flex flex-wrap md:px-20 px-5 items-center ${
             pathname === "/" ? "bg-[#FFE8EB]" : "bg-[#fafafa]"

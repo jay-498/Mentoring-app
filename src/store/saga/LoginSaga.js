@@ -1,5 +1,9 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { LOGIN_REQUESTED, GOOGLE_SIGNIN_REQUESTED,SIGNIN_REQUESTED } from "../actionTypes/index";
+import {
+  LOGIN_REQUESTED,
+  GOOGLE_SIGNIN_REQUESTED,
+  SIGNIN_REQUESTED,
+} from "../actionTypes/index";
 import {
   loginSuccess,
   loginFailure,
@@ -9,10 +13,12 @@ import {
   signinFailure,
   signinRequested,
 } from "../actions/Login";
+import { updateModalNUmber } from "../actions/booking";
 import {
-  updateModalNUmber
-} from "../actions/booking";
-import { verifyOtp, googleSignin, signinUser } from "../../services/auth.service";
+  verifyOtp,
+  googleSignin,
+  signinUser,
+} from "../../services/auth.service";
 import { toast } from "react-toastify";
 
 function* loginSaga(action) {
@@ -20,15 +26,16 @@ function* loginSaga(action) {
     const auth = yield call(verifyOtp, action.payload);
     if (auth.has_user_details) {
       localStorage.setItem("user_token", auth.jwt_token);
-      toast.success("Login Successfull",{position: toast.POSITION.TOP_CENTER})
+      toast.success("Login Successfull", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       yield put(loginSuccess(auth));
       // localStorage.setItem("is_google_verified", auth.is_google_verified);
-    }
-    else{
+    } else {
       yield put(updateModalNUmber(2));
     }
   } catch (e) {
-    toast.error("Invalid OTP",{position: toast.POSITION.TOP_CENTER});
+    toast.error("Invalid OTP", { position: toast.POSITION.TOP_CENTER });
     yield put(loginFailure("Invalid Otp"));
   }
 }
@@ -36,7 +43,7 @@ function* loginSaga(action) {
 function* googleLoginSaga(action) {
   try {
     const jwt_token = localStorage.getItem("jwt_token");
-    const data = {...action.payload,jwt_token }
+    const data = { ...action.payload, jwt_token };
     const auth = yield call(googleSignin, data);
     yield put(googleSigninSuccess());
   } catch (e) {
@@ -49,7 +56,9 @@ function* signinSaga(action) {
     const auth = yield call(signinUser, action.payload);
     if (auth.success) {
       localStorage.setItem("user_token", auth.jwt_token);
-      toast.success("Login Successfull",{position: toast.POSITION.TOP_CENTER})
+      toast.success("Account Created Successfully", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
     yield put(signinSuccess(auth));
   } catch (e) {
@@ -60,7 +69,7 @@ function* signinSaga(action) {
 function* userSaga() {
   yield takeEvery(LOGIN_REQUESTED, loginSaga);
   yield takeEvery(GOOGLE_SIGNIN_REQUESTED, googleLoginSaga);
-  yield takeEvery(SIGNIN_REQUESTED,signinSaga);
+  yield takeEvery(SIGNIN_REQUESTED, signinSaga);
 }
 
 export default userSaga;

@@ -13,9 +13,9 @@ import {
   setErrorMessage,
   signinRequested,
   updateUserMobile,
-  googleSigninRequested
+  googleSigninRequested,
 } from "../../store/actions/Login";
-import {updateCalenderEventRequested} from "../../store/actions/booking";
+import { updateCalenderEventRequested } from "../../store/actions/booking";
 import { sendOtp } from "../../services/auth.service";
 // import GoogleLogin from "react-google-login";
 // import { GLOGIN_CLIENT_ID } from "../../assets/js/config";
@@ -46,13 +46,11 @@ class DeleteTest extends Component {
     this.onGoogleLoginSuccess = this.onGoogleLoginSuccess.bind(this);
   }
 
-  componentDidUpdate(prevProps){
-    if(this.props.isLoggedIn && !this.props.isBooking){
+  componentDidUpdate(prevProps) {
+    if (this.props.isLoggedIn && !this.props.isBooking) {
       this.props.updateLoginModal(false);
     }
   }
-
-
 
   handleChange = (e) => {
     const { value, name } = e.target;
@@ -102,7 +100,7 @@ class DeleteTest extends Component {
               otpSent: true,
             };
           });
-        } 
+        }
         // else {
         //   this.props.updateModalNumber(2);
         // }
@@ -123,6 +121,7 @@ class DeleteTest extends Component {
       this.props.loginRequested({ otp, mobile: userMobile });
       this.setState({
         otp: "",
+        otpSent: false,
       });
     }
   }
@@ -158,13 +157,13 @@ class DeleteTest extends Component {
     //hit login API here then use the userToken to redirect towards dashboard
     // console.log(res.tokenId)
     const mentor_id = this.props.params.id;
-    localStorage.setItem('event',JSON.stringify(this.props.event))
-    this.props.googleSigninRequested({tokenId : res.tokenId,mentor_id});
+    localStorage.setItem("event", JSON.stringify(this.props.event));
+    this.props.googleSigninRequested({ tokenId: res.tokenId, mentor_id });
   };
 
-  onGoogleLoginFailure = (res) =>{
+  onGoogleLoginFailure = (res) => {
     console.log(res);
-  }
+  };
 
   handleSignin(e) {
     e.preventDefault();
@@ -172,7 +171,12 @@ class DeleteTest extends Component {
     const { userMobile } = this.props;
     const isValid = this.validate();
     if (isValid) {
-      this.props.signinRequested({email, first_name, last_name, mobile: userMobile});
+      this.props.signinRequested({
+        email,
+        first_name,
+        last_name,
+        mobile: userMobile,
+      });
       // signinUser({ email, first_name, last_name, mobile: userMobile }).then(
       //   (res) => {
       //     if (res.success) {
@@ -198,37 +202,35 @@ class DeleteTest extends Component {
   //   }
   //   else{
   //     toast.warn("Please select your slot first",{position: toast.POSITION.TOP_CENTER})
-  //   } 
+  //   }
   // }
 
   handleShowPassword = () => {
-    this.setState(prev=>{
-      return{
+    this.setState((prev) => {
+      return {
         ...prev,
-        showPassword: !prev.showPassword
-      }
-    })
+        showPassword: !prev.showPassword,
+      };
+    });
   };
 
-  loginRedirect=()=>{
+  loginRedirect = () => {
     this.props.updateLoginModal(1);
-    this.setState({otpSent: false})
-  }
+    this.setState({ otpSent: false });
+  };
 
   handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       // event.preventDefault();
-      this.handleOtp(event)
+      this.handleOtp(event);
     }
-  }
+  };
 
   handleKeyDownMobile = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       this.handleLogin(event);
     }
-  }
-
-  
+  };
 
   render() {
     const allModals = () => {
@@ -237,7 +239,7 @@ class DeleteTest extends Component {
           return (
             <>
               <div className="w-full">
-                <div className="rounded p-5 py-1 mb-4" >
+                <div className="rounded p-5 py-1 mb-4">
                   {!this.state.otpSent ? (
                     <div className="flex-col">
                       <div className="flex justify-center items-center mb-2">
@@ -254,7 +256,7 @@ class DeleteTest extends Component {
                         )}
                       </div>
                       <div className="relative my-3">
-                          <input
+                        <input
                           className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
                           id="mobile"
                           type="mobile"
@@ -263,16 +265,21 @@ class DeleteTest extends Component {
                           onChange={(e) => this.onChangeMobile(e)}
                           placeholder=" "
                         />
-                        <label htmlFor="mobile" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
-                      </div>
-                        <button
-                          className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
-                          type="button"
-                          onClick={(e) => this.handleLogin(e)}
+                        <label
+                          htmlFor="mobile"
+                          className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
                         >
-                          Proceed
-                        </button>
+                          Mobile No.
+                        </label>
                       </div>
+                      <button
+                        className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
+                        type="button"
+                        onClick={(e) => this.handleLogin(e)}
+                      >
+                        Proceed
+                      </button>
+                    </div>
                   ) : (
                     <div>
                       <div className="flex items-center my-2">
@@ -282,15 +289,16 @@ class DeleteTest extends Component {
                         >
                           OTP Verification
                         </label> */}
-                        {(this.state.otpError !== "" ||
-                          this.props.otpMessage !== "") ? 
+                        {this.state.otpError !== "" ||
+                        this.props.otpMessage !== "" ? (
                           <p className="py-1 text-sm text-red-500 px-1">
                             {this.state.otpError || this.props.otpMessage}
                           </p>
-                          :
-                          <p className="py-1 text-sm font-semibold font-poppins text-[#8F6EC5] px-1">Please verify your OTP...</p>
-                        }
-                      
+                        ) : (
+                          <p className="py-1 text-sm font-semibold font-poppins text-[#8F6EC5] px-1">
+                            Please verify your OTP...
+                          </p>
+                        )}
                       </div>
                       <div className="relative my-3">
                         <input
@@ -302,16 +310,21 @@ class DeleteTest extends Component {
                           onChange={(e) => this.onChangeOtp(e)}
                           placeholder=" "
                         />
-                        <label htmlFor="otp" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">OTP</label>
-                       </div> 
-                        <button
-                          className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
-                          type="button"
-                          onClick={(e) => this.handleOtp(e)}
+                        <label
+                          htmlFor="otp"
+                          className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
                         >
-                          Verify
-                        </button>
+                          OTP
+                        </label>
                       </div>
+                      <button
+                        className="w-full  bg-[#8F6EC5] text-white font-bold py-2 px-4 rounded-[3px]"
+                        type="button"
+                        onClick={(e) => this.handleOtp(e)}
+                      >
+                        Verify
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
@@ -321,15 +334,17 @@ class DeleteTest extends Component {
           return (
             <>
               <div className="px-10 rounded justify-center items-center w-full">
-                  <form className="mb-9" >
-                  <h1 className="pb-5 text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Join Menteezy today!</h1>
+                <form className="mb-9">
+                  <h1 className="pb-5 text-center font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">
+                    Join Menteezy today!
+                  </h1>
                   {/* <div className="mb-4"> */}
-                    {/* <div className="flex mb-2 items-center"> */}
-                      {/* <p className="text-red-600 px-2 text-xs">
+                  {/* <div className="flex mb-2 items-center"> */}
+                  {/* <p className="text-red-600 px-2 text-xs">
                       {this.state.mobileError}
                     </p> */}
-                    {/* </div> */}
-                    {/* <div className="relative">
+                  {/* </div> */}
+                  {/* <div className="relative">
                     <input
                       className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
                       id="mobile"
@@ -350,59 +365,74 @@ class DeleteTest extends Component {
                   </div> */}
                   <div className="mb-6">
                     {/* <div className="flex mb-2 items-center"> */}
-                      {/* <p className="text-red-600 px-2 text-xs">
+                    {/* <p className="text-red-600 px-2 text-xs">
                       {this.state.mobileError}
                     </p> */}
                     {/* </div> */}
                     <div className="relative">
-                    <input
-                      className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
-                      id="Firstname"
-                      name="first_name"
-                      value={this.state.form.first_name}
-                      onChange={(e) => this.handleChange(e)}
-                      type="text"
-                      placeholder=" "
-                    />
-                    <label htmlFor="Firstname" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">First name</label>
+                      <input
+                        className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                        id="Firstname"
+                        name="first_name"
+                        value={this.state.form.first_name}
+                        onChange={(e) => this.handleChange(e)}
+                        type="text"
+                        placeholder=" "
+                      />
+                      <label
+                        htmlFor="Firstname"
+                        className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
+                      >
+                        First name
+                      </label>
                     </div>
                   </div>
                   <div className="mb-6">
                     {/* <div className="flex mb-2 items-center"> */}
-                      {/* <p className="text-red-600 px-2 text-xs">
+                    {/* <p className="text-red-600 px-2 text-xs">
                       {this.state.mobileError}
                     </p> */}
                     {/* </div> */}
                     <div className="relative">
-                    <input
-                      className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
-                      id="Lastname"
-                      name="last_name"
-                      value={this.state.form.lastname}
-                      onChange={(e) => this.handleChange(e)}
-                      type="text"
-                      placeholder=" "
-                    />
-                    <label htmlFor="Lastname" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Last name</label>
+                      <input
+                        className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                        id="Lastname"
+                        name="last_name"
+                        value={this.state.form.lastname}
+                        onChange={(e) => this.handleChange(e)}
+                        type="text"
+                        placeholder=" "
+                      />
+                      <label
+                        htmlFor="Lastname"
+                        className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
+                      >
+                        Last name
+                      </label>
                     </div>
                   </div>
                   <div className="mb-6">
                     {/* <div className="flex mb-2 items-center"> */}
-                      {/* <p className="text-red-600 px-2 text-xs">
+                    {/* <p className="text-red-600 px-2 text-xs">
                       {this.state.mobileError}
                     </p> */}
                     {/* </div> */}
                     <div className="relative">
-                    <input
-                      className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
-                      id="mobile"
-                      name="mobile"
-                      disabled
-                      value={this.props.userMobile}
-                      type="text"
-                      placeholder=" "
-                    />
-                    <label htmlFor="mobile" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Mobile No.</label>
+                      <input
+                        className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                        id="mobile"
+                        name="mobile"
+                        disabled
+                        value={this.props.userMobile}
+                        type="text"
+                        placeholder=" "
+                      />
+                      <label
+                        htmlFor="mobile"
+                        className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
+                      >
+                        Mobile No.
+                      </label>
                     </div>
                   </div>
                   <div className="mb-6">
@@ -412,7 +442,7 @@ class DeleteTest extends Component {
                       </p>
                     </div> */}
                     <div className="relative">
-                        <input
+                      <input
                         className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
                         id="email"
                         name="email"
@@ -421,16 +451,21 @@ class DeleteTest extends Component {
                         type="email"
                         placeholder=" "
                       />
-                      <label htmlFor="email" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Email</label>
+                      <label
+                        htmlFor="email"
+                        className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
+                      >
+                        Email
+                      </label>
                     </div>
                   </div>
                   {/* <div className=" mb-6"> */}
-                    {/* <div className="flex mb-2 items-center">
+                  {/* <div className="flex mb-2 items-center">
                       <p className="text-red-600 px-2 text-xs">
                         {this.state.emailError}
                       </p>
                     </div> */}
-                    {/* <div className="grid items-center relative">
+                  {/* <div className="grid items-center relative">
                       <input
                         type={`${this.state.showPassword ? "text" : "password"}`}
                         className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
@@ -495,7 +530,6 @@ class DeleteTest extends Component {
                     </div>
                   </div>
                 )} */}
-                
               </div>
             </>
           );
@@ -505,7 +539,7 @@ class DeleteTest extends Component {
     };
     return (
       <>
-      {console.log("modal",this.props.showModal)}
+        {console.log("modal", this.props.showModal)}
         {this.props.showModal ? (
           <div
             className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}
@@ -537,12 +571,13 @@ class DeleteTest extends Component {
                     </button>
                   </div>
                   {this.props.isLoggedIn && this.props.isBooking ? (
-                    
                     <>
-                    {/* {this.props.is_google_verified ?  */}
+                      {/* {this.props.is_google_verified ?  */}
                       <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
-                          <h1 className="text-center pb-5 font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">Book Your Session Here</h1>
+                          <h1 className="text-center pb-5 font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">
+                            Book Your Session Here
+                          </h1>
                           <div className="mb-4">
                             {/* <label
                               className="block text-gray-700 text-sm font-bold mb-2"
@@ -557,20 +592,27 @@ class DeleteTest extends Component {
                                 id="summary"
                                 name="summary"
                                 value={this.props.event.summary}
-                                onChange={(e)=>this.props.onChangeEventSumary(e)}
+                                onChange={(e) =>
+                                  this.props.onChangeEventSumary(e)
+                                }
                                 rows={5}
                               />
-                              <label htmlFor="summary" className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Anything you want to get answered?</label>
+                              <label
+                                htmlFor="summary"
+                                className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
+                              >
+                                Anything you want to get answered?
+                              </label>
                             </div>
                           </div>
                           {/* <div className="mb-4"> */}
-                            {/* <label
+                          {/* <label
                               className="block text-[#8F6EC5] text-sm font-bold mb-2"
                               htmlFor="Mobile"
                             >
                               Duration
                             </label> */}
-                            {/* <div className="relative">
+                          {/* <div className="relative">
                               <select
                                 className="block appearance-none w-full bg-gray-100 border focus:outline-none focus:ring-0 focus:border-[#8F6EC5] text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
                                 id="grid-state"
@@ -591,13 +633,21 @@ class DeleteTest extends Component {
                               </div>
                             </div>
                           </div> */}
-                          <div onClick={() => this.props.handleUpdateCalender(this.props.mentor.session_rate)} className="flex cursor-pointer text-[16px] w-full items-center justify-between bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px] px-4">
-                              <span>
-                               PAY NOW
-                              </span>
-                              <span className="flex items-center justify-center">
-                              <img src={rupee} className="w-4 h-4" alt="Rs"/>{this.props.mentor.session_rate*parseInt(this.props.event.duration)/60}
-                              </span>
+                          <div
+                            onClick={() =>
+                              this.props.handleUpdateCalender(
+                                this.props.mentor.session_rate
+                              )
+                            }
+                            className="flex cursor-pointer text-[16px] w-full items-center justify-between bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px] px-4"
+                          >
+                            <span>PAY NOW</span>
+                            <span className="flex items-center justify-center">
+                              <img src={rupee} className="w-4 h-4" alt="Rs" />
+                              {(this.props.mentor.session_rate *
+                                parseInt(this.props.event.duration)) /
+                                60}
+                            </span>
                             {/* <button
                               className="flex justify-center items-center w-full bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px]"
                               type="button"
@@ -608,7 +658,7 @@ class DeleteTest extends Component {
                           </div>
                         </form>
                       </div>
-                    {/* :
+                      {/* :
                     <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
                             <label
@@ -664,7 +714,8 @@ const mapDispatchToProps = (dispatch) => {
     updateUserMobile: (data) => dispatch(updateUserMobile(data)),
     googleSigninRequested: (data) => dispatch(googleSigninRequested(data)),
     logOut: () => dispatch(logOut()),
-    updateCalenderEventRequested: (data)=>dispatch(updateCalenderEventRequested(data))
+    updateCalenderEventRequested: (data) =>
+      dispatch(updateCalenderEventRequested(data)),
   };
 };
 

@@ -8,78 +8,83 @@ import youtube from "../assets/images/icons/youtube.png";
 import { connect } from "react-redux";
 import { withRouter } from "../utils/withRouter";
 import { logOut } from "../store/actions/Login";
-import {mentorSearch} from "../services/booking.service";
+import { mentorSearch } from "../services/booking.service";
 import MyBookings from "../components/bookings/MyBookings";
 import LoginModal from "../components/profile/LoginModal";
 class HomePage extends Component {
-  constructor(){
+  constructor() {
     super();
-    this.state={
-       email: "",
-       search: "",
-       query: "",
-       isEmailValid: false,
-       mentorDetails: [],
-    }
+    this.state = {
+      email: "",
+      search: "",
+      query: "",
+      isEmailValid: false,
+      mentorDetails: [],
+    };
   }
 
-  componentDidMount(){
-    const search = window.location.search
+  componentDidMount() {
+    const search = window.location.search;
     const params = new URLSearchParams(search);
-    const query = params.get('mentor');
+    const query = params.get("mentor");
     this.fetchMentorDetails(query);
   }
 
-  componentDidUpdate(prevProps){
-    const search = window.location.search
+  componentDidUpdate(prevProps) {
+    const search = window.location.search;
     const params = new URLSearchParams(search);
-    const query = params.get('mentor');
-    console.log("check")
-    if(this.state.query !== query) {
+    const query = params.get("mentor");
+    console.log("check");
+    if (this.state.query !== query) {
       this.fetchMentorDetails(query);
     }
   }
 
-  fetchMentorDetails(query){
-    mentorSearch(query).then((res)=>{
+  fetchMentorDetails(query) {
+    mentorSearch(query)
+      .then((res) => {
         this.setState((prevState) => ({
           ...prevState,
           query,
           mentorDetails: res.data.data,
         }));
-    }).catch((err)=>{
-      console.log(err)
-    })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  handleChange=(e)=>{
-    this.setState(prev=>{
-      return{
+  handleChange = (e) => {
+    this.setState((prev) => {
+      return {
         ...prev,
         [e.target.name]: e.target.value,
-      }
-    })
-    if(e.target.name==="email"){
-    this.setState(prev=>{
-      return{
-        ...prev,
-        isEmailValid: (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value) === true),
-      }
-    })
+      };
+    });
+    if (e.target.name === "email") {
+      this.setState((prev) => {
+        return {
+          ...prev,
+          isEmailValid:
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+              e.target.value
+            ) === true,
+        };
+      });
     }
-  }
+  };
 
   render() {
     return (
       <div className="flex-col mx-auto">
-        <LoginModal isBooking="false"/>
-        <MyBookings />
         <div className="flex-col">
           <div className="flex-col lg:mx-10 sm:mx-6 mx-2">
-            <CarouselDiscover isSlider={false} mentorDetails={this.state.mentorDetails}/>
+            <CarouselDiscover
+              isSlider={false}
+              mentorDetails={this.state.mentorDetails}
+            />
           </div>
         </div>
-
 
         <div className="flex flex-col lg:p-10 p-5 bg-[#F9EFFD]">
           <div className="flex flex-col lg:mx-36 mx-5">
@@ -127,7 +132,12 @@ class HomePage extends Component {
                       className="py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="facebook" src={facebook} className="w-4 h-4" loading="lazy" />
+                      <img
+                        alt="facebook"
+                        src={facebook}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                     </a>
                   </li>
                   <li className="flex items-center justify-center">
@@ -135,7 +145,12 @@ class HomePage extends Component {
                       className="px-5 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="linkedin" src={linkedin} className="w-4 h-4" loading="lazy"/>
+                      <img
+                        alt="linkedin"
+                        src={linkedin}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                     </a>
                   </li>
                   <li className="flex items-center justify-center">
@@ -143,7 +158,12 @@ class HomePage extends Component {
                       className="px-3 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="twitter" src={twitter} className="w-4 h-4" loading="lazy"/>
+                      <img
+                        alt="twitter"
+                        src={twitter}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                     </a>
                   </li>
                   <li className="flex items-center justify-center">
@@ -151,7 +171,12 @@ class HomePage extends Component {
                       className="px-3 py-2  font-bold leading-snug text-gray hover:opacity-75"
                       href="#pablo"
                     >
-                      <img alt="youtube" src={youtube} className="w-4 h-4" loading="lazy"/>
+                      <img
+                        alt="youtube"
+                        src={youtube}
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                     </a>
                   </li>
                   <li className="flex items-center justify-center">
@@ -173,7 +198,7 @@ class HomePage extends Component {
           </div>
         </div>
 
-         <div className="flex-col sm:py-10 py-5">
+        <div className="flex-col sm:py-10 py-5">
           <div className="flex flex-col sm:mx-20 mx-10">
             <p className="text-slate-400 text-xl font-normal font-Helvetica text-center">
               © 2020. All rights reserved
@@ -197,5 +222,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(withRouter(HomePage));
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(HomePage));

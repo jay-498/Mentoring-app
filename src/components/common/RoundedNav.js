@@ -107,14 +107,8 @@ class RoundedUser extends Component {
                   <img src={downarrow} alt="arrow" />
                 </div>
                 <div
-                  className="flex w-full justify-between items-center"
-                  onClick={this.props.logOut}
-                >
-                  <p className="text-[14px] font-medium py-1">Logout</p>
-                </div>
-                <div
                   ref={this.viewref}
-                  className="flex text-[14px] font-medium text-[#b8b8b8] py-2 pb-3"
+                  className="flex text-[14px] font-medium text-[#b8b8b8] py-2"
                 >
                   <p>View & manage your booking</p>
                 </div>
@@ -148,6 +142,12 @@ class RoundedUser extends Component {
                       </p>
                     </div>
                   </div>
+                </div>
+                <div
+                  className="flex w-full justify-between items-center"
+                  onClick={this.props.logOut}
+                >
+                  <p className="text-[14px] font-medium pb-2">Logout</p>
                 </div>
               </div>
             </div>

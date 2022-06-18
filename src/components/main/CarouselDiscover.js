@@ -174,7 +174,7 @@ class CarouselDiscover extends Component {
           </>
         ) : (
           <>
-            <div className="grid grid-cols-4 gap-5">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {this.state.mentorDetails.map((mentor, index) => (
                 <div
                   className=" shadow-lg my-5 shadow-slate-500/40 rounded-b-[20px]"

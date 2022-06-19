@@ -59,7 +59,7 @@ class Navbar extends Component {
               <div>
                 <a
                   className="text-[28px] font-semibold font-poppins leading-relaxed inline-block py-2  text-gray"
-                  href="#pablo"
+                  href="/"
                 >
                   Menteezy
                 </a>

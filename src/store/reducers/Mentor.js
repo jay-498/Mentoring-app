@@ -43,8 +43,7 @@ const MentorReducer = (state = initialState, action) => {
       return {
         ...state,
         MentorDetails: {
-          ...state.MentorDetails,
-          [action.payload.type]: [...action.payload.data],
+          ...action.payload.data,
         },
       };
 

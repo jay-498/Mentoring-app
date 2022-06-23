@@ -32,7 +32,34 @@ class ExperienceModal extends Component {
 
   componentDidMount() {
     this.props.fetchCompaniesRequested();
+    if (this.props.isEdit) {
+      const { company } = this.props;
+      this.setState((prev) => {
+        return {
+          ...prev,
+          experience: {
+            job_title: company.job_title,
+            start_date: this.dateFormat(company.start_date),
+            company: company.company._id,
+            end_date: this.dateFormat(company.end_date) || "",
+            industry: company?.industry || "",
+          },
+        };
+      });
+    }
   }
+
+  dateFormat = (date) => {
+    let x = new Date(date);
+    return (
+      "date",
+      ("0" + x.getDate()).slice(-2) +
+        " " +
+        x.toLocaleString("default", { month: "long" }) +
+        " " +
+        x.getFullYear()
+    );
+  };
 
   handleChange = (e) => {
     const { value, name } = e.target;
@@ -52,16 +79,49 @@ class ExperienceModal extends Component {
   handleSubmitExperience = () => {
     const { experience } = this.state;
     const { companies } = this.props.mentor;
-    const modifiedCompanies = companies.map((company) => {
-      return { ...company, company: company.company._id };
-    });
-    const id = this.props.params.id;
-    if (this.validate()) {
-      this.props.updateMentorExperienceRequested({
-        companies: [...modifiedCompanies, { ...experience }],
+    if (!this.props.isEdit) {
+      const modifiedCompanies = companies.map((company) => {
+        return { ...company, company: company.company._id };
       });
-      this.props.handleExperienceModal();
+      if (this.validate()) {
+        this.props.updateMentorExperienceRequested({
+          companies: [...modifiedCompanies, { ...experience }],
+        });
+      }
+    } else {
+      const { company } = this.props;
+      const EditedCompany = {
+        ...company,
+        job_title: experience.job_title,
+        company: experience.company,
+        start_date: experience.start_date,
+        end_date: experience.end_date,
+        industry: experience.industry,
+      };
+      const itemIndex = companies.findIndex(
+        (company) => company._id === this.props.company._id
+      );
+      if (itemIndex > -1) {
+        companies[itemIndex] = EditedCompany;
+      }
+      if (this.validate()) {
+        this.props.updateMentorExperienceRequested({
+          companies: [...companies],
+        });
+      }
     }
+    this.props.handleExperienceModal();
+  };
+
+  handleSubmitDeleteExperience = () => {
+    const { companies } = this.props.mentor;
+    const modifiedCompanies = companies.filter(
+      (company) => company._id !== this.props.company._id
+    );
+    this.props.updateMentorExperienceRequested({
+      companies: [...modifiedCompanies],
+    });
+    this.props.handleExperienceModal();
   };
 
   render() {
@@ -129,7 +189,8 @@ class ExperienceModal extends Component {
                           className="block font-poppins appearance-none w-full bg-gray-100 border focus:outline-none focus:ring-0 focus:border-[#8F6EC5] text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
                           id="grid-state"
                           name="company"
-                          value={this.state.experience.company_name}
+                          // defaultValue={}
+                          value={this.state.experience.company}
                           onChange={(e) => this.handleChange(e)}
                         >
                           <option>Select Company</option>
@@ -280,7 +341,7 @@ class ExperienceModal extends Component {
                       </div>
                     </div>
 
-                    <div>
+                    {/* <div>
                       <div className="relative">
                         <input
                           className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
@@ -295,9 +356,15 @@ class ExperienceModal extends Component {
                           I am currently working here
                         </label>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="flex justify-end items-center">
+                    <div className="flex justify-between items-center">
+                      <button
+                        onClick={this.handleSubmitDeleteExperience}
+                        className="bg-[#8F6EC5] rounded-[5px] text-[16px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px] text-[10px]"
+                      >
+                        Delete
+                      </button>
                       <button
                         onClick={this.handleSubmitExperience}
                         className="bg-[#8F6EC5] rounded-[5px] text-[16px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px] text-[10px]"

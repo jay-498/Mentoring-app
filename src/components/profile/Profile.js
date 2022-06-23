@@ -22,9 +22,13 @@ class Profile extends Component {
     super(props);
     this.bookingref = React.createRef();
     this.state = {
-      showExperienceModal: false,
-      showEducationModal: false,
+      showAddExperienceModal: false,
+      showAddEducationModal: false,
+      showEditExperienceModal: false,
+      showEditEducationModal: false,
       availableDates: [],
+      currentEditCollege: {},
+      currentEditCompany: {},
       NavItem: 1,
       dropDownItem: 1,
       dropDownItems: ["All", "Upcoming", "Past"],
@@ -85,15 +89,17 @@ class Profile extends Component {
       });
     }
     // this.props.fetchMentorDetailsRequested({ id });
-    mentorAvailability(id).then((res) => {
-      this.setState((prev) => {
-        return {
-          ...prev,
-          availableDates: [...res.data.data],
-        };
+    if (!this.props.isEdit) {
+      mentorAvailability(id).then((res) => {
+        this.setState((prev) => {
+          return {
+            ...prev,
+            availableDates: [...res.data.data],
+          };
+        });
+        // this.onChangeEventStartDate(0);
       });
-      // this.onChangeEventStartDate(0);
-    });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -254,7 +260,7 @@ class Profile extends Component {
     this.setState((prev) => {
       return {
         ...prev,
-        showExperienceModal: !prev.showExperienceModal,
+        showAddExperienceModal: !prev.showAddExperienceModal,
       };
     });
   };
@@ -263,10 +269,30 @@ class Profile extends Component {
     this.setState((prev) => {
       return {
         ...prev,
-        showEducationModal: !prev.showEducationModal,
+        showAddEducationModal: !prev.showAddEducationModal,
       };
     });
   };
+
+  handleEditExperienceModal(company) {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        showEditExperienceModal: !prev.showEditExperienceModal,
+        currentEditCompany: { ...company },
+      };
+    });
+  }
+
+  handleEditEducationModal(college) {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        showEditEducationModal: !prev.showEditEducationModal,
+        currentEditCollege: { ...college },
+      };
+    });
+  }
 
   dateFormat = (date) => {
     let x = new Date(date);
@@ -281,8 +307,12 @@ class Profile extends Component {
 
   render() {
     const {
-      showExperienceModal,
-      showEducationModal,
+      showAddExperienceModal,
+      showAddEducationModal,
+      showEditExperienceModal,
+      showEditEducationModal,
+      currentEditCollege,
+      currentEditCompany,
       dropDownItems,
       dropDownItem,
     } = this.state;
@@ -314,13 +344,13 @@ class Profile extends Component {
                           className="cursor-pointer"
                           onClick={this.handleExperienceModal}
                         />
-                        <img
+                        {/* <img
                           src={pencil}
                           alt="edit"
                           title="Edit"
                           className="cursor-pointer"
                           onClick={this.handleExperienceModal}
-                        />
+                        /> */}
                       </div>
                     )}
                   </div>
@@ -328,25 +358,47 @@ class Profile extends Component {
                   {mentor.companies &&
                     mentor.companies.length !== 0 &&
                     mentor.companies.map((company, index) => (
-                      <div className="flex items-center mt-2" key={company._id}>
-                        <img
-                          src={
-                            company.company?.image_url ||
-                            `https://ui-avatars.com/api/?name=${company.company?.name}&bold=true&rounded=true&background=8f6ec5`
-                          }
-                          loading="lazy"
-                          alt="C"
-                          className="w-[50px] h-[38px]"
-                        />
-                        <div className="flex-col text-left items-center px-3">
-                          <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
-                            {company.job_title}
-                          </p>
-                          <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
-                            {company.company?.name} |{" "}
-                            {this.dateFormat(company.start_date)} -{" "}
-                            {this.dateFormat(company.end_date)}
-                          </p>
+                      <div
+                        className="flex justify-between items-center mt-2"
+                        key={company._id}
+                      >
+                        <div className="flex">
+                          <img
+                            src={
+                              company.company?.image_url ||
+                              `https://ui-avatars.com/api/?name=${company.company?.name}&bold=true&rounded=true&background=8f6ec5`
+                            }
+                            loading="lazy"
+                            alt="C"
+                            className="w-[50px] h-[38px]"
+                          />
+                          <div className="flex-col text-left items-center px-3">
+                            <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
+                              {company.job_title}
+                            </p>
+                            <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
+                              {company.company?.name} |{" "}
+                              {this.dateFormat(company.start_date)} -{" "}
+                              {company.end_date
+                                ? this.dateFormat(company.end_date)
+                                : "Present"}
+                            </p>
+                          </div>
+                        </div>
+                        <div>
+                          {this.props.isEdit && (
+                            <div className="flex items-center justify-center gap-x-5">
+                              <img
+                                src={pencil}
+                                alt="edit"
+                                title="Edit"
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  this.handleEditExperienceModal(company)
+                                }
+                              />
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -367,35 +419,55 @@ class Profile extends Component {
                           className="cursor-pointer"
                           onClick={this.handleEducationModal}
                         />
-                        <img
+                        {/* <img
                           src={pencil}
                           alt="edit"
                           title="Edit"
                           className="cursor-pointer"
                           onClick={this.handleEducationModal}
-                        />
+                        /> */}
                       </div>
                     )}
                   </div>
                   {mentor.colleges &&
                     mentor.colleges.length !== 0 &&
                     mentor.colleges.map((college, index) => (
-                      <div className="flex items-center" key={college._id}>
-                        <img
-                          src={college.college.image_url}
-                          loading="lazy"
-                          alt="ProfileImage"
-                          className="w-[38px] h-[38px]"
-                        />
-                        <div className="flex-col text-left items-center px-3">
-                          <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
-                            {college.degree}
-                          </p>
-                          <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
-                            {college.college.name} |{" "}
-                            {this.dateFormat(college.start_date)} -{" "}
-                            {this.dateFormat(college.end_date)}
-                          </p>
+                      <div
+                        className="flex justify-between items-center"
+                        key={college._id}
+                      >
+                        <div className="flex">
+                          <img
+                            src={college.college.image_url}
+                            loading="lazy"
+                            alt="ProfileImage"
+                            className="w-[38px] h-[38px]"
+                          />
+                          <div className="flex-col text-left items-center px-3">
+                            <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
+                              {college.degree}
+                            </p>
+                            <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
+                              {college.college.name} |{" "}
+                              {this.dateFormat(college.start_date)} -{" "}
+                              {this.dateFormat(college.end_date)}
+                            </p>
+                          </div>
+                        </div>
+                        <div>
+                          {this.props.isEdit && (
+                            <div className="flex items-center justify-center gap-x-5">
+                              <img
+                                src={pencil}
+                                alt="edit"
+                                title="Edit"
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  this.handleEditEducationModal(college)
+                                }
+                              />
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -512,16 +584,38 @@ class Profile extends Component {
           isBooking={true}
         />
         <div>
-          {showExperienceModal && (
+          {showAddExperienceModal && (
             <ExperienceModal
               handleExperienceModal={this.handleExperienceModal}
               mentor={mentor}
+              isEdit={false}
             />
           )}
-          {showEducationModal && (
+          {showAddEducationModal && (
             <EducationModal
               handleEducationModal={this.handleEducationModal}
               mentor={mentor}
+              isEdit={false}
+            />
+          )}
+          {showEditExperienceModal && (
+            <ExperienceModal
+              handleExperienceModal={() =>
+                this.setState({ showEditExperienceModal: false })
+              }
+              mentor={mentor}
+              isEdit={true}
+              company={currentEditCompany}
+            />
+          )}
+          {showEditEducationModal && (
+            <EducationModal
+              handleEducationModal={() =>
+                this.setState({ showEditEducationModal: false })
+              }
+              mentor={mentor}
+              isEdit={true}
+              college={currentEditCollege}
             />
           )}
           <img
@@ -531,7 +625,7 @@ class Profile extends Component {
             loading="lazy"
           />
         </div>
-        <div className="flex-col justify-left -mt-16 sm:mx-2 lg:mx-24 md:mx-8  mx-5">
+        <div className="flex-col justify-left -mt-16 sm:mx-5 lg:mx-24 md:mx-8">
           <div className="flex  items-center">
             {Object.keys(mentor).length !== 0 && (
               <img

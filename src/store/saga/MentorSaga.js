@@ -33,8 +33,7 @@ function* updateMentorExperienceSaga(action) {
       });
     }
   } catch (e) {
-    console.log("saga", e.msg);
-    toast.error(e.msg, {
+    toast.error("Cannot Update Mentor Details", {
       position: toast.POSITION.TOP_CENTER,
     });
   }

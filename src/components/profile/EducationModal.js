@@ -31,7 +31,33 @@ class EducationModal extends Component {
 
   componentDidMount() {
     this.props.fetchCollegesRequested();
+    if (this.props.isEdit) {
+      const { college } = this.props;
+      this.setState((prev) => {
+        return {
+          ...prev,
+          experience: {
+            degree: college.degree,
+            start_date: this.dateFormat(college.start_date),
+            college: college.college._id,
+            end_date: this.dateFormat(college.end_date) || "",
+          },
+        };
+      });
+    }
   }
+
+  dateFormat = (date) => {
+    let x = new Date(date);
+    return (
+      "date",
+      ("0" + x.getDate()).slice(-2) +
+        " " +
+        x.toLocaleString("default", { month: "long" }) +
+        " " +
+        x.getFullYear()
+    );
+  };
 
   handleChange = (e) => {
     const { value, name } = e.target;
@@ -48,18 +74,51 @@ class EducationModal extends Component {
     return true;
   };
 
-  handleSubmitExperience = () => {
+  handleSubmitEducation = () => {
     const { experience } = this.state;
     const { colleges } = this.props.mentor;
-    const modifiedColleges = colleges.map((college) => {
-      return { ...college, college: college.college._id };
-    });
-    if (this.validate()) {
-      this.props.updateMentorExperienceRequested({
-        colleges: [...modifiedColleges, { ...experience }],
+    if (!this.props.isEdit) {
+      const modifiedColleges = colleges.map((college) => {
+        return { ...college, college: college.college._id };
       });
-      this.props.handleEducationModal();
+      if (this.validate()) {
+        this.props.updateMentorExperienceRequested({
+          colleges: [...modifiedColleges, { ...experience }],
+        });
+        this.props.handleEducationModal();
+      }
+    } else {
+      const { college } = this.props;
+      const EditedCollege = {
+        ...college,
+        degree: experience.degree,
+        college: experience.college,
+        start_date: experience.start_date,
+        end_date: experience.end_date,
+      };
+      const itemIndex = colleges.findIndex(
+        (college) => college._id === this.props.college._id
+      );
+      if (itemIndex > -1) {
+        colleges[itemIndex] = EditedCollege;
+      }
+      if (this.validate()) {
+        this.props.updateMentorExperienceRequested({
+          companies: [...colleges],
+        });
+      }
     }
+  };
+
+  handleSubmitDeleteEducation = () => {
+    const { colleges } = this.props.mentor;
+    const modifiedColleges = colleges.filter(
+      (college) => college._id !== this.props.college._id
+    );
+    this.props.updateMentorExperienceRequested({
+      colleges: [...modifiedColleges],
+    });
+    this.props.handleEducationModal();
   };
 
   render() {
@@ -127,6 +186,7 @@ class EducationModal extends Component {
                           className="block font-poppins appearance-none w-full bg-gray-100 border focus:outline-none focus:ring-0 focus:border-[#8F6EC5] text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
                           id="grid-state"
                           name="college"
+                          value={this.state.experience.college}
                           onChange={(e) => this.handleChange(e)}
                         >
                           <option>Select College</option>
@@ -277,7 +337,7 @@ class EducationModal extends Component {
                       </div>
                     </div> */}
 
-                    <div>
+                    {/* <div>
                       <div className="relative">
                         <input
                           className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
@@ -292,12 +352,18 @@ class EducationModal extends Component {
                           I am currently working here
                         </label>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="flex justify-end items-center">
+                    <div className="flex justify-between items-center">
                       <button
-                        onClick={this.handleSubmitExperience}
-                        className="bg-[#8F6EC5] rounded-[5px] text-[16px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px] text-[10px]"
+                        onClick={this.handleSubmitDeleteEducation}
+                        className="bg-[#8F6EC5] rounded-[5px] text-[12px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px]"
+                      >
+                        Delete
+                      </button>
+                      <button
+                        onClick={this.handleSubmitEducation}
+                        className="bg-[#8F6EC5] rounded-[5px] text-[12px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px]"
                       >
                         Save
                       </button>

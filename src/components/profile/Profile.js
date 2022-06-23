@@ -84,7 +84,7 @@ class Profile extends Component {
         };
       });
     }
-    this.props.fetchMentorDetailsRequested({ id });
+    // this.props.fetchMentorDetailsRequested({ id });
     mentorAvailability(id).then((res) => {
       this.setState((prev) => {
         return {
@@ -287,14 +287,13 @@ class Profile extends Component {
       dropDownItem,
     } = this.state;
     const { mentor } = this.props;
-    console.log(mentor);
     const NavItems = () => {
       switch (this.state.NavItem) {
         case 1:
           return (
             <>
               <div className="gap-y-3">
-                <p className="font-Helvetica font-normal text-[#273150] py-5 pb-0 lg:text-xl md:text-lg sm:text-md text-sm">
+                <p className="font-Helvetica font-normal text-[#273150] sm:py-5 pb-0 lg:text-xl md:text-lg sm:text-md text-sm">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
@@ -306,7 +305,7 @@ class Profile extends Component {
                     <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
                       Experience
                     </h1>
-                    {this.props.Usertype === "M" && (
+                    {this.props.isEdit && (
                       <div className="flex items-center justify-center gap-x-5">
                         <img
                           src={plus}
@@ -359,7 +358,7 @@ class Profile extends Component {
                     <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
                       Education
                     </h1>
-                    {this.props.Usertype === "M" && (
+                    {this.props.isEdit && (
                       <div className="flex items-center justify-center gap-x-5">
                         <img
                           src={plus}
@@ -553,75 +552,77 @@ class Profile extends Component {
               </p>
             </div>
           </div>
-          <div className="flex-col sm:mt-10 mt-7 ">
-            <div className="flex-col w-full py-5">
-              <div className="flex font-poppins gap-x-16 py-2 pb-3">
+          <div className="flex-col sm:mt-10">
+            <div className="flex-col w-full sm:py-5 py-2">
+              <div className="flex font-poppins sm:gap-x-16 gap-x-4 py-2 sm:pb-3">
                 <p
                   onClick={() => this.setState({ NavItem: 1 })}
-                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] text-[20px] ${
+                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
                     this.state.NavItem === 1
                       ? "text-[#8f6ec5]"
                       : "text-[#8c8c8c]"
-                  } px-3`}
+                  } pr-1`}
                 >
                   Profile
                 </p>
                 <p
                   onClick={() => this.setState({ NavItem: 2 })}
-                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] text-[20px] ${
+                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
                     this.state.NavItem === 2
                       ? "text-[#8f6ec5]"
                       : "text-[#8c8c8c]"
-                  } px-1`}
+                  } pr-1`}
                 >
                   Sessions
                 </p>
                 <p
                   onClick={() => this.setState({ NavItem: 3 })}
-                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] text-[20px] ${
+                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
                     this.state.NavItem === 3
                       ? "text-[#8f6ec5]"
                       : "text-[#8c8c8c]"
-                  } px-1`}
+                  } pr-1`}
                 >
                   Testimonials
                 </p>
               </div>
               {this.state.NavItem === 1 && (
                 <div className="flex">
-                  <hr className="lg:w-[10%] sm:w-[14%] rounded bg-[#8f6ec5] py-[2px]" />
+                  <hr className="lg:w-[8%] sm:w-[12%] w-[16%] rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
                   <hr className="lg:w-full rounded-r bg-[#f2f2f2] py-[1px]" />
                 </div>
               )}
               {this.state.NavItem === 2 && (
                 <div className="flex">
-                  <hr className="lg:w-[14%] sm:w-[30%] rounded bg-[#f2f2f2] py-[1px]" />
-                  <hr className="lg:w-[16%] sm:w-[30%] rounded bg-[#8f6ec5] py-[2px]" />
+                  <hr className="lg:w-[12%] sm:w-[22%] w-[39%]  rounded bg-[#f2f2f2] py-[1px]" />
+                  <hr className="lg:w-[13%] sm:w-[27%] w-[50%] rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
                   <hr className="w-full rounded bg-[#f2f2f2] py-[1px]" />
                 </div>
               )}
               {this.state.NavItem === 3 && (
                 <div className="flex w-full">
-                  <hr className="lg:w-[44%] sm:w-[43%] rounded bg-[#f2f2f2] py-[1px]" />
-                  <hr className="lg:w-[24%] sm:w-[23%] rounded bg-[#8f6ec5] py-[2px]" />
+                  <hr className="lg:w-[36%] sm:w-[37%] w-[50%] rounded bg-[#f2f2f2] py-[1px]" />
+                  <hr className="lg:w-[23%] sm:w-[23%] w-[37%] rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
                   <hr className="lg:w-full sm:w-[30%] rounded bg-[#f2f2f2] py-[1px]" />
                 </div>
               )}
             </div>
             <div className="grid md:grid-cols-2">
               <>{<NavItems />}</>
-              <div className="pt-5 sm:p-0">
-                <Slots
-                  formatDate={this.formatDate}
-                  onChangeEventStartDate={this.onChangeEventStartDate}
-                  onChangeEventStartTime={this.onChangeEventStartTime}
-                  startDates={this.state.StartDates}
-                  availableDates={this.state.availableDates}
-                  event={this.state.event}
-                  currentStartTimeIndex={this.state.currentStartTimeIndex}
-                  currentStartDateIndex={this.state.currentStartDateIndex}
-                />
-              </div>
+              {!this.props.isEdit && (
+                <div className="pt-5 sm:p-0">
+                  <Slots
+                    formatDate={this.formatDate}
+                    onChangeEventStartDate={this.onChangeEventStartDate}
+                    onChangeEventStartTime={this.onChangeEventStartTime}
+                    startDates={this.state.StartDates}
+                    availableDates={this.state.availableDates}
+                    event={this.state.event}
+                    currentStartTimeIndex={this.state.currentStartTimeIndex}
+                    currentStartDateIndex={this.state.currentStartDateIndex}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

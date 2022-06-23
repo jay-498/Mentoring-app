@@ -16,6 +16,7 @@ class RoundedUser extends Component {
     this.roundref = React.createRef();
     this.bookingref = React.createRef();
     this.viewref = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   componentDidMount() {
@@ -36,12 +37,12 @@ class RoundedUser extends Component {
     }
   };
 
-  logout = () => {
+  logout() {
     this.props.logOut();
     this.interval = setTimeout(() => {
       window.location.reload();
     }, 2000);
-  };
+  }
 
   handleDropDown = () => {
     this.ref.current.classList.toggle("hidden");
@@ -91,19 +92,22 @@ class RoundedUser extends Component {
                 />
               </div>
               <div className="flex justify-center items-center gap-x-3">
-                {/* <select
-                        className="flex items-center cursor-pointer justify-center w-full text-gray-700 py-2 px-1 rounded"
-                        id="grid-state"
-                        >
-                        <option value="E">Eng</option>
-                        <option value="H">Hin</option>
-                    </select> */}
                 <img src={cross} alt="close" onClick={this.handleDropDown} />
               </div>
             </div>
             <div className="flex-col divide-y">
-              <div className="pb-2 font-roboto">
-                <p className="text-[20px] font-medium">{this.props.userName}</p>
+              <div className="pb-2">
+                <p className="text-[20px]  font-roboto font-medium">
+                  {this.props.userName}
+                </p>
+                {this.props.userType === "M" && (
+                  <a
+                    className="text-[14px] pt-2 font-poppins  font-medium"
+                    href={`/me`}
+                  >
+                    My Profile
+                  </a>
+                )}
               </div>
               <div className="flex-col relative w-full inline-block text-left px-2">
                 <div
@@ -148,7 +152,7 @@ class RoundedUser extends Component {
                 </div>
                 <div
                   className="flex w-full justify-between items-center"
-                  onClick={this.logOut}
+                  onClick={() => this.logout()}
                 >
                   <p className="text-[14px] font-medium pb-2">Logout</p>
                 </div>
@@ -164,6 +168,7 @@ class RoundedUser extends Component {
 const mapStateToProps = ({ booking, Login }) => {
   return {
     userName: Login.userName,
+    userType: Login.userType,
     bookingModal: booking.bookingModal,
     AllEvents: booking.AllEvents,
   };

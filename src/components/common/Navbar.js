@@ -17,6 +17,8 @@ class Navbar extends Component {
       navbarOpen: false,
       searchQuery: "",
     };
+    this.onChangeSearchQuery = this.onChangeSearchQuery.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   onChangeNavbar = () => {

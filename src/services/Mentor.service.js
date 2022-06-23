@@ -49,3 +49,19 @@ export const getMentorById = ({ id }) => {
       throw error;
     });
 };
+
+export const getCurrentMentor = () => {
+  const jwt_token = localStorage.getItem("user_token");
+  return axios
+    .get(`${BASE_URL}/api/auth/me`, {
+      headers: {
+        "x-auth-token": jwt_token,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};

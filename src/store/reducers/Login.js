@@ -80,7 +80,9 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
       };
     case LOGIN_SUCCESS:
-      console.log("reducer", action.payload);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
       return {
         ...state,
         userName: action.payload.user_name,

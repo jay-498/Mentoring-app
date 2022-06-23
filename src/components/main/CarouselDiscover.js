@@ -53,7 +53,7 @@ class CarouselDiscover extends Component {
     const settings = {
       arrows: false,
       swipe: true,
-      // infinite: true,
+      infinite: false,
       speed: 500,
       loop: true,
       slidesToShow: 4,

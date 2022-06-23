@@ -7,6 +7,8 @@ import {
   UPDATE_MENTOR_EXPERIENCE_SUCCESS,
   FETCH_COLLEGES_REQUESTED,
   FETCH_COLLEGES_SUCCESS,
+  FETCH_CURRENT_MENTOR_DETAILS_REQUESTED,
+  FETCH_CURRENT_MENTOR_DETAILS_SUCCESS,
 } from "../actionTypes/index";
 
 export const fetchCompaniesRequested = () => {
@@ -45,6 +47,19 @@ export const fetchMentorDetailsRequested = (data) => {
 export const fetchMentorDetailsSuccess = (data) => {
   return {
     type: FETCH_MENTOR_DETAILS_SUCCESS,
+    payload: data,
+  };
+};
+
+export const fetchCurrentMentorDetailsRequested = () => {
+  return {
+    type: FETCH_CURRENT_MENTOR_DETAILS_REQUESTED,
+  };
+};
+
+export const fetchCurrentMentorDetailsSuccess = (data) => {
+  return {
+    type: FETCH_CURRENT_MENTOR_DETAILS_SUCCESS,
     payload: data,
   };
 };

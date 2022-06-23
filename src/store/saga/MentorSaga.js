@@ -2,12 +2,14 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   FETCH_COLLEGES_REQUESTED,
   FETCH_COMPANIES_REQUESTED,
+  FETCH_CURRENT_MENTOR_DETAILS_REQUESTED,
   FETCH_MENTOR_DETAILS_REQUESTED,
   UPDATE_MENTOR_EXPERIENCE_REQUESTED,
 } from "../actionTypes/index";
 import {
   fetchCollegesSuccess,
   fetchCompaniesSuccess,
+  fetchCurrentMentorDetailsSuccess,
   fetchMentorDetailsRequested,
   fetchMentorDetailsSuccess,
   updateMentorExperienceSuccess,
@@ -15,6 +17,7 @@ import {
 import {
   getColleges,
   getCompanies,
+  getCurrentMentor,
   getMentorById,
   updateMentorExperience,
 } from "../../services/Mentor.service";
@@ -30,6 +33,7 @@ function* updateMentorExperienceSaga(action) {
       });
     }
   } catch (e) {
+    console.log("saga", e.msg);
     toast.error(e.msg, {
       position: toast.POSITION.TOP_CENTER,
     });
@@ -63,6 +67,17 @@ function* fetchCollegesSaga(action) {
   }
 }
 
+function* fetchCurrentMentorDetailsSaga() {
+  try {
+    const res = yield call(getCurrentMentor);
+    if (res.success) {
+      yield put(fetchCurrentMentorDetailsSuccess(res.data));
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function* mentorSaga() {
   yield takeEvery(
     UPDATE_MENTOR_EXPERIENCE_REQUESTED,
@@ -71,6 +86,10 @@ function* mentorSaga() {
   yield takeEvery(FETCH_COMPANIES_REQUESTED, fetchCompaniesSaga);
   yield takeEvery(FETCH_COLLEGES_REQUESTED, fetchCollegesSaga);
   yield takeEvery(FETCH_MENTOR_DETAILS_REQUESTED, fetchMentorDetailsSaga);
+  yield takeEvery(
+    FETCH_CURRENT_MENTOR_DETAILS_REQUESTED,
+    fetchCurrentMentorDetailsSaga
+  );
 }
 
 export default mentorSaga;

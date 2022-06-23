@@ -1,10 +1,12 @@
 import "./App.css";
 import Navbar from "./components/common/Navbar";
 import HomePage from "./pages/home";
-import Profile from "./components/profile/Profile";
+import MentorDetails from "./components/profile/MentorDetails";
+import MentorProfile from "./components/profile/MentorProfile";
 import { Routes, Route } from "react-router-dom";
 import MentorSearch from "./pages/MentorSearch";
 import { Fragment } from "react";
+import { ProtectedRoute } from "./components/common/ProtectedRoute";
 
 function App() {
   return (
@@ -12,17 +14,31 @@ function App() {
       <div>
         <Navbar />
         <Routes>
-          <Route path="/"element={
+          <Route
+            path="/"
+            element={
               <Fragment>
-                  <HomePage />
+                <HomePage />
               </Fragment>
-            }/>
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/search"element={
+            }
+          />
+          <Route path="/profile/:id" element={<MentorDetails />} />
+          <Route
+            path="/me"
+            element={
+              <ProtectedRoute>
+                <MentorProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/search"
+            element={
               <Fragment>
-                  <MentorSearch />
+                <MentorSearch />
               </Fragment>
-            }/>
+            }
+          />
         </Routes>
       </div>
     </div>

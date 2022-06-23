@@ -108,16 +108,16 @@ export default class Gallery extends Component {
 
     return (
       <div className="relative pt-5">
-        {this.state.categories.length>4 && 
-        <div
-          className="absolute sm:top-[118px] top-[124px] left-5 z-10 bg-gray-50 rounded-2xl h-15 w-15 p-3"
-          onClick={this.previous}
-        >
-          <button className="button">
-            <img src={left} alt="left" className="h-6 w-6" loading="lazy"/>
-          </button>
-        </div>
-        }
+        {this.state.categories.length > 4 && (
+          <div
+            className="absolute flex items-center justify-center sm:top-[118px] top-[124px] left-5 z-10 bg-gray-50 rounded-2xl h-15 w-15 p-3"
+            onClick={this.previous}
+          >
+            <button className="button">
+              <img src={left} alt="left" className="h-6 w-6" loading="lazy" />
+            </button>
+          </div>
+        )}
         <Slider ref={(c) => (this.slider = c)} {...settings}>
           {this.state.categories.map((mentor, index) => (
             <div key={index}>
@@ -131,20 +131,28 @@ export default class Gallery extends Component {
                   </h1>
                 </a>
                 <a href="#" className="relative">
-                  <img src={mentor.image} alt="1"loading="lazy" />
+                  <img src={mentor.image} alt="1" loading="lazy" />
                 </a>
               </div>
             </div>
           ))}
         </Slider>
-        
-        {this.state.categories.length>4 && 
-        <div className="absolute right-3 sm:top-[118px] top-[124px]" onClick={this.next}>
-          <button className="button bg-gray-50 rounded-2xl h-15 w-15 p-4">
-            <img src={right} alt="left" className="rounded-3xl h-6 w-6" loading="lazy"/>
-          </button>
-        </div>
-        }
+
+        {this.state.categories.length > 4 && (
+          <div
+            className="absolute right-3 sm:top-[118px] top-[124px]"
+            onClick={this.next}
+          >
+            <button className="button bg-gray-50 rounded-2xl h-15 w-15 p-4">
+              <img
+                src={right}
+                alt="left"
+                className="rounded-3xl h-6 w-6"
+                loading="lazy"
+              />
+            </button>
+          </div>
+        )}
       </div>
     );
   }

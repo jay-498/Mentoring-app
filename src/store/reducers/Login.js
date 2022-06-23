@@ -12,6 +12,8 @@ import {
 } from "../actionTypes/index";
 import { toast } from "react-toastify";
 
+const userType = localStorage.getItem("type");
+const userName = localStorage.getItem("user_name");
 const token = localStorage.getItem("user_token");
 const google_check = localStorage.getItem("is_google_verified");
 let user = { token };
@@ -20,8 +22,22 @@ if (!token) {
 }
 
 const initialState = user
-  ? { isLoggedIn: true,is_google_verified: google_check, user, userMobile: "" }
-  : { isLoggedIn: false,is_google_verified: google_check, user: null, userMobile: "", otpMessage: "" };
+  ? {
+      isLoggedIn: true,
+      is_google_verified: google_check,
+      user,
+      userName: userName,
+      userMobile: "",
+      userType: userType,
+    }
+  : {
+      isLoggedIn: false,
+      is_google_verified: google_check,
+      user: null,
+      userName: "",
+      userMobile: "",
+      otpMessage: "",
+    };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -31,6 +47,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
+        userType,
       };
 
     case UPDATE_USER_MOBILE:
@@ -63,10 +80,13 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
       };
     case LOGIN_SUCCESS:
+      console.log("reducer", action.payload);
       return {
         ...state,
+        userName: action.payload.user_name,
         is_google_verified: action.payload.is_google_verified,
         isLoggedIn: true,
+        userType,
       };
     case LOGIN_FAILURE:
       return {
@@ -77,7 +97,11 @@ export default function (state = initialState, action) {
       };
     case LOGOUT:
       localStorage.removeItem("user_token");
-      toast.success("Logout Successfull",{position: toast.POSITION.TOP_CENTER})
+      localStorage.removeItem("user_name");
+      localStorage.removeItem("type");
+      toast.success("Logout Successfull", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return {
         ...state,
         isLoggedIn: false,

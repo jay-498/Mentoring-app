@@ -23,6 +23,7 @@ import { withRouter } from "../utils/withRouter";
 import { UpdateLoginModal } from "../store/actions/booking";
 import { logOut } from "../store/actions/Login";
 import MyBookings from "../components/bookings/MyBookings";
+import { fetchCompaniesRequested } from "../store/actions/Mentor";
 
 class HomePage extends Component {
   constructor() {
@@ -33,6 +34,10 @@ class HomePage extends Component {
       isEmailValid: false,
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchCompaniesRequested();
   }
 
   onSearch = () => {
@@ -383,6 +388,7 @@ const mapStateToProps = ({ booking, Login }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logOut: () => dispatch(logOut()),
+    fetchCompaniesRequested: () => dispatch(fetchCompaniesRequested()),
   };
 };
 

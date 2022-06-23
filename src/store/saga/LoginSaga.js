@@ -13,7 +13,7 @@ import {
   signinFailure,
   signinRequested,
 } from "../actions/Login";
-import { updateModalNUmber } from "../actions/booking";
+import { UpdateLoginModal, updateModalNUmber } from "../actions/booking";
 import {
   verifyOtp,
   googleSignin,
@@ -24,17 +24,24 @@ import { toast } from "react-toastify";
 function* loginSaga(action) {
   try {
     const auth = yield call(verifyOtp, action.payload);
-    if (auth.has_user_details) {
+    if (
+      (auth.has_user_details || action.payload.type === "M") &&
+      auth.success
+    ) {
       localStorage.setItem("user_token", auth.jwt_token);
+      localStorage.setItem("user_name", auth.user_name);
       toast.success("Login Successfull", {
         position: toast.POSITION.TOP_CENTER,
       });
       yield put(loginSuccess(auth));
+      yield put(UpdateLoginModal(false));
       // localStorage.setItem("is_google_verified", auth.is_google_verified);
     } else {
+      localStorage.removeItem("type");
       yield put(updateModalNUmber(2));
     }
   } catch (e) {
+    localStorage.removeItem("type");
     toast.error("Invalid OTP", { position: toast.POSITION.TOP_CENTER });
     yield put(loginFailure("Invalid Otp"));
   }

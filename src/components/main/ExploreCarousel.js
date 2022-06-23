@@ -4,6 +4,8 @@ import img2 from "../../assets/images/mentee/Group 9547.png";
 import img3 from "../../assets/images/mentee/Group 9548.png";
 import Mentor from "../mentor";
 import MainService from "../../services/main.service";
+import { connect } from "react-redux";
+import { withRouter } from "../../utils/withRouter";
 
 /**
  * PurgeCSS:
@@ -13,26 +15,26 @@ import MainService from "../../services/main.service";
 
   */
 
-export default class ExploreCarousel extends Component {
-  constructor() {
-    super();
-    this.state = {
-      explore: [],
-    };
-  }
+class ExploreCarousel extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     explore: [],
+  //   };
+  // }
 
-  componentDidMount() {
-    MainService.exploreConsultingCompanies()
-      .then((response) => {
-        this.setState({ explore: response.data });
-      })
-      .catch((err) => console.log(err));
-  }
+  // componentDidMount() {
+  //   MainService.exploreConsultingCompanies()
+  //     .then((response) => {
+  //       this.setState({ explore: response.data });
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   render() {
     return (
       <div className="grid grid-cols lg:grid-cols-3 grid-cols-1 pt-10 gap-y-2">
-        {this.state.explore.map((mentor, index) => (
+        {this.props.companies.map((mentor, index) => (
           <div className="flex justify-center items-center" key={index}>
             <div
               className={`flex bg-[${mentor.template_color}] w-[350px] h-[205px] rounded-[20px]`}
@@ -55,3 +57,11 @@ export default class ExploreCarousel extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ Mentor }) => {
+  return {
+    companies: Mentor.companies,
+  };
+};
+
+export default connect(mapStateToProps, null)(withRouter(ExploreCarousel));

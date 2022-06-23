@@ -36,6 +36,13 @@ class RoundedUser extends Component {
     }
   };
 
+  logout = () => {
+    this.props.logOut();
+    this.interval = setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  };
+
   handleDropDown = () => {
     this.ref.current.classList.toggle("hidden");
   };
@@ -96,7 +103,7 @@ class RoundedUser extends Component {
             </div>
             <div className="flex-col divide-y">
               <div className="pb-2 font-roboto">
-                <p className="text-[20px] font-medium">Mentee Name</p>
+                <p className="text-[20px] font-medium">{this.props.userName}</p>
               </div>
               <div className="flex-col relative w-full inline-block text-left px-2">
                 <div
@@ -119,10 +126,6 @@ class RoundedUser extends Component {
                 >
                   <div className="bg-gray-300 h-[84px] w-[1px]"></div>
                   <div className="flex-col justify-between items-center py-1 text-[14px] font-medium">
-                    {/* <div className="flex items-center justify-center py-1">
-                                <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
-                                <p onClick={()=>this.props.updateBookingModal(true)}>All</p>
-                            </div> */}
                     <div className="flex items-center justify-start py-1">
                       <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
                       <p onClick={() => this.props.updateBookingModal(1)}>
@@ -145,7 +148,7 @@ class RoundedUser extends Component {
                 </div>
                 <div
                   className="flex w-full justify-between items-center"
-                  onClick={this.props.logOut}
+                  onClick={this.logOut}
                 >
                   <p className="text-[14px] font-medium pb-2">Logout</p>
                 </div>
@@ -158,8 +161,9 @@ class RoundedUser extends Component {
   }
 }
 
-const mapStateToProps = ({ booking }) => {
+const mapStateToProps = ({ booking, Login }) => {
   return {
+    userName: Login.userName,
     bookingModal: booking.bookingModal,
     AllEvents: booking.AllEvents,
   };

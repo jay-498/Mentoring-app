@@ -46,11 +46,11 @@ class DeleteTest extends Component {
     this.onGoogleLoginSuccess = this.onGoogleLoginSuccess.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isLoggedIn && !this.props.isBooking) {
-      this.props.updateLoginModal(false);
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.isLoggedIn && !this.props.isBooking) {
+  //     this.props.updateLoginModal(false);
+  //   }
+  // }
 
   handleChange = (e) => {
     const { value, name } = e.target;
@@ -94,6 +94,7 @@ class DeleteTest extends Component {
       this.props.updateUserMobile(mobile);
       sendOtp({ mobile }).then((res) => {
         if (res.success) {
+          localStorage.setItem("type", res.type);
           this.setState((prevState) => {
             return {
               ...prevState,
@@ -118,7 +119,8 @@ class DeleteTest extends Component {
     if (otp === "" || /^\d{6}$/.test(otp) === false) {
       this.props.setErrorMessage("*OTP length should be 6");
     } else {
-      this.props.loginRequested({ otp, mobile: userMobile });
+      const type = localStorage.getItem("type");
+      this.props.loginRequested({ otp, mobile: userMobile, type });
       this.setState({
         otp: "",
         otpSent: false,
@@ -539,7 +541,7 @@ class DeleteTest extends Component {
     };
     return (
       <>
-        {console.log("modal", this.props.showModal)}
+        {/* {console.log("modal", this.props.showModal)} */}
         {this.props.showModal ? (
           <div
             className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}

@@ -53,7 +53,7 @@ class CarouselDiscover extends Component {
     const settings = {
       arrows: false,
       swipe: true,
-      infinite: true,
+      // infinite: true,
       speed: 500,
       loop: true,
       slidesToShow: 4,
@@ -63,8 +63,8 @@ class CarouselDiscover extends Component {
           breakpoint: 1024,
           settings: {
             slidesToShow: 4,
-            slidesToScroll: 2,
-            infinite: true,
+            slidesToScroll: 1,
+            // infinite: true,
           },
         },
         {
@@ -73,7 +73,7 @@ class CarouselDiscover extends Component {
             slidesToShow: 2,
             slidesToScroll: 2,
             initialSlide: 2,
-            infinite: true,
+            // infinite: true,
           },
         },
         {
@@ -82,7 +82,7 @@ class CarouselDiscover extends Component {
             slidesToShow: 2,
             slidesToScroll: 2,
             initialSlide: 2,
-            infinite: true,
+            // infinite: true,
           },
         },
         {
@@ -90,7 +90,7 @@ class CarouselDiscover extends Component {
           settings: {
             slidesToShow: 1,
             slidesToScroll: 1,
-            infinite: true,
+            // infinite: true,
           },
         },
       ],
@@ -109,7 +109,7 @@ class CarouselDiscover extends Component {
                   <img
                     src={left}
                     alt="left"
-                    className="h-6 w-6 mt-2 ml-3"
+                    className="h-6 w-6 ml-3"
                     loading="lazy"
                   />
                 </button>

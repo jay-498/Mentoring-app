@@ -4,7 +4,7 @@ import plus from "../../assets/images/svgs/plus.png";
 import pencil from "../../assets/images/svgs/pencil.png";
 import Slots from "./Slots";
 import { withRouter } from "../../utils/withRouter";
-import mainService from "../../services/main.service";
+import downarrow from "../../assets/images/svgs/downarrow.png";
 import { mentorAvailability } from "../../services/booking.service";
 import {
   updateCalenderEventRequested,
@@ -16,36 +16,40 @@ import { logOut } from "../../store/actions/Login";
 import ExperienceModal from "./ExperienceModal";
 import EducationModal from "./EducationModal";
 import { toast } from "react-toastify";
+import { fetchMentorDetailsRequested } from "../../store/actions/Mentor";
 class Profile extends Component {
   constructor(props) {
     super(props);
+    this.bookingref = React.createRef();
     this.state = {
       showExperienceModal: false,
       showEducationModal: false,
-      mentor: {},
       availableDates: [],
-      StartDates: [
-        {
-          date: "Fri Jun 03 2022 8:00:00 GMT+0530 (India Standard Time)",
-          times: [8, 9, 10, 14, 16],
-        },
-        {
-          date: "Sat Jun 04 2022 10:00:00 GMT+0530 (India Standard Time)",
-          times: [10, 9],
-        },
-        {
-          date: "Sun Jun 05 2022 14:00:00 GMT+0530 (India Standard Time)",
-          times: [14, 16, 20],
-        },
-        {
-          date: "Mon Jun 06 2022 9:00:00 GMT+0530 (India Standard Time)",
-          times: [9, 10, 14, 16],
-        },
-        {
-          date: "Tue Jun 07 2022 8:00:00 GMT+0530 (India Standard Time)",
-          times: [8, 9, 10, 20],
-        },
-      ],
+      NavItem: 1,
+      dropDownItem: 1,
+      dropDownItems: ["All", "Upcoming", "Past"],
+      // StartDates: [
+      //   {
+      //     date: "Fri Jun 03 2022 8:00:00 GMT+0530 (India Standard Time)",
+      //     times: [8, 9, 10, 14, 16],
+      //   },
+      //   {
+      //     date: "Sat Jun 04 2022 10:00:00 GMT+0530 (India Standard Time)",
+      //     times: [10, 9],
+      //   },
+      //   {
+      //     date: "Sun Jun 05 2022 14:00:00 GMT+0530 (India Standard Time)",
+      //     times: [14, 16, 20],
+      //   },
+      //   {
+      //     date: "Mon Jun 06 2022 9:00:00 GMT+0530 (India Standard Time)",
+      //     times: [9, 10, 14, 16],
+      //   },
+      //   {
+      //     date: "Tue Jun 07 2022 8:00:00 GMT+0530 (India Standard Time)",
+      //     times: [8, 9, 10, 20],
+      //   },
+      // ],
       currentStartDateIndex: 0,
       currentStartTimeIndex: 0,
       event: {
@@ -62,7 +66,9 @@ class Profile extends Component {
     this.addHours = this.addHours.bind(this);
     this.formatDate = this.formatDate.bind(this);
     this.handleUpdateCalender = this.handleUpdateCalender.bind(this);
+    this.dateFormat = this.dateFormat.bind(this);
   }
+
   componentDidMount() {
     const id = this.props.params.id;
     const search = window.location.search;
@@ -78,16 +84,7 @@ class Profile extends Component {
         };
       });
     }
-    mainService
-      .getMentorById(id)
-      .then((response) => {
-        let tempMentors = JSON.parse(JSON.stringify(response.data));
-        this.setState((prevState) => ({
-          ...prevState,
-          mentor: tempMentors,
-        }));
-      })
-      .catch((err) => console.log(err));
+    this.props.fetchMentorDetailsRequested({ id });
     mentorAvailability(id).then((res) => {
       this.setState((prev) => {
         return {
@@ -196,8 +193,6 @@ class Profile extends Component {
   }
 
   handleUpdateCalender = (rate) => {
-    console.log("last", this.state.event);
-
     const id = this.props.params.id;
     const { event } = this.state;
     if (event.startDate && event.endDate) {
@@ -273,71 +268,31 @@ class Profile extends Component {
     });
   };
 
-  render() {
-    const { mentor, showExperienceModal, showEducationModal } = this.state;
+  dateFormat = (date) => {
+    let x = new Date(date);
     return (
-      <div className="flex flex-col overflow-hidden pb-10">
-        <LoginModal
-          onChangeEventSumary={this.onChangeEventSumary}
-          onChangeEventEndDate={this.onChangeEventEndDate}
-          handleUpdateCalender={this.handleUpdateCalender}
-          event={this.state.event}
-          mentor={this.state.mentor}
-          isBooking={true}
-        />
-        <div>
-          {showExperienceModal && (
-            <ExperienceModal
-              handleExperienceModal={this.handleExperienceModal}
-            />
-          )}
-          {showEducationModal && (
-            <EducationModal handleEducationModal={this.handleEducationModal} />
-          )}
-          <img
-            src={profiledesigns}
-            alt="bg"
-            className=" w-full"
-            loading="lazy"
-          />
-          {/* {this.props.isLoggedIn &&
-          <div>
-            <button onClick={this.logout} className="absolute right-10 top-3 bg-[#8F6EC5] text-white font-bold py-1 px-4 rounded">
-                Logout
-            </button>
-          </div>
-          } */}
-        </div>
-        <div className="flex-col justify-left -mt-16 mx-5 sm:mx-10 lg:mx-32 md:mx-16">
-          <div className="flex  items-center">
-            {Object.keys(mentor).length !== 0 && (
-              <img
-                src={mentor.profile_picture}
-                loading="lazy"
-                alt="mentor"
-                className="rounded-full border-solid border-white w-24 h-24 sm:w-44 sm:h-44 md:w-52 md:h-52 border-8 sm:-mt-5 mt-5"
-              />
-            )}
-            <div className="flex-col pt-10 sm:pt-8 text-left items-center sm:pl-10 pl-3">
-              <p className="sm:text-[32px] text-[20px] font-bold text-[#797979] font-poppins pt-1">
-                {mentor.name}
-              </p>
-              <p className="font-poppins font-normal text-[#797979] sm:text-[16px] text-[10px]">
-                {mentor.companies &&
-                  mentor.companies.length !== 0 &&
-                  mentor.companies[0].description}
-              </p>
-            </div>
-          </div>
-          <div className="flex-col sm:mt-10 mt-7">
-            <h1 className="text-[#5B6BD0] font-semibold font-poppins sm:text-[24px] text-[20px]">
-              Overview
-            </h1>
-            <div className="flex">
-              <hr className="bg-[#5B6BD0] mt-3 py-[2px] rounded w-28" />
-              <hr className="bg-[#F2F2F2] mt-3 py-[2px] rounded w-full" />
-            </div>
-            <div className="grid md:grid-cols-2">
+      x.toLocaleString("default", { month: "short" }) + " " + x.getFullYear()
+    );
+  };
+
+  handleBookingDropdown = () => {
+    this.bookingref.current.classList.toggle("hidden");
+  };
+
+  render() {
+    const {
+      showExperienceModal,
+      showEducationModal,
+      dropDownItems,
+      dropDownItem,
+    } = this.state;
+    const { mentor } = this.props;
+    console.log(mentor);
+    const NavItems = () => {
+      switch (this.state.NavItem) {
+        case 1:
+          return (
+            <>
               <div className="gap-y-3">
                 <p className="font-Helvetica font-normal text-[#273150] py-5 pb-0 lg:text-xl md:text-lg sm:text-md text-sm">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -346,70 +301,106 @@ class Profile extends Component {
                   laboris nisi.”
                 </p>
                 <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
-                {mentor.companies &&
-                  mentor.companies.length !== 0 &&
-                  mentor.companies.map((company, index) => (
-                    <div className="grid gap-y-2" key={company._id}>
-                      <div className="flex w-full justify-between items-center">
-                        <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
-                          Experience
-                        </h1>
-                        {/* <div className="flex items-center justify-center gap-x-5">
-                          <img src={plus} alt="+" title="Add" className="cursor-pointer" onClick={this.handleExperienceModal}/>
-                          <img src={pencil} alt="edit" title="Edit" className="cursor-pointer" onClick={this.handleExperienceModal}/>
-                        </div> */}
-                      </div>
-                      <div className="flex items-center mt-2">
+                <div className="flex-col  gap-y-2 mt-3">
+                  <div className="flex w-full justify-between items-center">
+                    <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
+                      Experience
+                    </h1>
+                    {this.props.Usertype === "M" && (
+                      <div className="flex items-center justify-center gap-x-5">
                         <img
-                          src={company.image_url}
-                          loading="lazy"
-                          alt="ProfileImage"
-                          className="w-[38px] h-[38px]"
+                          src={plus}
+                          alt="+"
+                          title="Add"
+                          className="cursor-pointer"
+                          onClick={this.handleExperienceModal}
                         />
-                        <div className="flex-col text-left items-center px-3">
-                          <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
-                            {company.description}
-                          </p>
-                          <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
-                            {company.name}
-                          </p>
-                        </div>
+                        <img
+                          src={pencil}
+                          alt="edit"
+                          title="Edit"
+                          className="cursor-pointer"
+                          onClick={this.handleExperienceModal}
+                        />
                       </div>
-                      <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
-                    </div>
-                  ))}
+                    )}
+                  </div>
 
-                {mentor.colleges &&
-                  mentor.colleges.length !== 0 &&
-                  mentor.colleges.map((college, index) => (
-                    <div className="grid gap-y-2 my-2" key={college._id}>
-                      <div className="flex w-full justify-between items-center">
-                        <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
-                          Education
-                        </h1>
-                        {/* <div className="flex items-center justify-center gap-x-5">
-                          <img src={plus} alt="+" title="Add" className="cursor-pointer" onClick={this.handleEducationModal}/>
-                          <img src={pencil} alt="edit" title="Edit" className="cursor-pointer" onClick={this.handleEducationModal}/>
-                        </div> */}
-                      </div>
-                      <div className="flex items-center">
+                  {mentor.companies &&
+                    mentor.companies.length !== 0 &&
+                    mentor.companies.map((company, index) => (
+                      <div className="flex items-center mt-2" key={company._id}>
                         <img
-                          src={college.image_url}
+                          src={
+                            company.company?.image_url ||
+                            `https://ui-avatars.com/api/?name=${company.company?.name}&bold=true&rounded=true&background=8f6ec5`
+                          }
+                          loading="lazy"
+                          alt="C"
+                          className="w-[50px] h-[38px]"
+                        />
+                        <div className="flex-col text-left items-center px-3">
+                          <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
+                            {company.job_title}
+                          </p>
+                          <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
+                            {company.company?.name} |{" "}
+                            {this.dateFormat(company.start_date)} -{" "}
+                            {this.dateFormat(company.end_date)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
+                </div>
+
+                <div className="grid gap-y-2 my-2">
+                  <div className="flex w-full justify-between items-center">
+                    <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
+                      Education
+                    </h1>
+                    {this.props.Usertype === "M" && (
+                      <div className="flex items-center justify-center gap-x-5">
+                        <img
+                          src={plus}
+                          alt="+"
+                          title="Add"
+                          className="cursor-pointer"
+                          onClick={this.handleEducationModal}
+                        />
+                        <img
+                          src={pencil}
+                          alt="edit"
+                          title="Edit"
+                          className="cursor-pointer"
+                          onClick={this.handleEducationModal}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  {mentor.colleges &&
+                    mentor.colleges.length !== 0 &&
+                    mentor.colleges.map((college, index) => (
+                      <div className="flex items-center" key={college._id}>
+                        <img
+                          src={college.college.image_url}
                           loading="lazy"
                           alt="ProfileImage"
                           className="w-[38px] h-[38px]"
                         />
                         <div className="flex-col text-left items-center px-3">
                           <p className="lg:text-[18px] md:text-lg sm:text-md text-sm font-semibold text-[#565656] font-poppins">
-                            {college.description}
+                            {college.degree}
                           </p>
                           <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
-                            {college.name}
+                            {college.college.name} |{" "}
+                            {this.dateFormat(college.start_date)} -{" "}
+                            {this.dateFormat(college.end_date)}
                           </p>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                </div>
                 <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
                 <div className="grid gap-y-2 my-2">
                   <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
@@ -437,6 +428,188 @@ class Profile extends Component {
                   </div>
                 </div>
               </div>
+            </>
+          );
+        case 2:
+          return (
+            <>
+              <div className="flex-col px-2">
+                <div className="flex relative items-start w-full inline-block text-left">
+                  <div
+                    className="flex gap-x-10 items-center"
+                    onClick={this.handleBookingDropdown}
+                  >
+                    <p className="text-[20px] font-poppins font-medium py-1">
+                      {dropDownItems[dropDownItem - 1]} Sessions
+                    </p>
+                    <img src={downarrow} alt="arrow" />
+                  </div>
+                  <div
+                    ref={this.bookingref}
+                    className="hidden absolute flex bg-white left-44 text-base list-none"
+                    id="dropdown"
+                  >
+                    <div className="flex-col w-[178px] shadow-lg justify-between items-center py-1 text-[14px] font-medium">
+                      <div
+                        onClick={() => this.setState({ dropDownItem: 1 })}
+                        className="flex  cursor-pointer hover:bg-[#8f6ec530] items-center justify-start p-1 px-4"
+                      >
+                        All
+                      </div>
+                      <div
+                        onClick={() => this.setState({ dropDownItem: 2 })}
+                        className="flex cursor-pointer items-center hover:bg-[#8f6ec530] justify-start p-1 px-4"
+                      >
+                        Upcoming
+                      </div>
+                      <div
+                        onClick={() => this.setState({ dropDownItem: 3 })}
+                        className="flex cursor-pointer items-center hover:bg-[#8f6ec530] justify-start p-1 px-4"
+                      >
+                        Past
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-col py-4">
+                  <p className="text-[#8f6ec5] pb-2 font-bold sm:text-[16px]">
+                    Friday, 18th June,2022 I 10:30 am
+                  </p>
+                  <hr className="max-w-[500px] py-[1px] text-[##E4E4E4]" />
+                  <div className="flex items-center py-2">
+                    <img
+                      loading="lazy"
+                      className="w-12 h-12 rounded-full shadow-lg overflow-hidden"
+                      src={mentor.profile_picture}
+                      alt="profile"
+                    />
+                    <div className="flex-col px-6 text-left">
+                      <h5 className="sm:text-[16px] font-Manrope font-bold text-[#3e3e3e]">
+                        Garvit Goswami
+                      </h5>
+                      <h5 className="font-medium font-Manrope text-[#888585]">
+                        Microsoft
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          );
+        case 3:
+          return <>{/* <EventCards events={PastEvents}/> */}</>;
+        default:
+          return <></>;
+      }
+    };
+    return (
+      <div className="flex flex-col overflow-hidden pb-10">
+        <LoginModal
+          onChangeEventSumary={this.onChangeEventSumary}
+          onChangeEventEndDate={this.onChangeEventEndDate}
+          handleUpdateCalender={this.handleUpdateCalender}
+          event={this.state.event}
+          mentor={mentor}
+          isBooking={true}
+        />
+        <div>
+          {showExperienceModal && (
+            <ExperienceModal
+              handleExperienceModal={this.handleExperienceModal}
+              mentor={mentor}
+            />
+          )}
+          {showEducationModal && (
+            <EducationModal
+              handleEducationModal={this.handleEducationModal}
+              mentor={mentor}
+            />
+          )}
+          <img
+            src={profiledesigns}
+            alt="bg"
+            className=" w-full"
+            loading="lazy"
+          />
+        </div>
+        <div className="flex-col justify-left -mt-16 sm:mx-2 lg:mx-24 md:mx-8  mx-5">
+          <div className="flex  items-center">
+            {Object.keys(mentor).length !== 0 && (
+              <img
+                src={mentor.profile_picture}
+                loading="lazy"
+                alt="mentor"
+                className="rounded-full border-solid border-white w-24 h-24 sm:w-44 sm:h-44 md:w-52 md:h-52 border-8 sm:-mt-5 mt-5"
+              />
+            )}
+            <div className="flex-col pt-10 sm:pt-8 text-left items-center sm:pl-10 pl-3">
+              <p className="sm:text-[32px] text-[20px] font-bold text-[#797979] font-poppins pt-1">
+                {mentor.name}
+              </p>
+              <p className="font-poppins font-normal text-[#797979] sm:text-[16px] text-[10px]">
+                {mentor.companies &&
+                  mentor.companies.length !== 0 &&
+                  mentor.companies[0].description}
+              </p>
+            </div>
+          </div>
+          <div className="flex-col sm:mt-10 mt-7 ">
+            <div className="flex-col w-full py-5">
+              <div className="flex font-poppins gap-x-16 py-2 pb-3">
+                <p
+                  onClick={() => this.setState({ NavItem: 1 })}
+                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] text-[20px] ${
+                    this.state.NavItem === 1
+                      ? "text-[#8f6ec5]"
+                      : "text-[#8c8c8c]"
+                  } px-3`}
+                >
+                  Profile
+                </p>
+                <p
+                  onClick={() => this.setState({ NavItem: 2 })}
+                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] text-[20px] ${
+                    this.state.NavItem === 2
+                      ? "text-[#8f6ec5]"
+                      : "text-[#8c8c8c]"
+                  } px-1`}
+                >
+                  Sessions
+                </p>
+                <p
+                  onClick={() => this.setState({ NavItem: 3 })}
+                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] text-[20px] ${
+                    this.state.NavItem === 3
+                      ? "text-[#8f6ec5]"
+                      : "text-[#8c8c8c]"
+                  } px-1`}
+                >
+                  Testimonials
+                </p>
+              </div>
+              {this.state.NavItem === 1 && (
+                <div className="flex">
+                  <hr className="lg:w-[10%] sm:w-[14%] rounded bg-[#8f6ec5] py-[2px]" />
+                  <hr className="lg:w-full rounded-r bg-[#f2f2f2] py-[1px]" />
+                </div>
+              )}
+              {this.state.NavItem === 2 && (
+                <div className="flex">
+                  <hr className="lg:w-[14%] sm:w-[30%] rounded bg-[#f2f2f2] py-[1px]" />
+                  <hr className="lg:w-[16%] sm:w-[30%] rounded bg-[#8f6ec5] py-[2px]" />
+                  <hr className="w-full rounded bg-[#f2f2f2] py-[1px]" />
+                </div>
+              )}
+              {this.state.NavItem === 3 && (
+                <div className="flex w-full">
+                  <hr className="lg:w-[44%] sm:w-[43%] rounded bg-[#f2f2f2] py-[1px]" />
+                  <hr className="lg:w-[24%] sm:w-[23%] rounded bg-[#8f6ec5] py-[2px]" />
+                  <hr className="lg:w-full sm:w-[30%] rounded bg-[#f2f2f2] py-[1px]" />
+                </div>
+              )}
+            </div>
+            <div className="grid md:grid-cols-2">
+              <>{<NavItems />}</>
               <div className="pt-5 sm:p-0">
                 <Slots
                   formatDate={this.formatDate}
@@ -457,9 +630,11 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = ({ booking, Login }) => {
+const mapStateToProps = ({ booking, Login, Mentor }) => {
   return {
     isLoggedIn: Login.isLoggedIn,
+    mentor: Mentor.MentorDetails,
+    Usertype: Login.userType,
   };
 };
 
@@ -469,6 +644,8 @@ const mapDispatchToProps = (dispatch) => {
     logOut: () => dispatch(logOut()),
     updateCalenderEventRequested: (data) =>
       dispatch(updateCalenderEventRequested(data)),
+    fetchMentorDetailsRequested: (data) =>
+      dispatch(fetchMentorDetailsRequested(data)),
   };
 };
 

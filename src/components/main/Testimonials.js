@@ -38,11 +38,54 @@ export default class Testimonials extends Component {
       className: "center slider variable-width",
       centerMode: true,
       infinite: true,
-      centerPadding: "10px",
-      speed: 500,
-      variableWidth: true,
+      centerPadding: "300px",
+      // variableWidth: true,
       slidesToShow: 1,
       slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerPadding: "300px",
+            // infinite: true,
+          },
+        },
+        {
+          breakpoint: 820,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerPadding: "30px",
+          },
+        },
+        {
+          breakpoint: 770,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            // infinite: true,
+          },
+        },
+        {
+          breakpoint: 650,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerPadding: "30px",
+          },
+        },
+        {
+          breakpoint: 500,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerPadding: "30px",
+            // infinite: true,
+          },
+        },
+      ],
     };
     return (
       <div className="pt-5 justify-center items-center">
@@ -50,7 +93,7 @@ export default class Testimonials extends Component {
           {this.state.testimonials.map((mentor, index) => (
             <div
               className="flex justify-center items-center lg:py-10 lg:pb-20 pb-10"
-              style={window.innerWidth < 720?{ width: 310 }:{width:800}}
+              // style={window.innerWidth < 720 ? { width: 310 } : { width: 800 }}
               key={index}
             >
               <div

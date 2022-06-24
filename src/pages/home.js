@@ -142,7 +142,7 @@ class HomePage extends Component {
         </div>
 
         <div
-          className="flex flex-col sm:pt-10"
+          className="flex-col sm:pt-10"
           style={{
             backgroundImage: `url(${bg})`,
             backgroundPosition: "center",
@@ -150,7 +150,7 @@ class HomePage extends Component {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <div className="flex flex-col lg:mx-10 sm:mx-6 mx-2 sm:mt-16 mt-8">
+          <div className="flex flex-col lg:mx-10 mx-2 sm:mt-16 mt-8">
             <h1 className="text-[#646464] sm:text-3xl text-2xl sm:pl-[44px] pl-[30px] font-medium font-poppins">
               CATEGORIES
             </h1>
@@ -158,11 +158,11 @@ class HomePage extends Component {
           </div>
         </div>
 
-        <div className="flex flex-col sm:pt-20 pt-10">
-          <div className="absolute sm:w-[60px] w-[40px] mt-32 sm:ml-10 ml-4">
+        <div className="flex-col sm:pt-20 pt-10">
+          <div className="absolute sm:w-[60px] w-[40px] mt-32 sm:ml-10 md:ml-2 lg:ml-4">
             <img src={dots} alt="dot" loading="lazy" />
           </div>
-          <div className="flex flex-col lg:mx-10 sm:mx-6 mx-2">
+          <div className="flex flex-col lg:mx-10 mx-2">
             <div className="flex">
               <h1 className="text-[#646464] pl-[44px] sm:text-3xl text-2xl font-medium font-poppins">
                 DISCOVER TOP MENTORS
@@ -181,7 +181,7 @@ class HomePage extends Component {
           />
         </div>
 
-        <div className="flex flex-col sm:pt-10 pt-5" id="companies">
+        <div className="flex flex-col lg:pt-10 pt-5 md:pt-0" id="companies">
           <div className="absolute sm:left-[-40px] left-[-70px]">
             <img
               src={plane2}
@@ -204,7 +204,7 @@ class HomePage extends Component {
         >
           <div className="flex justify-center items-center">
             <div className="flex bg-[#A36EBA] rounded-[28px]">
-              <div className="flex-col lg:p-28 p-10">
+              <div className="flex-col md:p-28 p-10">
                 <h1 className="sm:text-5xl text-2xl  text-slate-100 font-bold font-Helvetica">
                   Sign in to our book
                 </h1>

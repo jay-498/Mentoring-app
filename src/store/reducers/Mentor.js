@@ -39,7 +39,6 @@ const MentorReducer = (state = initialState, action) => {
       };
 
     case UPDATE_MENTOR_EXPERIENCE_SUCCESS:
-      console.log("reducer", action.payload.data);
       return {
         ...state,
         MentorDetails: {

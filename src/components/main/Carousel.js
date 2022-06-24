@@ -78,11 +78,18 @@ export default class Gallery extends Component {
           },
         },
         {
+          breakpoint: 820,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true,
+          },
+        },
+        {
           breakpoint: 770,
           settings: {
             slidesToShow: 2,
             slidesToScroll: 2,
-            initialSlide: 2,
             infinite: true,
           },
         },
@@ -91,7 +98,6 @@ export default class Gallery extends Component {
           settings: {
             slidesToShow: 2,
             slidesToScroll: 2,
-            initialSlide: 2,
             infinite: true,
           },
         },
@@ -110,7 +116,7 @@ export default class Gallery extends Component {
       <div className="relative pt-5">
         {this.state.categories.length > 4 && (
           <div
-            className="absolute flex items-center justify-center sm:top-[118px] top-[124px] left-5 z-10 bg-gray-50 rounded-2xl h-15 w-15 p-3"
+            className="absolute flex items-center justify-center lg:top-[118px] md:top-[90px] top-[124px] left-5 lg:left-5 md:left-2 z-10 bg-gray-50 rounded-2xl h-15 w-15 p-3"
             onClick={this.previous}
           >
             <button className="button">
@@ -124,7 +130,7 @@ export default class Gallery extends Component {
               <div className="relative">
                 <a className="absolute inset-0 z-10 text-center flex top-[35%] justify-center">
                   <h1
-                    className="text-2xl text-white font-bold font-poppins tracking-[.13em]"
+                    className="lg:text-2xl text-lg md:text-xl text-white font-bold font-poppins tracking-[.13em]"
                     style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)" }}
                   >
                     {mentor.tag}
@@ -140,7 +146,7 @@ export default class Gallery extends Component {
 
         {this.state.categories.length > 4 && (
           <div
-            className="absolute right-3 sm:top-[118px] top-[124px]"
+            className="absolute md:right-1 lg:right-3 right-3 lg:top-[118px] md:top-[90px] top-[124px]"
             onClick={this.next}
           >
             <button className="button bg-gray-50 rounded-2xl h-15 w-15 p-4">

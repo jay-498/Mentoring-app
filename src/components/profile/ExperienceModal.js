@@ -79,10 +79,11 @@ class ExperienceModal extends Component {
   handleSubmitExperience = () => {
     const { experience } = this.state;
     const { companies } = this.props.mentor;
+    //replacing companies with company id
+    const modifiedCompanies = companies.map((company) => {
+      return { ...company, company: company.company._id };
+    });
     if (!this.props.isEdit) {
-      const modifiedCompanies = companies.map((company) => {
-        return { ...company, company: company.company._id };
-      });
       if (this.validate()) {
         this.props.updateMentorExperienceRequested({
           companies: [...modifiedCompanies, { ...experience }],
@@ -90,6 +91,7 @@ class ExperienceModal extends Component {
       }
     } else {
       const { company } = this.props;
+      //company updated
       const EditedCompany = {
         ...company,
         job_title: experience.job_title,
@@ -98,15 +100,17 @@ class ExperienceModal extends Component {
         end_date: experience.end_date,
         industry: experience.industry,
       };
-      const itemIndex = companies.findIndex(
-        (company) => company._id === this.props.company._id
+      //finding the index of the company to update
+      const itemIndex = modifiedCompanies.findIndex(
+        (company) => company.company === EditedCompany.company
       );
+      //updating the index
       if (itemIndex > -1) {
-        companies[itemIndex] = EditedCompany;
+        modifiedCompanies[itemIndex] = EditedCompany;
       }
       if (this.validate()) {
         this.props.updateMentorExperienceRequested({
-          companies: [...companies],
+          companies: [...modifiedCompanies],
         });
       }
     }
@@ -115,11 +119,16 @@ class ExperienceModal extends Component {
 
   handleSubmitDeleteExperience = () => {
     const { companies } = this.props.mentor;
+    //removing the company
     const modifiedCompanies = companies.filter(
       (company) => company._id !== this.props.company._id
     );
+    //replacing the company with company id
+    const modified_Companies = modifiedCompanies.map((company) => {
+      return { ...company, company: company.company._id };
+    });
     this.props.updateMentorExperienceRequested({
-      companies: [...modifiedCompanies],
+      companies: [...modified_Companies],
     });
     this.props.handleExperienceModal();
   };
@@ -358,13 +367,19 @@ class ExperienceModal extends Component {
                       </div>
                     </div> */}
 
-                    <div className="flex justify-between items-center">
-                      <button
-                        onClick={this.handleSubmitDeleteExperience}
-                        className="bg-[#8F6EC5] rounded-[5px] text-[16px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px] text-[10px]"
-                      >
-                        Delete
-                      </button>
+                    <div
+                      className={`flex ${
+                        this.props.isEdit ? "justify-between" : "justify-end"
+                      }  items-center`}
+                    >
+                      {this.props.isEdit && (
+                        <button
+                          onClick={this.handleSubmitDeleteExperience}
+                          className="bg-[#8F6EC5] rounded-[5px] text-[16px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px] text-[10px]"
+                        >
+                          Delete
+                        </button>
+                      )}
                       <button
                         onClick={this.handleSubmitExperience}
                         className="bg-[#8F6EC5] rounded-[5px] text-[16px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px] text-[10px]"

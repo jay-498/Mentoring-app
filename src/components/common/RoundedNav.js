@@ -79,7 +79,7 @@ class RoundedUser extends Component {
           </button>
           <div
             ref={this.ref}
-            className="hidden z-50 w-[305px] my-4 text-base list-none px-4 bg-white rounded-md shadow"
+            className="hidden z-50 md:w-[300px] w-[260px] my-4 text-base list-none px-4 bg-white rounded-md shadow"
             id="dropdown"
             style={{ position: "absolute", right: "0px", top: "40%" }}
           >

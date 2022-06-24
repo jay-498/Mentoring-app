@@ -52,11 +52,11 @@ class Navbar extends Component {
         <MyBookings />
         <LoginModal isBooking={false} />
         <nav
-          className={`relative flex flex-wrap md:px-20 px-5 items-center ${
+          className={`relative flex flex-wrap lg:px-20 sm:px-10 px-5 items-center ${
             pathname === "/" ? "bg-[#FFE8EB]" : "bg-[#fafafa]"
           } justify-between`}
         >
-          <div className="flex w-full md:w-0  items-center">
+          <div className="flex w-full lg:w-0  items-center">
             <div className="flex w-full relative justify-between items-center">
               <div>
                 <a
@@ -94,10 +94,10 @@ class Navbar extends Component {
             }
             id="example-navbar-danger"
           >
-            <ul className="flex flex-col md:flex-row list-none gap-x-8">
+            <ul className="flex flex-col lg:flex-row list-none gap-x-8 lg:px-3">
               <li className="nav-item">
                 <a
-                  className="sm:px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
+                  className="py-2 flex items-center text-[18px] leading-snug text-gray"
                   href="/#casecompendium"
                 >
                   <span
@@ -113,7 +113,7 @@ class Navbar extends Component {
               </li>
               <li className="nav-item">
                 <a
-                  className="sm:px-3 py-2 flex items-center text-[18px] leading-snug text-gray"
+                  className="py-2 flex items-center text-[18px] leading-snug text-gray"
                   href="/#companies"
                 >
                   <span
@@ -130,7 +130,7 @@ class Navbar extends Component {
             </ul>
             <div
               className={
-                "flex rounded justify-center items-center sm:my-4 my-1 sm:pl-10"
+                "flex rounded justify-center items-center sm:my-4 my-1 lg:pl-10"
               }
               id="example-navbar-danger"
             >

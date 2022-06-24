@@ -33,7 +33,7 @@ class ExploreCarousel extends Component {
 
   render() {
     return (
-      <div className="grid grid-cols lg:grid-cols-3 grid-cols-1 pt-10 gap-y-2">
+      <div className="grid grid-cols lg:grid-cols-3 md:grid-cols-2 pt-10 gap-y-2">
         {this.props.companies.map((mentor, index) => (
           <div className="flex justify-center items-center" key={index}>
             <div

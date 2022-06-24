@@ -68,11 +68,18 @@ class CarouselDiscover extends Component {
           },
         },
         {
+          breakpoint: 820,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true,
+          },
+        },
+        {
           breakpoint: 770,
           settings: {
             slidesToShow: 2,
             slidesToScroll: 2,
-            initialSlide: 2,
             // infinite: true,
           },
         },
@@ -81,7 +88,6 @@ class CarouselDiscover extends Component {
           settings: {
             slidesToShow: 2,
             slidesToScroll: 2,
-            initialSlide: 2,
             // infinite: true,
           },
         },
@@ -128,18 +134,18 @@ class CarouselDiscover extends Component {
                           src={mentor.profile_picture}
                           loading="lazy"
                           alt="1"
-                          className="pb-0 mb-0 h-[400px] rounded-t-[20px]"
+                          className="pb-0 mb-0 h-[400px] lg:rounded-t-[20px] rounded-t-[15px]"
                         />
-                        <div className="flex-col bg-white rounded-b-[20px]">
-                          <div className="flex justify-between px-4 items-center">
-                            <p className="text-xl text-[#646464] font-Manrope font-black pt-1">
+                        <div className="flex-col bg-white lg:rounded-b-[20px] rounded-b-[15px]">
+                          <div className="flex w-full justify-between lg:px-4 px-3 items-center">
+                            <p className="lg:text-xl text-md text-[#646464] font-Manrope font-black pt-1">
                               {mentor.name}
                             </p>
-                            <span className="text-[#FB89A1] font-semibold font-poppins lg:text-xl text-sm">
+                            <p className="text-[#FB89A1] font-semibold font-poppins lg:text-xl text-sm">
                               RS {mentor.session_rate}
-                            </span>
+                            </p>
                           </div>
-                          <div className="flex-col px-4 pb-2">
+                          <div className="flex-col lg:px-4 px-3 pb-2">
                             <p className="text-sm font-medium text-[#0C2054] font-Manrope">
                               {mentor.description}
                             </p>

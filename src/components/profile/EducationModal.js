@@ -77,10 +77,11 @@ class EducationModal extends Component {
   handleSubmitEducation = () => {
     const { experience } = this.state;
     const { colleges } = this.props.mentor;
+    //replacing the college array with college id
+    const modifiedColleges = colleges.map((college) => {
+      return { ...college, college: college.college._id };
+    });
     if (!this.props.isEdit) {
-      const modifiedColleges = colleges.map((college) => {
-        return { ...college, college: college.college._id };
-      });
       if (this.validate()) {
         this.props.updateMentorExperienceRequested({
           colleges: [...modifiedColleges, { ...experience }],
@@ -96,27 +97,33 @@ class EducationModal extends Component {
         start_date: experience.start_date,
         end_date: experience.end_date,
       };
-      const itemIndex = colleges.findIndex(
-        (college) => college._id === this.props.college._id
+      const itemIndex = modifiedColleges.findIndex(
+        (college) => college.college === EditedCollege.college
       );
       if (itemIndex > -1) {
-        colleges[itemIndex] = EditedCollege;
+        modifiedColleges[itemIndex] = EditedCollege;
       }
       if (this.validate()) {
         this.props.updateMentorExperienceRequested({
-          companies: [...colleges],
+          colleges: [...modifiedColleges],
         });
       }
     }
+    this.props.handleEducationModal();
   };
 
   handleSubmitDeleteEducation = () => {
     const { colleges } = this.props.mentor;
+    //removing the college from the array
     const modifiedColleges = colleges.filter(
       (college) => college._id !== this.props.college._id
     );
+    //replacing the college with college id
+    const modified_Colleges = modifiedColleges.map((college) => {
+      return { ...college, college: college.college._id };
+    });
     this.props.updateMentorExperienceRequested({
-      colleges: [...modifiedColleges],
+      colleges: [...modified_Colleges],
     });
     this.props.handleEducationModal();
   };
@@ -354,13 +361,19 @@ class EducationModal extends Component {
                       </div>
                     </div> */}
 
-                    <div className="flex justify-between items-center">
-                      <button
-                        onClick={this.handleSubmitDeleteEducation}
-                        className="bg-[#8F6EC5] rounded-[5px] text-[12px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px]"
-                      >
-                        Delete
-                      </button>
+                    <div
+                      className={`flex ${
+                        this.props.isEdit ? "justify-between" : "justify-end"
+                      }  items-center`}
+                    >
+                      {this.props.isEdit && (
+                        <button
+                          onClick={this.handleSubmitDeleteEducation}
+                          className="bg-[#8F6EC5] rounded-[5px] text-[12px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px]"
+                        >
+                          Delete
+                        </button>
+                      )}
                       <button
                         onClick={this.handleSubmitEducation}
                         className="bg-[#8F6EC5] rounded-[5px] text-[12px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px]"

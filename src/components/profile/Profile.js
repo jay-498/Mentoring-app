@@ -625,7 +625,7 @@ class Profile extends Component {
             loading="lazy"
           />
         </div>
-        <div className="flex-col justify-left -mt-16 sm:mx-5 lg:mx-24 md:mx-8">
+        <div className="flex-col justify-left -mt-16 sm:mx-5 lg:mx-24 md:mx-8 mx-3">
           <div className="flex  items-center">
             {Object.keys(mentor).length !== 0 && (
               <img
@@ -683,7 +683,7 @@ class Profile extends Component {
               {this.state.NavItem === 1 && (
                 <div className="flex">
                   <hr className="lg:w-[8%] sm:w-[12%] w-[16%] rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
-                  <hr className="lg:w-full rounded-r bg-[#f2f2f2] py-[1px]" />
+                  <hr className="w-full rounded-r bg-[#f2f2f2] py-[1px]" />
                 </div>
               )}
               {this.state.NavItem === 2 && (

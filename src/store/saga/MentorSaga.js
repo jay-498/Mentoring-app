@@ -60,7 +60,7 @@ function* fetchMentorDetailsSaga(action) {
 function* fetchCollegesSaga(action) {
   try {
     const res = yield call(getColleges, action.payload);
-    yield put(fetchCollegesSuccess(res));
+    yield put(fetchCollegesSuccess(res.data));
   } catch (e) {
     console.log(e);
   }

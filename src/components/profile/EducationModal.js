@@ -86,7 +86,7 @@ class EducationModal extends Component {
         this.props.updateMentorExperienceRequested({
           colleges: [...modifiedColleges, { ...experience }],
         });
-        this.props.handleEducationModal();
+        // this.props.handleEducationModal();
       }
     } else {
       const { college } = this.props;
@@ -98,7 +98,7 @@ class EducationModal extends Component {
         end_date: experience.end_date,
       };
       const itemIndex = modifiedColleges.findIndex(
-        (college) => college.college === EditedCollege.college
+        (college) => college._id === EditedCollege._id
       );
       if (itemIndex > -1) {
         modifiedColleges[itemIndex] = EditedCollege;
@@ -107,9 +107,9 @@ class EducationModal extends Component {
         this.props.updateMentorExperienceRequested({
           colleges: [...modifiedColleges],
         });
+        // this.props.handleEducationModal();
       }
     }
-    this.props.handleEducationModal();
   };
 
   handleSubmitDeleteEducation = () => {
@@ -125,11 +125,12 @@ class EducationModal extends Component {
     this.props.updateMentorExperienceRequested({
       colleges: [...modified_Colleges],
     });
-    this.props.handleEducationModal();
+    // this.props.handleEducationModal();
   };
 
   render() {
     const { colleges } = this.props;
+    console.log(colleges);
     return (
       <>
         <div

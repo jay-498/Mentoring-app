@@ -103,6 +103,17 @@ class Profile extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.mentor !== this.props.mentor) {
+      this.setState((prev) => {
+        return {
+          ...prev,
+          showAddEducationModal: false,
+          showAddExperienceModal: false,
+          showEditEducationModal: false,
+          showEditExperienceModal: false,
+        };
+      });
+    }
     if (this.state.availableDates.length !== prevState.availableDates.length) {
       this.onChangeEventStartDate(0);
     }
@@ -438,7 +449,10 @@ class Profile extends Component {
                       >
                         <div className="flex">
                           <img
-                            src={college.college.image_url}
+                            src={
+                              college.college.image_url ||
+                              `https://ui-avatars.com/api/?name=${college.college?.name}&bold=true&rounded=true&background=8f6ec5`
+                            }
                             loading="lazy"
                             alt="ProfileImage"
                             className="w-[38px] h-[38px]"

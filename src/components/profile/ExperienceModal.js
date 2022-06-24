@@ -88,6 +88,7 @@ class ExperienceModal extends Component {
         this.props.updateMentorExperienceRequested({
           companies: [...modifiedCompanies, { ...experience }],
         });
+        // this.props.handleExperienceModal();
       }
     } else {
       const { company } = this.props;
@@ -102,8 +103,9 @@ class ExperienceModal extends Component {
       };
       //finding the index of the company to update
       const itemIndex = modifiedCompanies.findIndex(
-        (company) => company.company === EditedCompany.company
+        (company) => company._id === EditedCompany._id
       );
+
       //updating the index
       if (itemIndex > -1) {
         modifiedCompanies[itemIndex] = EditedCompany;
@@ -112,9 +114,9 @@ class ExperienceModal extends Component {
         this.props.updateMentorExperienceRequested({
           companies: [...modifiedCompanies],
         });
+        // this.props.handleExperienceModal();
       }
     }
-    this.props.handleExperienceModal();
   };
 
   handleSubmitDeleteExperience = () => {
@@ -130,7 +132,7 @@ class ExperienceModal extends Component {
     this.props.updateMentorExperienceRequested({
       companies: [...modified_Companies],
     });
-    this.props.handleExperienceModal();
+    // this.props.handleExperienceModal();
   };
 
   render() {

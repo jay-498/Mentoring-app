@@ -16,7 +16,11 @@ import { logOut } from "../../store/actions/Login";
 import ExperienceModal from "./ExperienceModal";
 import EducationModal from "./EducationModal";
 import { toast } from "react-toastify";
-import { fetchMentorDetailsRequested } from "../../store/actions/Mentor";
+import {
+  fetchMentorDetailsRequested,
+  updateMentorExperienceRequested,
+} from "../../store/actions/Mentor";
+import DeleteModal from "./DeleteModal";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +30,8 @@ class Profile extends Component {
       showAddEducationModal: false,
       showEditExperienceModal: false,
       showEditEducationModal: false,
+      showExperienceDeleteModal: false,
+      showEducationDeleteModal: false,
       availableDates: [],
       currentEditCollege: {},
       currentEditCompany: {},
@@ -111,6 +117,8 @@ class Profile extends Component {
           showAddExperienceModal: false,
           showEditEducationModal: false,
           showEditExperienceModal: false,
+          showExperienceDeleteModal: false,
+          showEducationDeleteModal: false,
         };
       });
     }
@@ -316,12 +324,46 @@ class Profile extends Component {
     this.bookingref.current.classList.toggle("hidden");
   };
 
+  handleSubmitDeleteExperience = () => {
+    const { companies } = this.props.mentor;
+    //removing the company
+    const modifiedCompanies = companies.filter(
+      (company) => company._id !== this.state.currentEditCompany._id
+    );
+    //replacing the company with company id
+    const modified_Companies = modifiedCompanies.map((company) => {
+      return { ...company, company: company.company._id };
+    });
+    this.props.updateMentorExperienceRequested({
+      companies: [...modified_Companies],
+    });
+    // this.props.handleExperienceModal();
+  };
+
+  handleSubmitDeleteEducation = () => {
+    const { colleges } = this.props.mentor;
+    //removing the college from the array
+    const modifiedColleges = colleges.filter(
+      (college) => college._id !== this.state.currentEditCollege._id
+    );
+    //replacing the college with college id
+    const modified_Colleges = modifiedColleges.map((college) => {
+      return { ...college, college: college.college._id };
+    });
+    this.props.updateMentorExperienceRequested({
+      colleges: [...modified_Colleges],
+    });
+    // this.props.handleEducationModal();
+  };
+
   render() {
     const {
       showAddExperienceModal,
       showAddEducationModal,
       showEditExperienceModal,
       showEditEducationModal,
+      showExperienceDeleteModal,
+      showEducationDeleteModal,
       currentEditCollege,
       currentEditCompany,
       dropDownItems,
@@ -334,12 +376,22 @@ class Profile extends Component {
           return (
             <>
               <div className="gap-y-3">
-                <p className="font-Helvetica font-normal text-[#273150] sm:py-5 pb-0 lg:text-xl md:text-lg sm:text-md text-sm">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi.”
-                </p>
+                <div className="flex justify-between items-center">
+                  <p className="flex font-Helvetica font-normal text-[#273150] sm:py-5 pb-0 lg:text-xl md:text-lg sm:text-md text-sm">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi.”
+                  </p>
+                  {this.props.isEdit && (
+                    <div
+                      onClick={() => this.handleEditEducationModal()}
+                      className="flex cursor-pointer hover:bg-gray-200 rounded-full p-2 items-center justify-center gap-x-5"
+                    >
+                      <img src={pencil} alt="edit" title="Edit" />
+                    </div>
+                  )}
+                </div>
                 <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
                 <div className="flex-col  gap-y-2 mt-3">
                   <div className="flex w-full justify-between items-center">
@@ -347,21 +399,11 @@ class Profile extends Component {
                       Experience
                     </h1>
                     {this.props.isEdit && (
-                      <div className="flex items-center justify-center gap-x-5">
-                        <img
-                          src={plus}
-                          alt="+"
-                          title="Add"
-                          className="cursor-pointer"
-                          onClick={this.handleExperienceModal}
-                        />
-                        {/* <img
-                          src={pencil}
-                          alt="edit"
-                          title="Edit"
-                          className="cursor-pointer"
-                          onClick={this.handleExperienceModal}
-                        /> */}
+                      <div
+                        onClick={this.handleExperienceModal}
+                        className="flex cursor-pointer hover:bg-gray-200 p-2 rounded-full items-center justify-center gap-x-5"
+                      >
+                        <img src={plus} alt="+" title="Add" />
                       </div>
                     )}
                   </div>
@@ -398,16 +440,13 @@ class Profile extends Component {
                         </div>
                         <div>
                           {this.props.isEdit && (
-                            <div className="flex items-center justify-center gap-x-5">
-                              <img
-                                src={pencil}
-                                alt="edit"
-                                title="Edit"
-                                className="cursor-pointer"
-                                onClick={() =>
-                                  this.handleEditExperienceModal(company)
-                                }
-                              />
+                            <div
+                              onClick={() =>
+                                this.handleEditExperienceModal(company)
+                              }
+                              className="flex cursor-pointer hover:bg-gray-200 rounded-full p-2 items-center justify-center gap-x-5"
+                            >
+                              <img src={pencil} alt="edit" title="Edit" />
                             </div>
                           )}
                         </div>
@@ -422,21 +461,11 @@ class Profile extends Component {
                       Education
                     </h1>
                     {this.props.isEdit && (
-                      <div className="flex items-center justify-center gap-x-5">
-                        <img
-                          src={plus}
-                          alt="+"
-                          title="Add"
-                          className="cursor-pointer"
-                          onClick={this.handleEducationModal}
-                        />
-                        {/* <img
-                          src={pencil}
-                          alt="edit"
-                          title="Edit"
-                          className="cursor-pointer"
-                          onClick={this.handleEducationModal}
-                        /> */}
+                      <div
+                        onClick={this.handleEducationModal}
+                        className="flex cursor-pointer hover:bg-gray-200 rounded-full p-2 items-center justify-center gap-x-5"
+                      >
+                        <img src={plus} alt="+" title="Add" />
                       </div>
                     )}
                   </div>
@@ -464,22 +493,21 @@ class Profile extends Component {
                             <p className="font-poppins font-normal text-[#797979] text-[12px] text-sm">
                               {college.college.name} |{" "}
                               {this.dateFormat(college.start_date)} -{" "}
-                              {this.dateFormat(college.end_date)}
+                              {college.end_date
+                                ? this.dateFormat(college.end_date)
+                                : "Present"}
                             </p>
                           </div>
                         </div>
                         <div>
                           {this.props.isEdit && (
-                            <div className="flex items-center justify-center gap-x-5">
-                              <img
-                                src={pencil}
-                                alt="edit"
-                                title="Edit"
-                                className="cursor-pointer"
-                                onClick={() =>
-                                  this.handleEditEducationModal(college)
-                                }
-                              />
+                            <div
+                              onClick={() =>
+                                this.handleEditEducationModal(college)
+                              }
+                              className="flex cursor-pointer hover:bg-gray-200 rounded-full p-2 items-center justify-center gap-x-5"
+                            >
+                              <img src={pencil} alt="edit" title="Edit" />
                             </div>
                           )}
                         </div>
@@ -492,24 +520,16 @@ class Profile extends Component {
                     Expertise
                   </h1>
                   <div className="flex gap-x-3 items-center font-Helvetica font-bold text-[12px]">
-                    <span
-                      className="text-[#8F6EC5] rounded-md p-1 px-2"
-                      style={{ background: "rgba(212, 195, 240, 0.5)" }}
-                    >
-                      Research
-                    </span>
-                    <span
-                      className="text-[#F4864D] rounded-md p-1 px-2"
-                      style={{ background: "rgba(251, 227, 215, 0.5)" }}
-                    >
-                      Prototyping
-                    </span>
-                    <span
-                      className="text-[#29ACE4] rounded-md p-1 px-2"
-                      style={{ background: "rgba(180,229,250, 0.5)" }}
-                    >
-                      Testing
-                    </span>
+                    {mentor?.tags?.length &&
+                      mentor.tags.map((tag) => (
+                        <span
+                          key={tag._id}
+                          className="text-[#8F6EC5] rounded-md p-1 px-2"
+                          style={{ background: "rgba(212, 195, 240, 0.5)" }}
+                        >
+                          {tag.name}
+                        </span>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -598,6 +618,22 @@ class Profile extends Component {
           isBooking={true}
         />
         <div>
+          {showExperienceDeleteModal && (
+            <DeleteModal
+              handleSubmitDelete={this.handleSubmitDeleteExperience}
+              handleDeleteModal={() =>
+                this.setState({ showExperienceDeleteModal: false })
+              }
+            />
+          )}
+          {showEducationDeleteModal && (
+            <DeleteModal
+              handleSubmitDelete={this.handleSubmitDeleteEducation}
+              handleDeleteModal={() =>
+                this.setState({ showEducationDeleteModal: false })
+              }
+            />
+          )}
           {showAddExperienceModal && (
             <ExperienceModal
               handleExperienceModal={this.handleExperienceModal}
@@ -618,6 +654,9 @@ class Profile extends Component {
                 this.setState({ showEditExperienceModal: false })
               }
               mentor={mentor}
+              handleDeleteModal={() =>
+                this.setState({ showExperienceDeleteModal: true })
+              }
               isEdit={true}
               company={currentEditCompany}
             />
@@ -626,6 +665,9 @@ class Profile extends Component {
             <EducationModal
               handleEducationModal={() =>
                 this.setState({ showEditEducationModal: false })
+              }
+              handleDeleteModal={() =>
+                this.setState({ showEducationDeleteModal: true })
               }
               mentor={mentor}
               isEdit={true}
@@ -755,6 +797,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(updateCalenderEventRequested(data)),
     fetchMentorDetailsRequested: (data) =>
       dispatch(fetchMentorDetailsRequested(data)),
+    updateMentorExperienceRequested: (data) =>
+      dispatch(updateMentorExperienceRequested(data)),
   };
 };
 

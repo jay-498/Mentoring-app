@@ -19,6 +19,7 @@ class EducationModal extends Component {
     this.state = {
       endDate_type: "text",
       startDate_type: "text",
+      checkbox: false,
       experience: {
         degree: "",
         college: "",
@@ -36,6 +37,7 @@ class EducationModal extends Component {
       this.setState((prev) => {
         return {
           ...prev,
+          checkbox: college.end_date ? false : true,
           experience: {
             degree: college.degree,
             start_date: this.dateFormat(college.start_date),
@@ -45,6 +47,15 @@ class EducationModal extends Component {
         };
       });
     }
+  }
+
+  handleChangeCheckbox(e) {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        checkbox: e.target.checked,
+      };
+    });
   }
 
   dateFormat = (date) => {
@@ -81,10 +92,19 @@ class EducationModal extends Component {
     const modifiedColleges = colleges.map((college) => {
       return { ...college, college: college.college._id };
     });
+    let modified_endDate = "";
+    if (this.state.checkbox) {
+      modified_endDate = "";
+    } else {
+      modified_endDate = experience.end_date;
+    }
     if (!this.props.isEdit) {
       if (this.validate()) {
         this.props.updateMentorExperienceRequested({
-          colleges: [...modifiedColleges, { ...experience }],
+          colleges: [
+            ...modifiedColleges,
+            { ...experience, end_date: modified_endDate },
+          ],
         });
         // this.props.handleEducationModal();
       }
@@ -95,7 +115,7 @@ class EducationModal extends Component {
         degree: experience.degree,
         college: experience.college,
         start_date: experience.start_date,
-        end_date: experience.end_date,
+        end_date: modified_endDate,
       };
       const itemIndex = modifiedColleges.findIndex(
         (college) => college._id === EditedCollege._id
@@ -112,29 +132,28 @@ class EducationModal extends Component {
     }
   };
 
-  handleSubmitDeleteEducation = () => {
-    const { colleges } = this.props.mentor;
-    //removing the college from the array
-    const modifiedColleges = colleges.filter(
-      (college) => college._id !== this.props.college._id
-    );
-    //replacing the college with college id
-    const modified_Colleges = modifiedColleges.map((college) => {
-      return { ...college, college: college.college._id };
-    });
-    this.props.updateMentorExperienceRequested({
-      colleges: [...modified_Colleges],
-    });
-    // this.props.handleEducationModal();
-  };
+  // handleSubmitDeleteEducation = () => {
+  //   const { colleges } = this.props.mentor;
+  //   //removing the college from the array
+  //   const modifiedColleges = colleges.filter(
+  //     (college) => college._id !== this.props.college._id
+  //   );
+  //   //replacing the college with college id
+  //   const modified_Colleges = modifiedColleges.map((college) => {
+  //     return { ...college, college: college.college._id };
+  //   });
+  //   this.props.updateMentorExperienceRequested({
+  //     colleges: [...modified_Colleges],
+  //   });
+  //   // this.props.handleEducationModal();
+  // };
 
   render() {
     const { colleges } = this.props;
-    console.log(colleges);
     return (
       <>
         <div
-          className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}
+          className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-40 w-full md:inset-0 h-full md:h-full`}
           id="popup-modal"
           style={{ backgroundColor: "rgb(0 ,0 ,0,0.1)" }}
         >
@@ -345,12 +364,14 @@ class EducationModal extends Component {
                       </div>
                     </div> */}
 
-                    {/* <div>
+                    <div className="py-2">
                       <div className="relative">
                         <input
-                          className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                          className="h-4 w-4 mx-3 cursor-pointer"
                           type="checkbox"
-                          value=""
+                          name="checkbox"
+                          checked={this.state.checkbox}
+                          onChange={(e) => this.handleChangeCheckbox(e)}
                           id="flexCheckDefault"
                         />
                         <label
@@ -360,27 +381,26 @@ class EducationModal extends Component {
                           I am currently working here
                         </label>
                       </div>
-                    </div> */}
+                    </div>
 
                     <div
-                      className={`flex ${
-                        this.props.isEdit ? "justify-between" : "justify-end"
-                      }  items-center`}
+                      className={`flex justify-end
+                       items-center gap-x-3`}
                     >
+                      <button
+                        onClick={this.handleSubmitEducation}
+                        className=" font-Manrope bg-[#8F6EC5] rounded-[5px] text-[15px] font-medium text-white font-semibold py-2 px-5 font-Helvetica"
+                      >
+                        Save
+                      </button>
                       {this.props.isEdit && (
                         <button
-                          onClick={this.handleSubmitDeleteEducation}
-                          className="bg-[#8F6EC5] rounded-[5px] text-[12px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px]"
+                          onClick={() => this.props.handleDeleteModal()}
+                          className=" font-Manrope bg-[#8F6EC5] rounded-[5px] text-[15px] font-medium text-white font-semibold py-2 px-5 font-Helvetica"
                         >
                           Delete
                         </button>
                       )}
-                      <button
-                        onClick={this.handleSubmitEducation}
-                        className="bg-[#8F6EC5] rounded-[5px] text-[12px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px]"
-                      >
-                        Save
-                      </button>
                     </div>
                   </div>
                 </div>

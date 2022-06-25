@@ -19,6 +19,7 @@ class ExperienceModal extends Component {
     this.state = {
       endDate_type: "text",
       startDate_type: "text",
+      checkbox: false,
       experience: {
         job_title: "",
         company: "",
@@ -37,6 +38,7 @@ class ExperienceModal extends Component {
       this.setState((prev) => {
         return {
           ...prev,
+          checkbox: company.end_date ? false : true,
           experience: {
             job_title: company.job_title,
             start_date: this.dateFormat(company.start_date),
@@ -68,6 +70,15 @@ class ExperienceModal extends Component {
     this.setState({ experience: new_form_data });
   };
 
+  handleChangeCheckbox(e) {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        checkbox: e.target.checked,
+      };
+    });
+  }
+
   validate = () => {
     const { company, start_date, job_title } = this.state.experience;
     if (company === "" || start_date === "" || job_title === "") {
@@ -83,22 +94,31 @@ class ExperienceModal extends Component {
     const modifiedCompanies = companies.map((company) => {
       return { ...company, company: company.company._id };
     });
+    let modified_endDate = "";
+    if (this.state.checkbox) {
+      modified_endDate = "";
+    } else {
+      modified_endDate = experience.end_date;
+    }
     if (!this.props.isEdit) {
       if (this.validate()) {
         this.props.updateMentorExperienceRequested({
-          companies: [...modifiedCompanies, { ...experience }],
+          companies: [
+            ...modifiedCompanies,
+            { ...experience, end_date: modified_endDate },
+          ],
         });
         // this.props.handleExperienceModal();
       }
     } else {
       const { company } = this.props;
       //company updated
-      const EditedCompany = {
+      let EditedCompany = {
         ...company,
         job_title: experience.job_title,
         company: experience.company,
         start_date: experience.start_date,
-        end_date: experience.end_date,
+        end_date: modified_endDate,
         industry: experience.industry,
       };
       //finding the index of the company to update
@@ -119,28 +139,28 @@ class ExperienceModal extends Component {
     }
   };
 
-  handleSubmitDeleteExperience = () => {
-    const { companies } = this.props.mentor;
-    //removing the company
-    const modifiedCompanies = companies.filter(
-      (company) => company._id !== this.props.company._id
-    );
-    //replacing the company with company id
-    const modified_Companies = modifiedCompanies.map((company) => {
-      return { ...company, company: company.company._id };
-    });
-    this.props.updateMentorExperienceRequested({
-      companies: [...modified_Companies],
-    });
-    // this.props.handleExperienceModal();
-  };
+  // handleSubmitDeleteExperience = () => {
+  //   const { companies } = this.props.mentor;
+  //   //removing the company
+  //   const modifiedCompanies = companies.filter(
+  //     (company) => company._id !== this.props.company._id
+  //   );
+  //   //replacing the company with company id
+  //   const modified_Companies = modifiedCompanies.map((company) => {
+  //     return { ...company, company: company.company._id };
+  //   });
+  //   this.props.updateMentorExperienceRequested({
+  //     companies: [...modified_Companies],
+  //   });
+  //   // this.props.handleExperienceModal();
+  // };
 
   render() {
     const { companies } = this.props;
     return (
       <>
         <div
-          className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}
+          className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-30 w-full md:inset-0 h-full md:h-full`}
           id="popup-modal"
           style={{ backgroundColor: "rgb(0 ,0 ,0,0.1)" }}
         >
@@ -330,7 +350,7 @@ class ExperienceModal extends Component {
                       </div>
                     </div>
 
-                    <div className="mb-6">
+                    <div className="mb-2">
                       <div className="relative">
                         <input
                           className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
@@ -352,12 +372,14 @@ class ExperienceModal extends Component {
                       </div>
                     </div>
 
-                    {/* <div>
+                    <div className="py-2">
                       <div className="relative">
                         <input
-                          className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                          className="h-4 w-4 mx-3 cursor-pointer"
                           type="checkbox"
-                          value=""
+                          name="checkbox"
+                          checked={this.state.checkbox}
+                          onChange={(e) => this.handleChangeCheckbox(e)}
                           id="flexCheckDefault"
                         />
                         <label
@@ -367,27 +389,23 @@ class ExperienceModal extends Component {
                           I am currently working here
                         </label>
                       </div>
-                    </div> */}
+                    </div>
 
-                    <div
-                      className={`flex ${
-                        this.props.isEdit ? "justify-between" : "justify-end"
-                      }  items-center`}
-                    >
+                    <div className={`flex justify-end gap-x-3  items-center`}>
+                      <button
+                        onClick={this.handleSubmitExperience}
+                        className=" font-Manrope bg-[#8F6EC5] rounded-[5px] text-[15px] font-medium text-white font-semibold py-2 px-5 font-Helvetica"
+                      >
+                        Save
+                      </button>
                       {this.props.isEdit && (
                         <button
-                          onClick={this.handleSubmitDeleteExperience}
-                          className="bg-[#8F6EC5] rounded-[5px] text-[16px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px] text-[10px]"
+                          onClick={() => this.props.handleDeleteModal()}
+                          className=" font-Manrope bg-[#8F6EC5] rounded-[5px] text-[15px] font-medium text-white font-semibold py-2 px-5 font-Helvetica"
                         >
                           Delete
                         </button>
                       )}
-                      <button
-                        onClick={this.handleSubmitExperience}
-                        className="bg-[#8F6EC5] rounded-[5px] text-[16px] font-medium text-white font-semibold py-2 px-5 font-Helvetica md:text-[18px] text-[10px]"
-                      >
-                        Save
-                      </button>
                     </div>
                   </div>
                 </div>

@@ -28,6 +28,17 @@ export const getCompanies = () => {
     });
 };
 
+export const getCategories = () => {
+  return axios
+    .get(`${BASE_URL}/api/category`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 export const getColleges = () => {
   return axios
     .get(`${BASE_URL}/api/college`)

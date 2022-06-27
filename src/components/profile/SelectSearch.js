@@ -2,7 +2,13 @@ import "./SelectSearchStyles.css";
 import SelectSearch from "react-select-search";
 import { useRef } from "react";
 
-export default function SearchSelect({ options, onChange, value, name }) {
+export default function SearchSelect({
+  multiSelect,
+  options,
+  onChange,
+  value,
+  name,
+}) {
   const searchInput = useRef();
 
   const handleChange = (...args) => {
@@ -24,8 +30,6 @@ export default function SearchSelect({ options, onChange, value, name }) {
     };
   };
 
-  console.log(options);
-
   return (
     <div className="App">
       <SelectSearch
@@ -33,6 +37,7 @@ export default function SearchSelect({ options, onChange, value, name }) {
         options={options}
         filterOptions={handleFilter}
         value={value}
+        multiple={multiSelect}
         name={name}
         placeholder={`Choose a ${name}`}
         search

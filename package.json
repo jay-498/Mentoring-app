@@ -16,6 +16,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
+    "react-select": "^5.3.2",
     "react-select-search": "^3.0.10",
     "react-slick": "^0.28.1",
     "react-timeit": "^1.1.12",

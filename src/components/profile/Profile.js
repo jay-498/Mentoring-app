@@ -23,6 +23,8 @@ import {
 } from "../../store/actions/Mentor";
 import DeleteModal from "./DeleteModal";
 import DescriptionTextArea from "./DescriptionTextArea";
+import ExpertiseModal from "./ExpertiseModal";
+import Calender from "../calender";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +36,7 @@ class Profile extends Component {
       showEditEducationModal: false,
       showExperienceDeleteModal: false,
       showEducationDeleteModal: false,
+      showExpertiseModal: false,
       availableDates: [],
       currentEditCollege: {},
       currentEditCompany: {},
@@ -100,6 +103,7 @@ class Profile extends Component {
           showEditExperienceModal: false,
           showExperienceDeleteModal: false,
           showEducationDeleteModal: false,
+          showExpertiseModal: false,
         };
       });
     }
@@ -349,11 +353,12 @@ class Profile extends Component {
       currentEditCompany,
       dropDownItems,
       dropDownItem,
+      showExpertiseModal,
     } = this.state;
     const { mentor } = this.props;
     const NavItems = () => {
       switch (this.state.NavItem) {
-        case 1:
+        case 2:
           return (
             <>
               <div className="gap-y-3">
@@ -485,11 +490,23 @@ class Profile extends Component {
                 </div>
                 <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
                 <div className="grid gap-y-2 my-2">
-                  <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
-                    Expertise
-                  </h1>
-                  <div className="flex gap-x-3 items-center font-Helvetica font-bold text-[12px]">
-                    {mentor?.tags?.length &&
+                  <div className="flex w-full justify-between items-center">
+                    <h1 className="text-[#565656] font-semibold font-poppins lg:text-xl md:text-lg sm:text-md text-sm">
+                      Expertise
+                    </h1>
+                    {this.props.isEdit && (
+                      <div
+                        onClick={() =>
+                          this.setState({ showExpertiseModal: true })
+                        }
+                        className="flex cursor-pointer hover:bg-gray-200 rounded-full p-2 items-center justify-center gap-x-5"
+                      >
+                        <img src={pencil} alt="+" title="Add" />
+                      </div>
+                    )}
+                  </div>
+                  {/* <div className="flex gap-x-3 items-center font-Helvetica font-bold text-[12px]">
+                    {mentor?.tags?.length !== 0 &&
                       mentor.tags.map((tag) => (
                         <span
                           key={tag._id}
@@ -499,73 +516,18 @@ class Profile extends Component {
                           {tag.name}
                         </span>
                       ))}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </>
           );
-        case 2:
+        case 1:
           return (
             <>
               <div className="flex-col px-2">
-                <div className="flex relative items-start w-full inline-block text-left">
-                  <div
-                    className="flex gap-x-10 items-center"
-                    onClick={this.handleBookingDropdown}
-                  >
-                    <p className="text-[20px] font-poppins font-medium py-1">
-                      {dropDownItems[dropDownItem - 1]} Sessions
-                    </p>
-                    <img src={downarrow} alt="arrow" />
-                  </div>
-                  <div
-                    ref={this.bookingref}
-                    className="hidden absolute flex bg-white left-44 text-base list-none"
-                    id="dropdown"
-                  >
-                    <div className="flex-col w-[178px] shadow-lg justify-between items-center py-1 text-[14px] font-medium">
-                      <div
-                        onClick={() => this.setState({ dropDownItem: 1 })}
-                        className="flex  cursor-pointer hover:bg-[#8f6ec530] items-center justify-start p-1 px-4"
-                      >
-                        All
-                      </div>
-                      <div
-                        onClick={() => this.setState({ dropDownItem: 2 })}
-                        className="flex cursor-pointer items-center hover:bg-[#8f6ec530] justify-start p-1 px-4"
-                      >
-                        Upcoming
-                      </div>
-                      <div
-                        onClick={() => this.setState({ dropDownItem: 3 })}
-                        className="flex cursor-pointer items-center hover:bg-[#8f6ec530] justify-start p-1 px-4"
-                      >
-                        Past
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <div className="flex relative items-start w-full inline-block text-left"></div>
                 <div className="flex-col py-4">
-                  <p className="text-[#8f6ec5] pb-2 font-bold sm:text-[16px]">
-                    Friday, 18th June,2022 I 10:30 am
-                  </p>
-                  <hr className="max-w-[500px] py-[1px] text-[##E4E4E4]" />
-                  <div className="flex items-center py-2">
-                    <img
-                      loading="lazy"
-                      className="w-12 h-12 rounded-full shadow-lg overflow-hidden"
-                      src={mentor.profile_picture}
-                      alt="profile"
-                    />
-                    <div className="flex-col px-6 text-left">
-                      <h5 className="sm:text-[16px] font-Manrope font-bold text-[#3e3e3e]">
-                        Garvit Goswami
-                      </h5>
-                      <h5 className="font-medium font-Manrope text-[#888585]">
-                        Microsoft
-                      </h5>
-                    </div>
-                  </div>
+                  <Calender />
                 </div>
               </div>
             </>
@@ -641,6 +603,15 @@ class Profile extends Component {
               mentor={mentor}
               isEdit={true}
               college={currentEditCollege}
+            />
+          )}
+          {showExpertiseModal && (
+            <ExpertiseModal
+              mentor={mentor}
+              isEdit={true}
+              handleExpertiseModal={() =>
+                this.setState({ showExpertiseModal: false })
+              }
             />
           )}
           <img
@@ -722,9 +693,13 @@ class Profile extends Component {
               </div>
               <hr className="w-full  rounded-r bg-[#f2f2f2] py-[1px] sm:py-[2px]" />
             </div>
-            <div className="grid md:grid-cols-2">
-              <>{<NavItems />}</>
-              {!this.props.isEdit && (
+            {this.props.isEdit ? (
+              <div>
+                <>{<NavItems />}</>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2">
+                <>{<NavItems />}</>
                 <div className="pt-5 sm:p-0">
                   <Slots
                     formatDate={this.formatDate}
@@ -737,8 +712,8 @@ class Profile extends Component {
                     currentStartDateIndex={this.state.currentStartDateIndex}
                   />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

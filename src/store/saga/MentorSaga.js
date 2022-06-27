@@ -4,6 +4,7 @@ import {
   FETCH_COMPANIES_REQUESTED,
   FETCH_CURRENT_MENTOR_DETAILS_REQUESTED,
   FETCH_MENTOR_DETAILS_REQUESTED,
+  FETCH_TAGS_REQUESTED,
   UPDATE_MENTOR_EXPERIENCE_REQUESTED,
 } from "../actionTypes/index";
 import {
@@ -12,9 +13,11 @@ import {
   fetchCurrentMentorDetailsSuccess,
   fetchMentorDetailsRequested,
   fetchMentorDetailsSuccess,
+  fetchTagsSuccess,
   updateMentorExperienceSuccess,
 } from "../actions/Mentor";
 import {
+  getCategories,
   getColleges,
   getCompanies,
   getCurrentMentor,
@@ -66,6 +69,15 @@ function* fetchCollegesSaga(action) {
   }
 }
 
+function* fetchTagsSaga(action) {
+  try {
+    const res = yield call(getCategories, action.payload);
+    yield put(fetchTagsSuccess(res.data));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function* fetchCurrentMentorDetailsSaga() {
   try {
     const res = yield call(getCurrentMentor);
@@ -84,6 +96,7 @@ function* mentorSaga() {
   );
   yield takeEvery(FETCH_COMPANIES_REQUESTED, fetchCompaniesSaga);
   yield takeEvery(FETCH_COLLEGES_REQUESTED, fetchCollegesSaga);
+  yield takeEvery(FETCH_TAGS_REQUESTED, fetchTagsSaga);
   yield takeEvery(FETCH_MENTOR_DETAILS_REQUESTED, fetchMentorDetailsSaga);
   yield takeEvery(
     FETCH_CURRENT_MENTOR_DETAILS_REQUESTED,

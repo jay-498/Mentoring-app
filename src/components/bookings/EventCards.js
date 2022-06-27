@@ -27,7 +27,6 @@ function EventCards({ events }) {
             key={event._id}
             className="flex-col p-5 mt-5 w-full border rounded-lg"
           >
-            {console.log(event)}
             <div className="flex justify-between items-center py-2">
               <p className="font-Manrope font-black text-[#535353] text-[16px]">
                 {event.mentee?.first_name} {event.mentee?.last_name}

@@ -9,6 +9,8 @@ import {
   FETCH_COLLEGES_SUCCESS,
   FETCH_CURRENT_MENTOR_DETAILS_REQUESTED,
   FETCH_CURRENT_MENTOR_DETAILS_SUCCESS,
+  FETCH_TAGS_REQUESTED,
+  FETCH_TAGS_SUCCESS,
 } from "../actionTypes/index";
 
 export const fetchCompaniesRequested = () => {
@@ -20,6 +22,19 @@ export const fetchCompaniesRequested = () => {
 export const fetchCompaniesSuccess = (data) => {
   return {
     type: FETCH_COMPANIES_SUCCESS,
+    payload: data,
+  };
+};
+
+export const fetchTagsRequested = () => {
+  return {
+    type: FETCH_TAGS_REQUESTED,
+  };
+};
+
+export const fetchTagsSuccess = (data) => {
+  return {
+    type: FETCH_TAGS_SUCCESS,
     payload: data,
   };
 };

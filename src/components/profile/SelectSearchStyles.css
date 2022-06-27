@@ -169,6 +169,7 @@ body {
 .select-search--multiple {
   border-radius: 3px;
   overflow: hidden;
+
 }
 
 .select-search:not(.is-loading):not(.select-search--multiple)
@@ -203,7 +204,7 @@ body {
   left: 0;
   border-radius: 3px;
   overflow: auto;
-  max-height: 360px;
+  max-height: 200px;
 }
 
 .select-search--multiple .select-search__select {

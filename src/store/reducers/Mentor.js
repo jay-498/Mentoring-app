@@ -3,12 +3,14 @@ import {
   FETCH_COMPANIES_SUCCESS,
   FETCH_CURRENT_MENTOR_DETAILS_SUCCESS,
   FETCH_MENTOR_DETAILS_SUCCESS,
+  FETCH_TAGS_SUCCESS,
   UPDATE_MENTOR_EXPERIENCE_SUCCESS,
 } from "../actionTypes/index";
 
 const initialState = {
   companies: [],
   colleges: [],
+  tags: [],
   MentorDetails: {},
 };
 
@@ -18,6 +20,12 @@ const MentorReducer = (state = initialState, action) => {
       return {
         ...state,
         companies: [...action.payload],
+      };
+
+    case FETCH_TAGS_SUCCESS:
+      return {
+        ...state,
+        tags: [...action.payload],
       };
 
     case FETCH_COLLEGES_SUCCESS:

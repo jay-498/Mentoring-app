@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import profiledesigns from "../../assets/images/design/profiledesigns.png";
 import plus from "../../assets/images/svgs/plus.png";
 import pencil from "../../assets/images/svgs/pencil.png";
+import cross from "../../assets/images/svgs/cross.png";
 import Slots from "./Slots";
 import { withRouter } from "../../utils/withRouter";
 import downarrow from "../../assets/images/svgs/downarrow.png";
@@ -21,6 +22,7 @@ import {
   updateMentorExperienceRequested,
 } from "../../store/actions/Mentor";
 import DeleteModal from "./DeleteModal";
+import DescriptionTextArea from "./DescriptionTextArea";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -38,30 +40,9 @@ class Profile extends Component {
       NavItem: 1,
       dropDownItem: 1,
       dropDownItems: ["All", "Upcoming", "Past"],
-      // StartDates: [
-      //   {
-      //     date: "Fri Jun 03 2022 8:00:00 GMT+0530 (India Standard Time)",
-      //     times: [8, 9, 10, 14, 16],
-      //   },
-      //   {
-      //     date: "Sat Jun 04 2022 10:00:00 GMT+0530 (India Standard Time)",
-      //     times: [10, 9],
-      //   },
-      //   {
-      //     date: "Sun Jun 05 2022 14:00:00 GMT+0530 (India Standard Time)",
-      //     times: [14, 16, 20],
-      //   },
-      //   {
-      //     date: "Mon Jun 06 2022 9:00:00 GMT+0530 (India Standard Time)",
-      //     times: [9, 10, 14, 16],
-      //   },
-      //   {
-      //     date: "Tue Jun 07 2022 8:00:00 GMT+0530 (India Standard Time)",
-      //     times: [8, 9, 10, 20],
-      //   },
-      // ],
       currentStartDateIndex: 0,
       currentStartTimeIndex: 0,
+      description: "",
       event: {
         startDate: "",
         endDate: "",
@@ -376,22 +357,10 @@ class Profile extends Component {
           return (
             <>
               <div className="gap-y-3">
-                <div className="flex justify-between items-center">
-                  <p className="flex font-Helvetica font-normal text-[#273150] sm:py-5 pb-0 lg:text-xl md:text-lg sm:text-md text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi.”
-                  </p>
-                  {this.props.isEdit && (
-                    <div
-                      onClick={() => this.handleEditEducationModal()}
-                      className="flex cursor-pointer hover:bg-gray-200 rounded-full p-2 items-center justify-center gap-x-5"
-                    >
-                      <img src={pencil} alt="edit" title="Edit" />
-                    </div>
-                  )}
-                </div>
+                <DescriptionTextArea
+                  isEdit={this.props.isEdit}
+                  description={mentor.description}
+                />
                 <hr className="bg-[#F2F2F2] mt-3 py-[0.2px] rounded w-full" />
                 <div className="flex-col  gap-y-2 mt-3">
                   <div className="flex w-full justify-between items-center">
@@ -703,59 +672,55 @@ class Profile extends Component {
             </div>
           </div>
           <div className="flex-col sm:mt-10">
-            <div className="flex-col w-full sm:py-5 py-2">
-              <div className="flex font-poppins sm:gap-x-16 gap-x-4 py-2 sm:pb-3">
-                <p
-                  onClick={() => this.setState({ NavItem: 1 })}
-                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
-                    this.state.NavItem === 1
-                      ? "text-[#8f6ec5]"
-                      : "text-[#8c8c8c]"
-                  } pr-1`}
-                >
-                  Profile
-                </p>
-                <p
-                  onClick={() => this.setState({ NavItem: 2 })}
-                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
-                    this.state.NavItem === 2
-                      ? "text-[#8f6ec5]"
-                      : "text-[#8c8c8c]"
-                  } pr-1`}
-                >
-                  Sessions
-                </p>
-                <p
-                  onClick={() => this.setState({ NavItem: 3 })}
-                  className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
-                    this.state.NavItem === 3
-                      ? "text-[#8f6ec5]"
-                      : "text-[#8c8c8c]"
-                  } pr-1`}
-                >
-                  Testimonials
-                </p>
+            <div className="flex-col items-center justify-center w-full sm:py-5 sm:py-2 py-3">
+              <div className="flex font-poppins sm:gap-x-16 gap-x-4 py-1  sm:pb-3">
+                <div className="flex-col relative">
+                  <p
+                    onClick={() => this.setState({ NavItem: 1 })}
+                    className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
+                      this.state.NavItem === 1
+                        ? "text-[#8f6ec5]"
+                        : "text-[#8c8c8c]"
+                    } pr-1`}
+                  >
+                    Profile
+                  </p>
+                  {this.state.NavItem === 1 && (
+                    <hr className="absolute z-10 w-full sm:my-2 my-1 rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
+                  )}
+                </div>
+                <div className="flex-col relative">
+                  <p
+                    onClick={() => this.setState({ NavItem: 2 })}
+                    className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
+                      this.state.NavItem === 2
+                        ? "text-[#8f6ec5]"
+                        : "text-[#8c8c8c]"
+                    } pr-1`}
+                  >
+                    Slots
+                  </p>
+                  {this.state.NavItem === 2 && (
+                    <hr className="absolute z-10 w-full sm:my-2 my-1 rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
+                  )}
+                </div>
+                <div className="flex-col relative">
+                  <p
+                    onClick={() => this.setState({ NavItem: 3 })}
+                    className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
+                      this.state.NavItem === 3
+                        ? "text-[#8f6ec5]"
+                        : "text-[#8c8c8c]"
+                    } pr-1`}
+                  >
+                    Testimonials
+                  </p>
+                  {this.state.NavItem === 3 && (
+                    <hr className="absolute z-10 w-full sm:my-2 my-1 rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
+                  )}
+                </div>
               </div>
-              {this.state.NavItem === 1 && (
-                <div className="flex">
-                  <hr className="lg:w-[8%] sm:w-[12%] w-[16%] rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
-                  <hr className="w-full rounded-r bg-[#f2f2f2] py-[1px]" />
-                </div>
-              )}
-              {this.state.NavItem === 2 && (
-                <div className="flex">
-                  <hr className="lg:w-[12%] sm:w-[22%] w-[39%]  rounded bg-[#f2f2f2] py-[1px]" />
-                  <hr className="lg:w-[13%] sm:w-[27%] w-[50%] rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
-                  <hr className="w-full rounded bg-[#f2f2f2] py-[1px]" />
-                </div>
-              )}
-              {this.state.NavItem === 3 && (
-                <div className="flex w-full">
-                  <hr className="lg:w-[36%] sm:w-[37%] w-[50%] rounded bg-[#f2f2f2] py-[1px]" />
-                  <hr className="lg:w-[23%] sm:w-[23%] w-[37%] rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
-                  <hr className="lg:w-full sm:w-[30%] rounded bg-[#f2f2f2] py-[1px]" />
-                </div>
-              )}
+              <hr className="w-full  rounded-r bg-[#f2f2f2] py-[1px] sm:py-[2px]" />
             </div>
             <div className="grid md:grid-cols-2">
               <>{<NavItems />}</>

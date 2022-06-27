@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import avatar from "../../assets/images/mentee/1.png";
 import cross from "../../assets/images/svgs/cross.png";
 import downarrow from "../../assets/images/svgs/downarrow.png";
 import {
@@ -8,10 +7,14 @@ import {
   updateBookingModal,
 } from "../../store/actions/booking";
 import { withRouter } from "../../utils/withRouter";
+import SettingsModal from "./SettingsModal";
 
 class RoundedUser extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showSettingsModal: false,
+    };
     this.ref = React.createRef();
     this.roundref = React.createRef();
     this.bookingref = React.createRef();
@@ -54,9 +57,15 @@ class RoundedUser extends Component {
   };
 
   render() {
-    const { logOut } = this.props;
     return (
       <>
+        {this.state.showSettingsModal && (
+          <SettingsModal
+            handleSettingsModal={() =>
+              this.setState({ showSettingsModal: false })
+            }
+          />
+        )}
         <div
           className="flex items-center md:order-2"
           style={{ position: "relative" }}
@@ -79,7 +88,7 @@ class RoundedUser extends Component {
           </button>
           <div
             ref={this.ref}
-            className="hidden z-50 md:w-[300px] w-[260px] my-4 text-base list-none px-4 bg-white rounded-md shadow"
+            className="hidden z-30 md:w-[300px] w-[260px] my-4 text-base list-none px-4 bg-white rounded-md shadow"
             id="dropdown"
             style={{ position: "absolute", right: "0px", top: "40%" }}
           >
@@ -100,16 +109,16 @@ class RoundedUser extends Component {
                 <p className="text-[20px]  font-roboto font-medium">
                   {this.props.userName}
                 </p>
+              </div>
+              <div className="flex-col relative w-full inline-block text-left px-2">
                 {this.props.userType === "M" && (
                   <a
-                    className="text-[14px] pt-2 font-poppins  font-medium"
+                    className="text-[14px] font-poppins  font-medium"
                     href={`/me`}
                   >
                     My Profile
                   </a>
                 )}
-              </div>
-              <div className="flex-col relative w-full inline-block text-left px-2">
                 <div
                   className="flex w-full justify-between items-center"
                   onClick={this.handleBookingDropdown}
@@ -132,23 +141,47 @@ class RoundedUser extends Component {
                   <div className="flex-col justify-between items-center py-1 text-[14px] font-medium">
                     <div className="flex items-center justify-start py-1">
                       <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
-                      <p onClick={() => this.props.updateBookingModal(1)}>
+                      <p
+                        onClick={() => {
+                          this.props.updateBookingModal(1);
+                          this.handleDropDown();
+                        }}
+                      >
                         All
                       </p>
                     </div>
                     <div className="flex items-center justify-center py-1">
                       <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
-                      <p onClick={() => this.props.updateBookingModal(2)}>
+                      <p
+                        onClick={() => {
+                          this.props.updateBookingModal(2);
+                          this.handleDropDown();
+                        }}
+                      >
                         Upcoming
                       </p>
                     </div>
                     <div className="flex items-center justify-start py-1">
                       <div className="bg-gray-300 h-[1px] w-[10px] mr-3"></div>
-                      <p onClick={() => this.props.updateBookingModal(3)}>
+                      <p
+                        onClick={() => {
+                          this.props.updateBookingModal(3);
+                          this.handleDropDown();
+                        }}
+                      >
                         Past
                       </p>
                     </div>
                   </div>
+                </div>
+                <div
+                  className="flex w-full justify-between items-center"
+                  onClick={() => {
+                    this.setState({ showSettingsModal: true });
+                    this.handleDropDown();
+                  }}
+                >
+                  <p className="text-[14px] font-medium pb-2">Settings</p>
                 </div>
                 <div
                   className="flex w-full justify-between items-center"

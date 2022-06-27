@@ -6,50 +6,33 @@ import img1 from "../../assets/images/1.png";
 import img2 from "../../assets/images/2.png";
 import img3 from "../../assets/images/3.png";
 import img4 from "../../assets/images/4.png";
-import left from "../../assets/images/design/left.png";
+// import left from "../../assets/images/design/left.png";
 import right from "../../assets/images/design/right.png";
+import left from "../../assets/images/svgs/arrow-left.png";
+import MainService from "../../services/main.service";
+import { withRouter } from "../../utils/withRouter";
 
-export default class Gallery extends Component {
+class Gallery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [
-        {
-          image: img1,
-          tag: "REASEARCH",
-        },
-        {
-          image: img2,
-          tag: "REASEARCH",
-        },
-        {
-          image: img3,
-          tag: "REASEARCH",
-        },
-        {
-          image: img4,
-          tag: "REASEARCH",
-        },
-        {
-          image: img1,
-          tag: "REASEARCH",
-        },
-        {
-          image: img2,
-          tag: "REASEARCH",
-        },
-        {
-          image: img3,
-          tag: "REASEARCH",
-        },
-        {
-          image: img4,
-          tag: "RESEARCH",
-        },
-      ],
+      categories: [],
     };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
+    this.onSearch = this.onSearch.bind(this);
+  }
+
+  componentDidMount() {
+    MainService.getCategories()
+      .then((response) => {
+        let tempCategories = [...response.data.data];
+        this.setState((prevState) => ({
+          ...prevState,
+          categories: tempCategories,
+        }));
+      })
+      .catch((err) => console.log(err));
   }
 
   next() {
@@ -58,6 +41,10 @@ export default class Gallery extends Component {
 
   previous() {
     this.slider.slickPrev();
+  }
+
+  onSearch(tag) {
+    this.props.navigate(`/search?mentor=${tag}`);
   }
 
   render() {
@@ -113,49 +100,55 @@ export default class Gallery extends Component {
     };
 
     return (
-      <div className="relative pt-5">
+      <div className="relative pt-5 mx-7">
         {this.state.categories.length > 4 && (
           <div
-            className="absolute flex items-center justify-center lg:top-[118px] md:top-[90px] top-[124px] left-5 lg:left-5 md:left-2 z-10 bg-gray-50 rounded-2xl h-15 w-15 p-3"
+            className="absolute lg:top-[110px] bg-gray-50 rounded-2xl z-10  sm:top-[110px] md:top-[70px] top-[97px] left-0"
             onClick={this.previous}
           >
-            <button className="button">
+            <button className="button  h-15 w-15 p-4">
               <img src={left} alt="left" className="h-6 w-6" loading="lazy" />
             </button>
           </div>
         )}
-        <Slider ref={(c) => (this.slider = c)} {...settings}>
-          {this.state.categories.map((mentor, index) => (
-            <div key={index}>
-              <div className="relative">
-                <a className="absolute inset-0 z-10 text-center flex top-[35%] justify-center">
-                  <h1
-                    className="lg:text-2xl text-lg md:text-xl text-white font-bold font-poppins tracking-[.13em]"
-                    style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)" }}
+        <div className="px-4">
+          <Slider ref={(c) => (this.slider = c)} {...settings}>
+            {this.state.categories.map((mentor, index) => (
+              <div key={mentor._id} className="flex rounded-[20px]">
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => this.onSearch(mentor.name)}
+                >
+                  <div
+                    className="absolute px-5 inset-0 z-10 rounded-[20px] text-center flex items-center justify-center"
+                    style={{ background: "rgba(0, 0, 0, 0.35)" }}
                   >
-                    {mentor.tag}
-                  </h1>
-                </a>
-                <a href="#" className="relative">
-                  <img src={mentor.image} alt="1" loading="lazy" />
-                </a>
+                    <h1 className="lg:text-xl text-lg md:text-xl w-full text-white font-bold font-poppins tracking-[.13em]">
+                      {mentor.name}
+                    </h1>
+                  </div>
+                  <div className="max-w-[350px]">
+                    <img
+                      src={mentor.img_url}
+                      alt="1"
+                      loading="lazy"
+                      className="rounded-[20px]"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </Slider>
+        </div>
 
         {this.state.categories.length > 4 && (
           <div
-            className="absolute md:right-1 lg:right-3 right-3 lg:top-[118px] md:top-[90px] top-[124px]"
+            className="absolute right-0 z-10 bg-gray-50 rounded-2xl
+             lg:top-[110px] sm:top-[110px] md:top-[70px] top-[97px]"
             onClick={this.next}
           >
-            <button className="button bg-gray-50 rounded-2xl h-15 w-15 p-4">
-              <img
-                src={right}
-                alt="left"
-                className="rounded-3xl h-6 w-6"
-                loading="lazy"
-              />
+            <button className="button  h-15 w-15 p-4">
+              <img src={right} alt="right" className="h-6 w-6" loading="lazy" />
             </button>
           </div>
         )}
@@ -163,3 +156,5 @@ export default class Gallery extends Component {
     );
   }
 }
+
+export default withRouter(Gallery);

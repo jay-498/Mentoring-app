@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./EditModal.css";
 import group from "../../assets/images/svgs/Group.png";
+import SearchSelect from "./SelectSearch";
 
 class EducationModal extends Component {
   constructor() {
@@ -20,6 +21,7 @@ class EducationModal extends Component {
       endDate_type: "text",
       startDate_type: "text",
       checkbox: false,
+      CollegesOptions: [],
       experience: {
         degree: "",
         college: "",
@@ -45,6 +47,18 @@ class EducationModal extends Component {
             end_date: this.dateFormat(college.end_date) || "",
           },
         };
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.colleges !== this.props.colleges) {
+      //replacing colleges with college id
+      const Options = this.props.colleges.map((college) => {
+        return { value: college._id, name: college.name };
+      });
+      this.setState((prev) => {
+        return { ...prev, CollegesOptions: [...Options] };
       });
     }
   }
@@ -75,6 +89,18 @@ class EducationModal extends Component {
     let new_form_data = { ...this.state.experience };
     new_form_data[name] = value;
     this.setState({ experience: new_form_data });
+  };
+
+  handleChangeCollege = (college) => {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        experience: {
+          ...prev.experience,
+          college: college,
+        },
+      };
+    });
   };
 
   validate = () => {
@@ -199,7 +225,7 @@ class EducationModal extends Component {
                         />
                         <label
                           htmlFor="Titlename"
-                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
+                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2  origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
                                 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
                                 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
                         >
@@ -208,7 +234,13 @@ class EducationModal extends Component {
                       </div>
                     </div>
                     <div className="mb-6">
-                      <div className="relative">
+                      <SearchSelect
+                        options={this.state.CollegesOptions}
+                        onChange={this.handleChangeCollege}
+                        value={this.state.experience.college}
+                        name="college"
+                      />
+                      {/* <div className="relative">
                         <select
                           className="block font-poppins appearance-none w-full bg-gray-100 border focus:outline-none focus:ring-0 focus:border-[#8F6EC5] text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
                           id="grid-state"
@@ -232,7 +264,7 @@ class EducationModal extends Component {
                             <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                           </svg>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* <div className="mb-6">
@@ -248,7 +280,7 @@ class EducationModal extends Component {
                         />
                         <label
                           htmlFor="collegename"
-                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
+                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2  origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
                                 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
                                 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
                         >
@@ -268,7 +300,7 @@ class EducationModal extends Component {
                                 type="text"
                                 placeholder=" "
                                 />
-                                <label htmlFor="EmploymentType" className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
+                                <label htmlFor="EmploymentType" className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2  origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
                                 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
                                 peer-focus:scale-75 peer-focus:-translate-y-4 left-2">Employment Type</label>
                                 </div>
@@ -300,7 +332,7 @@ class EducationModal extends Component {
                         )}
                         <label
                           htmlFor="StartDate"
-                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
+                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2  origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
                                   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
                                   peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
                         >
@@ -333,7 +365,7 @@ class EducationModal extends Component {
                         )}
                         <label
                           htmlFor="EndDate"
-                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
+                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2  origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
                                   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
                                   peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
                         >
@@ -355,7 +387,7 @@ class EducationModal extends Component {
                         />
                         <label
                           htmlFor="Industry"
-                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
+                          className="font-poppins absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-2  origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] 
                                 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 
                                 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
                         >

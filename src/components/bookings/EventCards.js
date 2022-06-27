@@ -1,5 +1,7 @@
 import React from "react";
 import calender from "../../assets/images/svgs/mybooking.png";
+import dollar from "../../assets/images/svgs/dollar.svg";
+import summary from "../../assets/images/svgs/summary.svg";
 
 function EventCards({ events }) {
   const dateFormat = (date) => {
@@ -28,12 +30,13 @@ function EventCards({ events }) {
             {console.log(event)}
             <div className="flex justify-between items-center py-2">
               <p className="font-Manrope font-black text-[#535353] text-[16px]">
-                {event.mentor?.name}
+                {event.mentee?.first_name} {event.mentee?.last_name}
               </p>
               <a
                 href={`https://${event.mentor?.google_meet_link}`}
                 target="blank"
-                className="text-[#e7783e] bg-[#ffcfb6] text-[12px] font-semibold mr-2 px-2.5 py-0.5 rounded"
+                style={{ background: "rgba(212, 195, 240, 0.5)" }}
+                className="text-[#8F6EC5]  text-[12px] font-semibold mr-2 px-2.5 py-0.5 rounded"
               >
                 Join Meet
               </a>
@@ -45,10 +48,16 @@ function EventCards({ events }) {
                 Date - {dateFormat(event.start_date)}
               </p>
             </div>
-            <div className="flex items-center gap-x-3 pt-2 pb-4">
-              <img src={calender} alt="c" />
+            <div className="flex items-center gap-x-3 pt-2">
+              <img src={dollar} alt="c" className="w-3 h-3" />
               <p className="font-Manrope font-medium text-[#bbb9b9] text-[12px]">
                 Fees - ₹{event.amount}
+              </p>
+            </div>
+            <div className="flex items-center gap-x-3 pt-2">
+              <img src={summary} alt="c" className="w-3 h-3" />
+              <p className="font-Manrope font-medium text-[#bbb9b9] text-[12px]">
+                {event.summary}
               </p>
             </div>
             {/* <div className="flex rounded-b-lg bg-[#f8f8f8] justify-end items-center gap-x-3 py-2 pr-5">

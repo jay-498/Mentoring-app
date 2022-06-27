@@ -159,7 +159,7 @@ class HomePage extends Component {
         </div>
 
         <div className="flex-col sm:pt-20 pt-10">
-          <div className="absolute sm:w-[60px] w-[40px] mt-32 sm:ml-10 md:ml-2 lg:ml-4">
+          <div className="absolute sm:w-[60px] w-[50px]  mt-32 sm:ml-10 md:ml-2 lg:ml-8 ml-3">
             <img src={dots} alt="dot" loading="lazy" />
           </div>
           <div className="flex flex-col lg:mx-10 mx-2">

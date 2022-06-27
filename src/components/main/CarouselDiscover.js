@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import "./slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import left from "../../assets/images/design/left.png";
+// import left from "../../assets/images/design/left.png";
+import left from "../../assets/images/svgs/arrow-left.png";
 import right from "../../assets/images/design/right.png";
 import MainService from "../../services/main.service";
 import { withRouter } from "../../utils/withRouter";
@@ -27,7 +28,7 @@ class CarouselDiscover extends Component {
     if (this.props.isSlider) {
       MainService.discoverTopMentors()
         .then((response) => {
-          let tempMentors = [...response.data];
+          let tempMentors = [...response.data.data];
           this.setState((prevState) => ({
             ...prevState,
             mentorDetails: tempMentors,
@@ -108,14 +109,14 @@ class CarouselDiscover extends Component {
             {(this.state.mentorDetails.length > 4 ||
               window.innerWidth < 720) && (
               <div
-                className="absolute pt-5 top-56 left-2 z-10 bg-white rounded-2xl h-[65px] w-[69px] p-3 bg-gray-50 cursor-pointer"
+                className="absolute top-56 left-2 z-10 bg-gray-50 rounded-2xl cursor-pointer"
                 onClick={this.previous}
               >
-                <button className="button">
+                <button className="button h-[65px] w-[69px] p-4 pl-5">
                   <img
                     src={left}
                     alt="left"
-                    className="h-6 w-6 ml-3"
+                    className="h-6 w-6"
                     loading="lazy"
                   />
                 </button>
@@ -147,10 +148,10 @@ class CarouselDiscover extends Component {
                           </div>
                           <div className="flex-col lg:px-4 px-3 pb-2">
                             <p className="text-sm font-medium text-[#0C2054] font-Manrope">
-                              {mentor.description}
+                              {mentor.colleges[0]?.degree}
                             </p>
                             {/* <p className="text-[10px] font-light text-[#0C2054] font-poppins">
-                              {mentor.colleges[0].name}
+                              {mentor.colleges[0]?.degree}
                             </p> */}
                           </div>
                         </div>

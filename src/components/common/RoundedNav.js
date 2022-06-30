@@ -7,6 +7,7 @@ import {
   updateBookingModal,
 } from "../../store/actions/booking";
 import { withRouter } from "../../utils/withRouter";
+import MyBookings from "../bookings/MyBookings";
 import SettingsModal from "./SettingsModal";
 
 class RoundedUser extends Component {
@@ -23,9 +24,9 @@ class RoundedUser extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchMentorEventRequested({ type: "A" });
-    this.props.fetchMentorEventRequested({ type: "U" });
-    this.props.fetchMentorEventRequested({ type: "P" });
+    // this.props.fetchMentorEventRequested({ type: "A" });
+    // this.props.fetchMentorEventRequested({ type: "U" });
+    // this.props.fetchMentorEventRequested({ type: "P" });
     window.addEventListener("click", this.handleClickOutside);
   }
 
@@ -59,6 +60,7 @@ class RoundedUser extends Component {
   render() {
     return (
       <>
+        {this.props.bookingModal !== 0 && <MyBookings />}
         {this.state.showSettingsModal && (
           <SettingsModal
             handleSettingsModal={() =>

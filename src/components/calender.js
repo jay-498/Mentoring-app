@@ -7,13 +7,16 @@ import copy from "../assets/svgs/copy.svg";
 import "./calender.css";
 import { connect } from "react-redux";
 import { updateBookingTime, updateBookingDate } from "../store/actions/booking";
-
+import { setMentorAvailability } from "../services/Mentor.service";
+import { toast } from "react-toastify";
+import { mentorAvailability } from "../services/booking.service";
 const dates = [];
 export class calender extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dates: [],
+      deletedDates: [],
       weekDays: [
         {
           name: "SUN",
@@ -46,6 +49,20 @@ export class calender extends Component {
       ],
       availableDates: [],
     };
+  }
+
+  componentDidMount() {
+    const { mentor_id } = this.props;
+    console.log("prev", mentor_id.data);
+    mentorAvailability(mentor_id).then((res) => {
+      console.log(res.data.data);
+      this.setState((prev) => {
+        return {
+          ...prev,
+          availableDates: [...res.data.data],
+        };
+      });
+    });
   }
 
   isSameDay(d1, d2) {
@@ -91,18 +108,18 @@ export class calender extends Component {
         this.setState((prev) => {
           return {
             ...prev,
-            date: date,
+            date: this.dateFormat(date),
             availableDates: [
               ...prev.availableDates,
               {
-                date: date,
+                date: this.dateFormat(date),
                 times: [{ start_time: "09:00", end_time: "10:00" }],
               },
             ],
           };
         });
       }
-    } else alert("Please Kindly Book Your Session From Tommorrow");
+    }
   };
 
   IncreaseSlot(index) {
@@ -132,9 +149,12 @@ export class calender extends Component {
   }
 
   DeleteSlot(timeIndex, dateIndex) {
-    const { availableDates } = this.state;
+    const { availableDates, deletedDates } = this.state;
     let dates = [...availableDates];
     let date = { ...dates[dateIndex] };
+    if (deletedDates.indexOf(date.date.toString()) === -1) {
+      deletedDates.push(date.date.toString());
+    }
     let times = [...date.times];
     times.splice(timeIndex, 1);
     dates[dateIndex] = { ...date, times };
@@ -202,8 +222,10 @@ export class calender extends Component {
           times.splice(j, 1);
           let replaceTimes = [];
           for (let i = 1; i <= diff; i++) {
-            let str_start_time = start_time.toString() + ":00";
-            let str_end_time = (start_time + 1).toString() + ":00";
+            let str_start_time =
+              ("0" + start_time.toString()).slice(-2) + ":00";
+            let str_end_time =
+              ("0" + (start_time + 1).toString()).slice(-2) + ":00";
             replaceTimes.push({
               start_time: str_start_time,
               end_time: str_end_time,
@@ -214,24 +236,23 @@ export class calender extends Component {
           //issue is here
           //i have to set this times to dates
         }
-        console.log("replace", times);
       }
+      const uniq = new Set(times.map((e) => JSON.stringify(e)));
+      const res = Array.from(uniq).map((e) => JSON.parse(e));
+      console.log("uniqie", res);
+      dates[i].times = [...res];
     }
-
-    //remove duplicate elements for times
-    for (let i = 0; i < dates.length; i++) {
-      times = [...dates[i].times];
-      const unique_times = [
-        ...new Map(times.map((item, key) => [item[key], item])).values(),
-      ];
-      dates[i].times = [...unique_times];
-      console.log("uniqie", unique_times);
-    }
-
-    // console.log(
-    //   parseInt(e.target.value) - parseInt(times[timeIndex].start_time)
-    // );
-    console.log("finalBooked", dates);
+    setMentorAvailability({ availability: dates })
+      .then((response) => {
+        if (response.data.success) {
+          toast.success(response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+      })
+      .catch((err) => toast.error(err.response.data.msg), {
+        position: toast.POSITION.TOP_CENTER,
+      });
   };
 
   dateFormat = (date) => {
@@ -239,16 +260,16 @@ export class calender extends Component {
     return (
       "date",
       ("0" + x.getDate()).slice(-2) +
-        " " +
-        x.toLocaleString("default", { month: "long" }) +
-        " " +
+        "/" +
+        ("0" + (parseInt(x.getMonth()) + 1)).slice(-2) +
+        "/" +
         x.getFullYear()
     );
   };
 
   render() {
     return (
-      <div className="lg:flex rounded-lg shadow-xl gap-x-10 p-5 pt-0">
+      <div className="lg:flex  gap-x-10 p-5 pt-0">
         <div className="max-w-3xl  pb-3">
           <h1 className="text-xl font-poppins font-bold bg-blend-color-dodge pb-2 text-left ">
             Select Your available Dates
@@ -277,7 +298,7 @@ export class calender extends Component {
                     className="flex gap-x-5 items-start justify-between"
                   >
                     <p className="flex font-poppins text-semibold px-2 m-2 py-3 rounded-lg bg-white">
-                      {this.dateFormat(date.date)}
+                      {date.date}
                     </p>
                     <div className="flex-col">
                       {date.times.map((time, timeIndex) => (
@@ -289,10 +310,10 @@ export class calender extends Component {
                             className="p-2 py-3 focus:outline-none rounded-lg font-poppins"
                             type="time"
                             value={time.start_time}
+                            step="00:15"
                             onChange={(e) =>
                               this.onChangeStartTime(e, timeIndex, dateIndex)
                             }
-                            step="900"
                           />
                           <p>-</p>
                           <input

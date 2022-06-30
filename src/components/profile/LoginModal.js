@@ -646,9 +646,10 @@ class DeleteTest extends Component {
                             <span>PAY NOW</span>
                             <span className="flex items-center justify-center">
                               <img src={rupee} className="w-4 h-4" alt="Rs" />
-                              {(this.props.mentor.session_rate *
-                                parseInt(this.props.event.duration)) /
-                                60}
+                              {
+                                this.props.mentor.session_rate
+                                // parseInt(this.props.event.duration)) /60
+                              }
                             </span>
                             {/* <button
                               className="flex justify-center items-center w-full bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px]"

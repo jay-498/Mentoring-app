@@ -51,7 +51,7 @@ class DescriptionTextArea extends Component {
           <div className="flex w-full mx-1">
             {showTextArea ? (
               <textarea
-                className="w-full font-poppins border-2 rounded border-gray-300 px-2 py-2 w-full text-sm focus:outline-none  bg-transparent"
+                className="w-full font-Helvetica border-2 rounded border-gray-300 px-2 py-2 w-full text-sm focus:outline-none  bg-transparent"
                 placeholder=" "
                 id="description"
                 name="description"
@@ -60,7 +60,7 @@ class DescriptionTextArea extends Component {
                 rows={5}
               />
             ) : (
-              <p className="font-Helvetica font-normal text-[#273150] sm:pt-3 sm:pb-1 pb-0 lg:text-xl md:text-lg sm:text-md text-sm">
+              <p className="font-Helvetica font-normal text-[#273150] sm:pt-3 sm:pb-1 pb-0 lg:text-[20px] md:text-lg sm:text-md text-sm">
                 {this.state.description}
               </p>
             )}

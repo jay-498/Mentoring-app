@@ -49,7 +49,7 @@ class Navbar extends Component {
     const { pathname } = this.props.location;
     return (
       <>
-        <MyBookings />
+        {/* <MyBookings /> */}
         <LoginModal isBooking={false} />
         <nav
           className={`relative flex flex-wrap lg:px-20 sm:px-10 px-5 items-center ${

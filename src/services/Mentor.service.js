@@ -30,7 +30,7 @@ export const getCompanies = () => {
 
 export const getCategories = () => {
   return axios
-    .get(`${BASE_URL}/api/category`)
+    .get(`${BASE_URL}/api/tags`)
     .then((res) => {
       return res.data;
     })
@@ -59,6 +59,16 @@ export const getMentorById = ({ id }) => {
     .catch((error) => {
       throw error;
     });
+};
+
+export const setMentorAvailability = (data) => {
+  const jwt_token = localStorage.getItem("user_token");
+  console.log("services", data);
+  return axios.put(`${BASE_URL}/api/mentoravailability`, data, {
+    headers: {
+      "x-auth-token": jwt_token,
+    },
+  });
 };
 
 export const getCurrentMentor = () => {

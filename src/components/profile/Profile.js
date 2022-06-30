@@ -135,7 +135,7 @@ class Profile extends Component {
   };
 
   formatDate = (date) => {
-    var dateParts = date.split("-");
+    var dateParts = date.split("/");
     var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
     return dateObject.toString();
   };
@@ -358,7 +358,7 @@ class Profile extends Component {
     const { mentor } = this.props;
     const NavItems = () => {
       switch (this.state.NavItem) {
-        case 2:
+        case 1:
           return (
             <>
               <div className="gap-y-3">
@@ -505,8 +505,9 @@ class Profile extends Component {
                       </div>
                     )}
                   </div>
-                  {/* <div className="flex gap-x-3 items-center font-Helvetica font-bold text-[12px]">
-                    {mentor?.tags?.length !== 0 &&
+                  <div className="flex gap-x-3 items-center font-Helvetica font-bold text-[12px]">
+                    {mentor.tags &&
+                      mentor?.tags?.length !== 0 &&
                       mentor.tags.map((tag) => (
                         <span
                           key={tag._id}
@@ -516,18 +517,21 @@ class Profile extends Component {
                           {tag.name}
                         </span>
                       ))}
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </>
           );
-        case 1:
+        case 2:
           return (
             <>
               <div className="flex-col px-2">
                 <div className="flex relative items-start w-full inline-block text-left"></div>
                 <div className="flex-col py-4">
-                  <Calender />
+                  <Calender
+                    mentor_id={mentor._id}
+                    availableDates={this.state.availableDates}
+                  />
                 </div>
               </div>
             </>
@@ -547,6 +551,7 @@ class Profile extends Component {
           event={this.state.event}
           mentor={mentor}
           isBooking={true}
+          availableDates={this.state.availableDates}
         />
         <div>
           {showExperienceDeleteModal && (
@@ -660,21 +665,23 @@ class Profile extends Component {
                     <hr className="absolute z-10 w-full sm:my-2 my-1 rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
                   )}
                 </div>
-                <div className="flex-col relative">
-                  <p
-                    onClick={() => this.setState({ NavItem: 2 })}
-                    className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
-                      this.state.NavItem === 2
-                        ? "text-[#8f6ec5]"
-                        : "text-[#8c8c8c]"
-                    } pr-1`}
-                  >
-                    Slots
-                  </p>
-                  {this.state.NavItem === 2 && (
-                    <hr className="absolute z-10 w-full sm:my-2 my-1 rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
-                  )}
-                </div>
+                {this.props.isEdit && (
+                  <div className="flex-col relative">
+                    <p
+                      onClick={() => this.setState({ NavItem: 2 })}
+                      className={`cursor-pointer font-semibold font-poppins lg:text-[24px] sm:text-[20px] text-lg ${
+                        this.state.NavItem === 2
+                          ? "text-[#8f6ec5]"
+                          : "text-[#8c8c8c]"
+                      } pr-1`}
+                    >
+                      Slots
+                    </p>
+                    {this.state.NavItem === 2 && (
+                      <hr className="absolute z-10 w-full sm:my-2 my-1 rounded bg-[#8f6ec5] sm:py-[2px] py-[1px]" />
+                    )}
+                  </div>
+                )}
                 <div className="flex-col relative">
                   <p
                     onClick={() => this.setState({ NavItem: 3 })}

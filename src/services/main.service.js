@@ -25,6 +25,10 @@ const getCompanyById = (id) => {
   return axios.get(`${BASE_URL}/api/company/${id}`);
 };
 
+const sendCustomerEmail = (data) => {
+  return axios.post(`${BASE_URL}/api/newsletter`, data);
+};
+
 export default {
   discoverTopMentors,
   exploreConsultingCompanies,
@@ -32,4 +36,5 @@ export default {
   getMentorById,
   getCompanyById,
   getCategories,
+  sendCustomerEmail,
 };

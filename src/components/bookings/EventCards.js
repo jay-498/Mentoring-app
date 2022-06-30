@@ -3,7 +3,7 @@ import calender from "../../assets/images/svgs/mybooking.png";
 import dollar from "../../assets/images/svgs/dollar.svg";
 import summary from "../../assets/images/svgs/summary.svg";
 
-function EventCards({ events }) {
+function EventCards({ events, userType }) {
   const dateFormat = (date) => {
     let x = new Date(date);
     return (
@@ -21,7 +21,7 @@ function EventCards({ events }) {
   };
   return (
     <>
-      {events.length ? (
+      {events.length !== 0 ? (
         events.map((event) => (
           <div
             key={event._id}
@@ -29,7 +29,9 @@ function EventCards({ events }) {
           >
             <div className="flex justify-between items-center py-2">
               <p className="font-Manrope font-black text-[#535353] text-[16px]">
-                {event.mentee?.first_name} {event.mentee?.last_name}
+                {userType === "M"
+                  ? event.mentee?.first_name + " " + event.mentee?.last_name
+                  : event.mentor?.name}
               </p>
               <a
                 href={`https://${event.mentor?.google_meet_link}`}

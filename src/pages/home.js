@@ -24,7 +24,7 @@ import { UpdateLoginModal } from "../store/actions/booking";
 import { logOut } from "../store/actions/Login";
 import MyBookings from "../components/bookings/MyBookings";
 import { fetchCompaniesRequested } from "../store/actions/Mentor";
-
+import MainService from "../services/main.service";
 class HomePage extends Component {
   constructor() {
     super();
@@ -48,6 +48,20 @@ class HomePage extends Component {
     if (e.key === "Enter") {
       this.props.navigate(`/search?mentor=${this.state.searchQuery}`);
     }
+  };
+
+  handleSendCustomerEmail = () => {
+    const { email } = this.state;
+    MainService.sendCustomerEmail({ email })
+      .then((res) => {
+        if (res.data.success) {
+          window.open(
+            "https://menteezy.com/downloads/casecompendium.pdf",
+            "_blank"
+          );
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   handleChange = (e) => {
@@ -226,16 +240,17 @@ class HomePage extends Component {
                       style={{ background: "rgba(255, 208, 255, 0.15)" }}
                     />
                   </div>
-                  <a
-                    href="https://menteezy.com/downloads/casecompendium.pdf"
-                    target="blank"
+                  <button
+                    // href="https://menteezy.com/downloads/casecompendium.pdf"
+                    // target="blank"
                     className={`${
                       !this.state.isEmailValid && "opacity-70"
                     } flex items-center justify-center bg-[#FFACFF] sm:text-[16px] text-[12px] font-Helvetica text-white font-bold py-2 px-4 rounded-r-lg`}
                     disabled={!this.state.isEmailValid}
+                    onClick={this.handleSendCustomerEmail}
                   >
                     Download
-                  </a>
+                  </button>
                 </div>
               </div>
               <div className="p-4 pr-10 opacity-60 hidden lg:block">

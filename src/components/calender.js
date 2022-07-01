@@ -270,9 +270,9 @@ export class calender extends Component {
     return (
       "date",
       ("0" + x.getDate()).slice(-2) +
-        "/" +
+        "-" +
         ("0" + (parseInt(x.getMonth()) + 1)).slice(-2) +
-        "/" +
+        "-" +
         x.getFullYear()
     );
   };
@@ -343,14 +343,16 @@ export class calender extends Component {
                               onClick={() => this.IncreaseSlot(dateIndex)}
                             />
                           )}
-                          <img
-                            src={delet}
-                            onClick={() =>
-                              this.DeleteSlot(timeIndex, dateIndex)
-                            }
-                            alt="x"
-                            className="w-4 h-4 cursor-pointer"
-                          />
+                          {timeIndex !== 0 && (
+                            <img
+                              src={delet}
+                              onClick={() =>
+                                this.DeleteSlot(timeIndex, dateIndex)
+                              }
+                              alt="x"
+                              className="w-4 h-4 cursor-pointer"
+                            />
+                          )}
                         </div>
                       ))}
                     </div>

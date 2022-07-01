@@ -103,7 +103,12 @@ class RoundedUser extends Component {
                 />
               </div>
               <div className="flex justify-center items-center gap-x-3">
-                <img src={cross} alt="close" onClick={this.handleDropDown} />
+                <img
+                  src={cross}
+                  alt="close"
+                  className="hover:bg-gray-200 p-1 rounded-full"
+                  onClick={this.handleDropDown}
+                />
               </div>
             </div>
             <div className="flex-col divide-y">
@@ -176,15 +181,17 @@ class RoundedUser extends Component {
                     </div>
                   </div>
                 </div>
-                <div
-                  className="flex w-full justify-between items-center"
-                  onClick={() => {
-                    this.setState({ showSettingsModal: true });
-                    this.handleDropDown();
-                  }}
-                >
-                  <p className="text-[14px] font-medium pb-2">Settings</p>
-                </div>
+                {this.props.userType === "M" && (
+                  <div
+                    className="flex w-full justify-between items-center"
+                    onClick={() => {
+                      this.setState({ showSettingsModal: true });
+                      this.handleDropDown();
+                    }}
+                  >
+                    <p className="text-[14px] font-medium pb-2">Settings</p>
+                  </div>
+                )}
                 <div
                   className="flex w-full justify-between items-center"
                   onClick={() => this.logout()}

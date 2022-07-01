@@ -11,11 +11,19 @@ import {
   FETCH_CURRENT_MENTOR_DETAILS_SUCCESS,
   FETCH_TAGS_REQUESTED,
   FETCH_TAGS_SUCCESS,
+  UPDATE_LOADER_STATE,
 } from "../actionTypes/index";
 
 export const fetchCompaniesRequested = () => {
   return {
     type: FETCH_COMPANIES_REQUESTED,
+  };
+};
+
+export const updateLoaderState = (data) => {
+  return {
+    type: UPDATE_LOADER_STATE,
+    payload: data,
   };
 };
 

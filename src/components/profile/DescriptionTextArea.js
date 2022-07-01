@@ -93,7 +93,12 @@ class DescriptionTextArea extends Component {
                   }
                   className="flex w-[36px] p-2 cursor-pointer hover:bg-gray-200 rounded-full items-center justify-center gap-x-5"
                 >
-                  <img src={cross} alt="x" title="Cancel" />
+                  <img
+                    src={cross}
+                    className="hover:bg-gray-200 p-1 rounded-full"
+                    alt="x"
+                    title="Cancel"
+                  />
                 </div>
               )}
             </div>

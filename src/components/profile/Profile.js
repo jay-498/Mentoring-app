@@ -19,6 +19,7 @@ import EducationModal from "./EducationModal";
 import { toast } from "react-toastify";
 import {
   fetchMentorDetailsRequested,
+  updateLoaderState,
   updateMentorExperienceRequested,
 } from "../../store/actions/Mentor";
 import DeleteModal from "./DeleteModal";
@@ -206,6 +207,7 @@ class Profile extends Component {
     const id = this.props.params.id;
     const { event } = this.state;
     if (event.startDate && event.endDate) {
+      this.props.updateLoaderState(true);
       this.props.updateCalenderEventRequested({
         event: { ...event, amount: (parseInt(rate) * event.duration) / 60 },
         mentor_id: id,
@@ -746,6 +748,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchMentorDetailsRequested(data)),
     updateMentorExperienceRequested: (data) =>
       dispatch(updateMentorExperienceRequested(data)),
+    updateLoaderState: (data) => dispatch(updateLoaderState(data)),
   };
 };
 

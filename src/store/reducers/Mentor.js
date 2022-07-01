@@ -5,6 +5,7 @@ import {
   FETCH_MENTOR_DETAILS_SUCCESS,
   FETCH_TAGS_SUCCESS,
   UPDATE_MENTOR_EXPERIENCE_SUCCESS,
+  UPDATE_LOADER_STATE,
 } from "../actionTypes/index";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   colleges: [],
   tags: [],
   MentorDetails: {},
+  isLoading: false,
 };
 
 const MentorReducer = (state = initialState, action) => {
@@ -20,6 +22,12 @@ const MentorReducer = (state = initialState, action) => {
       return {
         ...state,
         companies: [...action.payload],
+      };
+
+    case UPDATE_LOADER_STATE:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
 
     case FETCH_TAGS_SUCCESS:

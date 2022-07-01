@@ -137,8 +137,17 @@ export class calender extends Component {
   }
 
   removeSlot(index) {
-    const { availableDates } = this.state;
+    const { availableDates, deletedDates } = this.state;
     let dates = [...availableDates];
+    if (deletedDates.indexOf(availableDates[index]) === -1) {
+      this.setState((prev) => {
+        return {
+          ...prev,
+          deletedDates: [...prev.deletedDates, availableDates[index].date],
+        };
+      });
+    }
+    console.log("arraydeleted", deletedDates);
     dates.splice(index, 1);
     this.setState((prev) => {
       return {
@@ -149,12 +158,9 @@ export class calender extends Component {
   }
 
   DeleteSlot(timeIndex, dateIndex) {
-    const { availableDates, deletedDates } = this.state;
+    const { availableDates } = this.state;
     let dates = [...availableDates];
     let date = { ...dates[dateIndex] };
-    if (deletedDates.indexOf(date.date.toString()) === -1) {
-      deletedDates.push(date.date.toString());
-    }
     let times = [...date.times];
     times.splice(timeIndex, 1);
     dates[dateIndex] = { ...date, times };
@@ -209,7 +215,7 @@ export class calender extends Component {
   };
 
   handleSubmitDates = () => {
-    const { availableDates } = this.state;
+    const { availableDates, deletedDates } = this.state;
     //replacing the college array with college id
     let dates = [...availableDates];
     let times = [];
@@ -242,7 +248,11 @@ export class calender extends Component {
       console.log("uniqie", res);
       dates[i].times = [...res];
     }
-    setMentorAvailability({ availability: dates })
+    console.log({ availability: [...dates], removed_dates: [...deletedDates] });
+    setMentorAvailability({
+      availability: [...dates],
+      removed_dates: [...deletedDates],
+    })
       .then((response) => {
         if (response.data.success) {
           toast.success(response.data.msg, {

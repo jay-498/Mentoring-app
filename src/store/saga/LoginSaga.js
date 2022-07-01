@@ -20,6 +20,7 @@ import {
   signinUser,
 } from "../../services/auth.service";
 import { toast } from "react-toastify";
+import { updateLoaderState } from "../actions/Mentor";
 
 function* loginSaga(action) {
   try {
@@ -40,10 +41,12 @@ function* loginSaga(action) {
       localStorage.removeItem("type");
       yield put(updateModalNUmber(2));
     }
+    yield put(updateLoaderState(false));
   } catch (e) {
     localStorage.removeItem("type");
     toast.error("Invalid OTP", { position: toast.POSITION.TOP_CENTER });
     yield put(loginFailure("Invalid Otp"));
+    yield put(updateLoaderState(false));
   }
 }
 
@@ -68,8 +71,10 @@ function* signinSaga(action) {
       });
     }
     yield put(signinSuccess(auth));
+    yield call(updateLoaderState(false));
   } catch (e) {
     yield put(signinFailure(e));
+    yield call(updateLoaderState(false));
   }
 }
 

@@ -38,6 +38,7 @@ class DeleteTest extends Component {
       isMobilEmpty: false,
       mobile: "",
       otp: "",
+      duration: 1,
       form: {
         first_name: "",
         last_name: "",
@@ -52,6 +53,44 @@ class DeleteTest extends Component {
   //     this.props.updateLoginModal(false);
   //   }
   // }
+
+  componentDidMount() {
+    const {
+      isLoggedIn,
+      isBooking,
+      availableDates,
+      currentStartDateIndex,
+      currentStartTimeIndex,
+    } = this.props;
+    let hours = 1;
+    if (isLoggedIn && isBooking) {
+      const start_time = parseInt(
+        availableDates[currentStartDateIndex].times[currentStartTimeIndex]
+          .start_time
+      );
+      let notFound = false;
+      while (!notFound) {
+        let startTime =
+          ("0" + (start_time + hours).toString()).slice(-2) + ":00";
+        console.log(
+          "object",
+          availableDates[currentStartDateIndex].times.some(
+            (time) => time.start_time === startTime
+          )
+        );
+        if (
+          availableDates[currentStartDateIndex].times.some(
+            (time) => time.start_time === startTime
+          )
+        ) {
+          hours += 1;
+        } else {
+          notFound = true;
+        }
+      }
+      this.setState({ duration: hours });
+    }
+  }
 
   handleChange = (e) => {
     const { value, name } = e.target;
@@ -602,144 +641,143 @@ class DeleteTest extends Component {
     return (
       <>
         {/* {console.log("modal", this.props.showModal)} */}
-        {this.props.showModal ? (
-          <div
-            className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}
-            id="popup-modal"
-            style={{ backgroundColor: "rgb(0 ,0 ,0,0.1)" }}
-          >
-            <div className="flex justify-center items-center p-4 w-full h-full md:h-auto">
-              <div className="flex justify-center items-center relative w-full min-w-xs max-w-sm h-full md:h-auto">
-                <div className=" relative w-full rounded-lg bg-white shadop-2">
-                  <div className="flex justify-end p-2">
-                    <button
-                      type="button"
-                      onClick={() => this.props.updateLoginModal(false)}
-                      className="text-gray-400 bg-transparent hover:bg-gray-200 hover rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                      data-modal-toggle="popup-modal"
+
+        <div
+          className={`flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full`}
+          id="popup-modal"
+          style={{ backgroundColor: "rgb(0 ,0 ,0,0.1)" }}
+        >
+          <div className="flex justify-center items-center p-4 w-full h-full md:h-auto">
+            <div className="flex justify-center items-center relative w-full min-w-xs max-w-sm h-full md:h-auto">
+              <div className=" relative w-full rounded-lg bg-white shadop-2">
+                <div className="flex justify-end p-2">
+                  <button
+                    type="button"
+                    onClick={() => this.props.updateLoginModal(false)}
+                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                    data-modal-toggle="popup-modal"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                  {this.props.isLoggedIn && this.props.isBooking ? (
-                    <>
-                      {/* {this.props.is_google_verified ?  */}
-                      <div className="w-full">
-                        <form className="rounded p-5 pt-0 mb-4">
-                          <h1 className="text-center pb-5 font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">
-                            Book Your Session Here
-                          </h1>
-                          <div className="mb-4">
-                            {/* <label
+                      <path
+                        fillRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+                {this.props.isLoggedIn && this.props.isBooking ? (
+                  <>
+                    {/* {this.props.is_google_verified ?  */}
+                    <div className="w-full">
+                      <form className="rounded p-5 pt-0 mb-4">
+                        <h1 className="text-center pb-5 font-poppins tracking-[0.18px] font-semibold text-[#989898] text-md">
+                          Book Your Session Here
+                        </h1>
+                        <div className="mb-4">
+                          {/* <label
                               className="block text-gray-700 text-sm font-bold mb-2"
                               htmlFor="Email"
                             >
                               Anything else you want answered?
                             </label> */}
-                            <div className="relative">
-                              <textarea
-                                className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
-                                placeholder=" "
-                                id="summary"
-                                name="summary"
-                                value={this.props.event.summary}
-                                onChange={(e) =>
-                                  this.props.onChangeEventSumary(e)
-                                }
-                                rows={5}
-                              />
-                              <label
-                                htmlFor="summary"
-                                className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
-                              >
-                                Anything you want to get answered?
-                              </label>
-                            </div>
+                          <div className="relative">
+                            <textarea
+                              className="border-2 border-gray-300 block px-2.5 pb-2 pt-3 w-full text-sm  bg-transparent rounded appearance-none focus:outline-none focus:ring-0 focus:border-[#8F6EC5] peer"
+                              placeholder=" "
+                              id="summary"
+                              name="summary"
+                              value={this.props.event.summary}
+                              onChange={(e) =>
+                                this.props.onChangeEventSumary(e)
+                              }
+                              rows={5}
+                            />
+                            <label
+                              htmlFor="summary"
+                              className="font-roboto absolute text-sm text-[#2D333A] duration-300 transform -translate-y-4 scale-75 top-0 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#8F6EC5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-placeholder-shown:top-3 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
+                            >
+                              Anything you want to get answered?
+                            </label>
                           </div>
-                          {/* <div className="mb-4"> */}
-                          {/* <label
+                        </div>
+                        {/* <div className="mb-4"> */}
+                        {/* <label
                               className="block text-[#8F6EC5] text-sm font-bold mb-2"
                               htmlFor="Mobile"
                             >
                               Duration
                             </label> */}
-                          {/* <div className="relative">
-                              <select
-                                className="block appearance-none w-full bg-gray-100 border focus:outline-none focus:ring-0 focus:border-[#8F6EC5] text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
-                                id="grid-state"
-                                onChange={(e)=>this.props.onChangeEventEndDate(e)}
-                              >
-                                <option value="1">1 hour</option>
-                                <option value="2">2 hours</option>
-                                <option value="3">3 hours</option>
-                              </select>
-                              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg
-                                  className="fill-current h-4 w-4"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                </svg>
-                              </div>
-                            </div>
-                          </div> */}
-                          <div
-                            onClick={() =>
-                              this.props.handleUpdateCalender(
-                                this.props.mentor.session_rate
-                              )
-                            }
-                            className="flex cursor-pointer text-[16px] w-full items-center justify-between bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px] px-4"
+                        <div className="relative mb-4">
+                          <select
+                            className="block appearance-none w-full bg-gray-100 border focus:outline-none focus:ring-0 focus:border-[#8F6EC5] text-gray-700 py-2 px-3 pr-8 rounded leading-tight"
+                            id="grid-state"
+                            onChange={(e) => this.props.onChangeEventEndDate(e)}
                           >
-                            <span>PAY NOW</span>
-                            {isLoading && (
-                              <svg
-                                role="status"
-                                className="inline w-6 h-6 mr-2 text-slate-200 animate-spin  fill-purple-600"
-                                viewBox="0 0 100 101"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                  fill="currentColor"
-                                />
-                                <path
-                                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                  fill="currentFill"
-                                />
-                              </svg>
-                            )}
-                            <span className="flex items-center justify-center">
-                              <img src={rupee} className="w-4 h-4" alt="Rs" />
-                              {
-                                this.props.mentor.session_rate
-                                // parseInt(this.props.event.duration)) /60
-                              }
-                            </span>
-                            {/* <button
+                            {[...Array(this.state.duration)].map((e, index) => (
+                              <option value={index + 1} key={index}>
+                                {index + 1} hour
+                              </option>
+                            ))}
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg
+                              className="fill-current h-4 w-4"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                            </svg>
+                          </div>
+                        </div>
+                        <div
+                          onClick={() =>
+                            this.props.handleUpdateCalender(
+                              this.props.mentor.session_rate
+                            )
+                          }
+                          className="flex cursor-pointer text-[16px] w-full items-center justify-between bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px] px-4"
+                        >
+                          <span>PAY NOW</span>
+                          {isLoading && (
+                            <svg
+                              role="status"
+                              className="inline w-6 h-6 mr-2 text-slate-200 animate-spin  fill-purple-600"
+                              viewBox="0 0 100 101"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                fill="currentFill"
+                              />
+                            </svg>
+                          )}
+                          <span className="flex items-center justify-center">
+                            <img src={rupee} className="w-4 h-4" alt="Rs" />
+                            {this.props.mentor.session_rate *
+                              parseInt(this.props.event.duration)}
+                          </span>
+                          {/* <button
                               className="flex justify-center items-center w-full bg-[#8F6EC5] text-white font-bold py-2 rounded-[3px]"
                               type="button"
                               onClick={() => this.handleUpdateCalender()}
                             >
                               <img src={rupee} className="w-4 h-4" alt="Rs"/><span>435</span>Book Slot
                             </button> */}
-                          </div>
-                        </form>
-                      </div>
-                      {/* :
+                        </div>
+                      </form>
+                    </div>
+                    {/* :
                     <div className="w-full">
                         <form className="rounded p-5 pt-0 mb-4">
                             <label
@@ -759,15 +797,14 @@ class DeleteTest extends Component {
                         </form>
                     </div>
                     } */}
-                    </>
-                  ) : (
-                    <>{allModals()}</>
-                  )}
-                </div>
+                  </>
+                ) : (
+                  <>{allModals()}</>
+                )}
               </div>
             </div>
           </div>
-        ) : null}
+        </div>
         <ToastContainer autoClose={2000} />
       </>
     );

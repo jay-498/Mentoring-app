@@ -22,6 +22,7 @@ function* updateCalenderEventSaga(action) {
       ...action.payload,
       jwt_token,
     });
+    // console.log("saga", auth);
     if (auth.success) {
       toast.success(auth.msg, { position: toast.POSITION.TOP_CENTER });
       yield put(updateCalenderEventSuccess());

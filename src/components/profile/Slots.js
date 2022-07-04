@@ -43,7 +43,7 @@ class Slots extends Component {
         <hr className="bg-[#F2F2F2] my-3 py-[0.125rem] rounded w-FULL" />
         {availableDates.length ? (
           <>
-            <div className="grid grid-cols-5 gap-3 mt-5">
+            <div className="flex  scrollbar overflow-x-auto pb-3 gap-3 mt-5">
               {availableDates.map((eachDate, index) => (
                 <button
                   key={index}
@@ -57,7 +57,7 @@ class Slots extends Component {
                   {/* <p className="text-[10px] text-[#B4B4B4]">
                     {this.getDay(this.props.formatDate(eachDate.date))}
                   </p> */}
-                  <p className="text-[12px] p-1 text-[#565656]">
+                  <p className="w-[85px] text-[12px] p-1 text-[#565656]">
                     {eachDate.date}
                     {/* {new Date(this.props.formatDate(eachDate.date)).getDate()}{" "}
                     {this.getMonth(this.props.formatDate(eachDate.date))} */}
@@ -82,7 +82,7 @@ class Slots extends Component {
           </div>
           {availableDates[currentStartDateIndex] ? (
             <div>
-              <div className="grid grid-cols-8 overflow-x-auto gap-2 mt-2">
+              <div className="flex scrollbar overflow-x-auto pb-3 overflow-x-auto gap-2 mt-2">
                 {availableDates[currentStartDateIndex].times.map(
                   (eachTime, index) => (
                     <div className="" key={index}>
@@ -95,7 +95,7 @@ class Slots extends Component {
                             : "border border-[#D5D3D3]"
                         } font-poppins text-center  rounded`}
                       >
-                        <p className="text-[10px] p-1 px-2 text-[#565656]">
+                        <p className="w-[70px] text-[10px] p-1 px-2 text-[#565656]">
                           {eachTime.start_time}
                         </p>
                       </button>

@@ -50,7 +50,7 @@ class Navbar extends Component {
     return (
       <>
         {/* <MyBookings /> */}
-        <LoginModal isBooking={false} />
+        {this.props.showModal && <LoginModal isBooking={false} />}
         <nav
           className={`relative flex flex-wrap lg:px-20 sm:px-10 px-5 items-center ${
             pathname === "/" ? "bg-[#FFE8EB]" : "bg-[#fafafa]"
@@ -184,6 +184,7 @@ class Navbar extends Component {
 const mapStateToProps = ({ booking, Login }) => {
   return {
     isLoggedIn: Login.isLoggedIn,
+    showModal: booking.showLoginModal,
   };
 };
 

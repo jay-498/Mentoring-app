@@ -71,6 +71,16 @@ export const setMentorAvailability = (data) => {
   });
 };
 
+export const verifyEventCode = (data) => {
+  const jwt_token = localStorage.getItem("user_token");
+  console.log("services", data);
+  return axios.post(`${BASE_URL}/api/event/verify`, data, {
+    headers: {
+      "x-auth-token": jwt_token,
+    },
+  });
+};
+
 export const getCurrentMentor = () => {
   const jwt_token = localStorage.getItem("user_token");
   return axios

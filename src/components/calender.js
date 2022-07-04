@@ -139,6 +139,21 @@ export class calender extends Component {
   removeSlot(index) {
     const { availableDates, deletedDates } = this.state;
     let dates = [...availableDates];
+    if (index === 0) {
+      setMentorAvailability({
+        removed_dates: [...deletedDates, availableDates[index].date],
+      })
+        .then((response) => {
+          if (response.data.success) {
+            toast.success(response.data.msg, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+          }
+        })
+        .catch((err) => toast.error(err.response.data.msg), {
+          position: toast.POSITION.TOP_CENTER,
+        });
+    }
     if (deletedDates.indexOf(availableDates[index]) === -1) {
       this.setState((prev) => {
         return {
@@ -187,11 +202,12 @@ export class calender extends Component {
   // }
 
   onChangeStartTime = (e, timeIndex, dateIndex) => {
+    let hour = e.target.value.split(":")[0];
     const { availableDates } = this.state;
     let dates = [...availableDates];
     let date = { ...dates[dateIndex] };
     let times = [...date.times];
-    times[timeIndex].start_time = e.target.value;
+    times[timeIndex].start_time = `${hour}:00`;
     this.setState((prev) => {
       return {
         ...prev,
@@ -201,11 +217,12 @@ export class calender extends Component {
   };
 
   onChangeEndTime = (e, timeIndex, dateIndex) => {
+    let hour = e.target.value.split(":")[0];
     const { availableDates } = this.state;
     let dates = [...availableDates];
     let date = { ...dates[dateIndex] };
     let times = [...date.times];
-    times[timeIndex].end_time = e.target.value;
+    times[timeIndex].end_time = `${hour}:00`;
     this.setState((prev) => {
       return {
         ...prev,
@@ -320,7 +337,7 @@ export class calender extends Component {
                             className="p-2 py-3 focus:outline-none rounded-lg font-poppins"
                             type="time"
                             value={time.start_time}
-                            step="00:15"
+                            step="3600000"
                             onChange={(e) =>
                               this.onChangeStartTime(e, timeIndex, dateIndex)
                             }
@@ -329,11 +346,11 @@ export class calender extends Component {
                           <input
                             className="p-2 py-3 focus:outline-none rounded-lg font-poppins"
                             type="time"
+                            step="3600000"
                             onChange={(e) =>
                               this.onChangeEndTime(e, timeIndex, dateIndex)
                             }
                             value={time.end_time}
-                            step="900"
                           />
                           {timeIndex === 0 && (
                             <img

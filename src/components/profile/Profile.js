@@ -49,8 +49,8 @@ class Profile extends Component {
       description: "",
       event: {
         startDate: "",
-        endDate: "",
-        duration: 0,
+        // endDate: "",
+        duration: 1,
         summary: "",
       },
     };
@@ -128,6 +128,7 @@ class Profile extends Component {
           currentStartDateIndex: index,
           event: {
             ...prev.event,
+            duration: 1,
             startDate: this.formatDate(availableDates[index].date),
           },
         };
@@ -153,17 +154,17 @@ class Profile extends Component {
     return String(newTime);
   }
 
-  endTimesCalculate(timeIndex) {
-    const { startDate } = this.state.event;
-    const { availableDates, currentStartDateIndex } = this.state;
-    const newStartDate = new Date(startDate);
-    const newTime = new Date(newStartDate.getTime());
-    const times = availableDates[currentStartDateIndex].times;
-    const splitStartTimes = times[timeIndex].end_time.split(":");
-    newTime.setHours(parseInt(splitStartTimes[0]));
-    newTime.setMinutes(parseInt(splitStartTimes[1]));
-    return String(newTime);
-  }
+  // endTimesCalculate(timeIndex) {
+  //   const { startDate } = this.state.event;
+  //   const { availableDates, currentStartDateIndex } = this.state;
+  //   const newStartDate = new Date(startDate);
+  //   const newTime = new Date(newStartDate.getTime());
+  //   const times = availableDates[currentStartDateIndex].times;
+  //   const splitStartTimes = times[timeIndex].end_time.split(":");
+  //   newTime.setHours(parseInt(splitStartTimes[0]));
+  //   newTime.setMinutes(parseInt(splitStartTimes[1]));
+  //   return String(newTime);
+  // }
 
   onChangeEventStartTime = (timeIndex) => {
     this.setState(
@@ -173,12 +174,13 @@ class Profile extends Component {
           currentStartTimeIndex: timeIndex,
           event: {
             ...prev.event,
+            duration: 1,
             startDate: this.startTimesCalculate(timeIndex),
-            endDate: this.endTimesCalculate(timeIndex),
+            // endDate: this.endTimesCalculate(timeIndex),
           },
         };
-      },
-      () => this.durationCalculation()
+      }
+      // () => this.durationCalculation()
     );
   };
 
@@ -188,28 +190,28 @@ class Profile extends Component {
     return Math.abs(Math.round(diff));
   }
 
-  durationCalculation() {
-    const { startDate, endDate } = this.state.event;
-    let dt1 = new Date(endDate);
-    let dt2 = new Date(startDate);
-    this.setState((prev) => {
-      return {
-        ...prev,
-        event: {
-          ...prev.event,
-          duration: this.diff_hours(dt1, dt2) * 60,
-        },
-      };
-    });
-  }
+  // durationCalculation() {
+  //   const { startDate, endDate } = this.state.event;
+  //   let dt1 = new Date(endDate);
+  //   let dt2 = new Date(startDate);
+  //   this.setState((prev) => {
+  //     return {
+  //       ...prev,
+  //       event: {
+  //         ...prev.event,
+  //         duration: this.diff_hours(dt1, dt2) * 60,
+  //       },
+  //     };
+  //   });
+  // }
 
   handleUpdateCalender = (rate) => {
     const id = this.props.params.id;
     const { event } = this.state;
-    if (event.startDate && event.endDate) {
+    if (event.startDate && event.duration) {
       this.props.updateLoaderState(true);
       this.props.updateCalenderEventRequested({
-        event: { ...event, amount: (parseInt(rate) * event.duration) / 60 },
+        event: { ...event, amount: parseInt(rate) * event.duration },
         mentor_id: id,
       });
     } else {
@@ -239,17 +241,18 @@ class Profile extends Component {
   }
 
   onChangeEventEndDate = (e) => {
-    const endDate = this.addHours(
-      parseInt(e.target.value),
-      this.state.event.startDate
-    );
+    console.log(e.target.value);
+    // const endDate = this.addHours(
+    //   parseInt(e.target.value),
+    //   this.state.event.startDate
+    // );
     this.setState((prev) => {
       return {
         ...prev,
         event: {
           ...prev.event,
-          endDate: String(endDate),
-          duration: e.target.value * 60,
+          // endDate: String(endDate),
+          duration: e.target.value,
         },
       };
     });
@@ -546,15 +549,19 @@ class Profile extends Component {
     };
     return (
       <div className="flex flex-col overflow-hidden pb-10">
-        <LoginModal
-          onChangeEventSumary={this.onChangeEventSumary}
-          onChangeEventEndDate={this.onChangeEventEndDate}
-          handleUpdateCalender={this.handleUpdateCalender}
-          event={this.state.event}
-          mentor={mentor}
-          isBooking={true}
-          availableDates={this.state.availableDates}
-        />
+        {this.props.showModal && (
+          <LoginModal
+            onChangeEventSumary={this.onChangeEventSumary}
+            onChangeEventEndDate={this.onChangeEventEndDate}
+            handleUpdateCalender={this.handleUpdateCalender}
+            event={this.state.event}
+            mentor={mentor}
+            currentStartDateIndex={this.state.currentStartDateIndex}
+            currentStartTimeIndex={this.state.currentStartTimeIndex}
+            isBooking={true}
+            availableDates={this.state.availableDates}
+          />
+        )}
         <div>
           {showExperienceDeleteModal && (
             <DeleteModal
@@ -707,7 +714,7 @@ class Profile extends Component {
                 <>{<NavItems />}</>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2">
+              <div className="lg:grid lg:grid-cols-2 flex-col">
                 <>{<NavItems />}</>
                 <div className="pt-5 sm:p-0">
                   <Slots
@@ -735,6 +742,7 @@ const mapStateToProps = ({ booking, Login, Mentor }) => {
     isLoggedIn: Login.isLoggedIn,
     mentor: Mentor.MentorDetails,
     Usertype: Login.userType,
+    showModal: booking.showLoginModal,
   };
 };
 

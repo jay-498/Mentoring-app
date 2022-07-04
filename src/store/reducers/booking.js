@@ -5,7 +5,7 @@ import {
   UPDATE_MODAL_NUMBER,
   UPDATE_CALENDER_EVENT_SUCCESS,
   UPDATE_BOOKING_MODAL,
-  FETCH_MENTOR_EVENTS_SUCCESS
+  FETCH_MENTOR_EVENTS_SUCCESS,
 } from "../actionTypes/index";
 
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
   currentModalNumber: 1,
   AllEvents: [],
   UpcomingEvents: [],
-  PastEvents: []
+  PastEvents: [],
 };
 
 const bookingReducer = (state = initialState, action) => {
@@ -24,38 +24,39 @@ const bookingReducer = (state = initialState, action) => {
         ...state,
         showLoginModal: action.payload,
       };
-    
+
     case FETCH_MENTOR_EVENTS_SUCCESS:
-      if(action.payload.type==='U'){
-        return{
+      if (action.payload.type === "U") {
+        return {
           ...state,
-          UpcomingEvents: [...action.payload.data]
-        }
-      }
-      else if(action.payload.type==='P'){
-        return{
+          UpcomingEvents: [...action.payload.data],
+        };
+      } else if (action.payload.type === "P") {
+        return {
           ...state,
-          PastEvents: [...action.payload.data]
-        }
-      }
-      else{
-        return{
+          PastEvents: [...action.payload.data],
+        };
+      } else {
+        return {
           ...state,
-          AllEvents: [...action.payload.data]
-        }
+          AllEvents: [...action.payload.data],
+        };
       }
 
     case UPDATE_BOOKING_MODAL:
       return {
         ...state,
         bookingModal: action.payload,
-      }
+      };
 
     case UPDATE_CALENDER_EVENT_SUCCESS:
-      return{
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+      return {
         ...state,
         showLoginModal: false,
-      }
+      };
 
     case UPDATE_MODAL_NUMBER:
       return {

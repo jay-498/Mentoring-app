@@ -37,7 +37,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchCompaniesRequested();
+    this.props.fetchCompaniesRequested({ featured : true });
   }
 
   onSearch = () => {
@@ -121,7 +121,7 @@ class HomePage extends Component {
                   onClick={this.onSearch}
                   className={`${
                     this.state.searchQuery === "" && "opacity-60"
-                  } bg-[#8F6EC5] text-white font-bold sm:py-3 py-2 sm:px-12 px-7 rounded-r-lg`}
+                  } bg-[#8F6EC5] text-white font-bold sm:py-3 py-2 sm:px-12 px-7 rounded-r-lg font-Helvetica`}
                 >
                   Search
                 </button>
@@ -137,9 +137,6 @@ class HomePage extends Component {
                 loading="lazy"
               />
             </div>
-            <h1 className="font-Helvetica text-xl font-normal text-center">
-              Pragyan Pandey, Software Engineer
-            </h1>
           </div>
         </div>
 
@@ -165,7 +162,7 @@ class HomePage extends Component {
           }}
         >
           <div className="flex flex-col lg:mx-10 mx-2 sm:mt-16 mt-8">
-            <h1 className="text-[#646464] sm:text-3xl text-2xl sm:pl-[44px] pl-[30px] font-medium font-poppins">
+            <h1 className="pb-6 text-[#646464] pl-[38px] sm:text-3xl text-2xl font-medium font-poppins">
               CATEGORIES
             </h1>
             <Gallery />
@@ -173,15 +170,13 @@ class HomePage extends Component {
         </div>
 
         <div className="flex-col sm:pt-20 pt-10">
-          <div className="absolute sm:w-[60px] w-[50px]  mt-32 sm:ml-10 md:ml-2 lg:ml-8 ml-3">
+          <div className="absolute w-[45px] mt-40 sm:ml-10 md:ml-2 lg:ml-11 ml-3">
             <img src={dots} alt="dot" loading="lazy" />
           </div>
           <div className="flex flex-col lg:mx-10 mx-2">
-            <div className="flex">
-              <h1 className="text-[#646464] pl-[44px] sm:text-3xl text-2xl font-medium font-poppins">
-                DISCOVER TOP MENTORS
-              </h1>
-            </div>
+            <h1 className="pb-6 text-[#646464] pl-[38px] sm:text-3xl text-2xl font-medium font-poppins">
+              DISCOVER TOP MENTORS
+            </h1>
             <CarouselDiscover isSlider="true" />
           </div>
         </div>
@@ -403,7 +398,7 @@ const mapStateToProps = ({ booking, Login }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logOut: () => dispatch(logOut()),
-    fetchCompaniesRequested: () => dispatch(fetchCompaniesRequested()),
+    fetchCompaniesRequested: (data) => dispatch(fetchCompaniesRequested(data)),
   };
 };
 

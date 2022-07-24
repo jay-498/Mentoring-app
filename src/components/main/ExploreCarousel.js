@@ -5,9 +5,9 @@ import { withRouter } from "../../utils/withRouter";
 /**
  * PurgeCSS:
  * bg-[#FBFAF5]
- * bg-[#0000FF]
- * bg-[#ffdf00]
-
+ * bg-[#0a7d56]
+ * bg-[#2867b2]
+ * bg-[#0a1f3c]
   */
 
 class ExploreCarousel extends Component {
@@ -15,14 +15,6 @@ class ExploreCarousel extends Component {
     super();
     this.onSearch = this.onSearch.bind(this);
   }
-
-  // componentDidMount() {
-  //   MainService.exploreConsultingCompanies()
-  //     .then((response) => {
-  //       this.setState({ explore: response.data });
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
 
   onSearch(company) {
     this.props.navigate(`/search?mentor=${company}`);
@@ -37,14 +29,14 @@ class ExploreCarousel extends Component {
               onClick={() => this.onSearch(company.name)}
               className={`flex cursor-pointer bg-[${company.template_color}] w-[350px] h-[205px] rounded-[20px]`}
             >
-              <div className="z-10 flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center w-full">
                 <img
                   loading="lazy"
                   src={company.image_url}
                   alt="1"
-                  className="w-30 h-28 px-20"
+                  className="w-30 h-20 px-20"
                 />
-                <h1 className="text-2xl text-slate-100 font-Helvetica">
+                <h1 className="text-3xl font-bold text-slate-100 font-Helvetica">
                   {company.name}
                 </h1>
               </div>

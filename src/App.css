@@ -43,3 +43,7 @@
     transform: rotate(360deg);
   }
 }
+
+.custom-carousel-left-right{
+  box-shadow: -10px 14px 24px rgba(1, 22, 39, 0.08);
+}

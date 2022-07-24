@@ -14,9 +14,10 @@ import {
   UPDATE_LOADER_STATE,
 } from "../actionTypes/index";
 
-export const fetchCompaniesRequested = () => {
+export const fetchCompaniesRequested = (filter) => {
   return {
     type: FETCH_COMPANIES_REQUESTED,
+    payload : filter
   };
 };
 

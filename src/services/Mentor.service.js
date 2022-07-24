@@ -17,9 +17,14 @@ export const updateMentorExperience = (data) => {
     });
 };
 
-export const getCompanies = () => {
+export const getCompanies = (filter) => {
+  let queryArr = []
+  for(let key in filter){
+    queryArr.push(`${key}=${filter[key]}`)
+  }
+  const queryString = queryArr.join("&")
   return axios
-    .get(`${BASE_URL}/api/company`)
+    .get(`${BASE_URL}/api/company?${queryString}`)
     .then((res) => {
       return res.data;
     })

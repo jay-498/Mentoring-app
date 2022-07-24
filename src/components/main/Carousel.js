@@ -100,10 +100,10 @@ class Gallery extends Component {
     };
 
     return (
-      <div className="relative pt-5 mx-7">
+      <div className="relative px-[31px]">
         {this.state.categories.length > 4 && (
           <div
-            className="absolute lg:top-[110px] bg-gray-50 rounded-2xl z-10  sm:top-[110px] md:top-[70px] top-[97px] left-0"
+            className="custom-carousel-left-right absolute lg:top-[80px] bg-gray-50 rounded-2xl z-10  sm:top-[80px] md:top-[70px] top-[80px] left-2"
             onClick={this.previous}
           >
             <button className="button  h-15 w-15 p-4">
@@ -111,7 +111,7 @@ class Gallery extends Component {
             </button>
           </div>
         )}
-        <div className="px-4">
+        <div>
           <Slider ref={(c) => (this.slider = c)} {...settings}>
             {this.state.categories.map((mentor, index) => (
               <div key={mentor._id} className="flex rounded-[20px]">
@@ -123,7 +123,7 @@ class Gallery extends Component {
                     className="absolute px-5 inset-0 z-10 rounded-[20px] text-center flex items-center justify-center"
                     style={{ background: "rgba(0, 0, 0, 0.35)" }}
                   >
-                    <h1 className="lg:text-xl text-lg md:text-xl w-full text-white font-bold font-poppins tracking-[.13em]">
+                    <h1 className="uppercase lg:text-xl text-lg md:text-xl w-full text-white font-bold font-poppins tracking-[.13em]">
                       {mentor.name}
                     </h1>
                   </div>
@@ -143,8 +143,8 @@ class Gallery extends Component {
 
         {this.state.categories.length > 4 && (
           <div
-            className="absolute right-0 z-10 bg-gray-50 rounded-2xl
-             lg:top-[110px] sm:top-[110px] md:top-[70px] top-[97px]"
+            className="custom-carousel-left-right absolute right-2 z-10 bg-gray-50 rounded-2xl
+             lg:top-[80px] sm:top-[80px] md:top-[70px] top-[80px]"
             onClick={this.next}
           >
             <button className="button  h-15 w-15 p-4">

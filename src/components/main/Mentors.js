@@ -9,6 +9,7 @@ import att from "../../assets/images/artwork/ATTCOLOR.png";
  * bg-[#FD8498]
  * bg-[#3960FE]
  * bg-[#F6C859]
+ * h-[40px]
 
   */
 
@@ -19,16 +20,20 @@ export default class Mentors extends Component {
       companies: [
         {
           image: reddit,
+          height: 50
         },
         {
           image: att,
-        },
-        {
-          image: zen,
+          height: 50
         },
         {
           image: linkedin,
+          height: 40
         },
+        {
+          image: zen,
+          height: 40
+        }
       ],
     };
   }
@@ -44,7 +49,7 @@ export default class Mentors extends Component {
               loading="lazy"
               src={logo.image}
               alt="1"
-              className="w-[150px] h-[60px] hover:grayscale"
+              className={`opacity-50 h-[${logo.height}px] grayscale`}
             />
           </div>
         ))}

@@ -6,6 +6,7 @@ import ExploreCarousel from "../components/main/ExploreCarousel";
 import Testimonials from "../components/main/Testimonials";
 import Mentors from "../components/main/Mentors";
 import sign from "../assets/images/mentee/sign.png";
+import HomeProfileBG1 from "../assets/images/design/home_profile_bg1.png";
 import plane1 from "../assets/images/design/plane1.png";
 import plane2 from "../assets/images/design/plane3.png";
 import dots from "../assets/images/design/Dots.png";
@@ -15,14 +16,10 @@ import instagram from "../assets/images/icons/Instagram.png";
 import linkedin from "../assets/images/icons/linkedin.png";
 import twitter from "../assets/images/icons/twitter.png";
 import youtube from "../assets/images/icons/youtube.png";
-import bg from "../assets/images/bg.png";
-import Navbar from "../components/common/Navbar";
-import LoginModal from "../components/profile/LoginModal";
+import HomeCategoriesBG1 from "../assets/images/home_categories_bg1.png"
 import { connect } from "react-redux";
 import { withRouter } from "../utils/withRouter";
-import { UpdateLoginModal } from "../store/actions/booking";
 import { logOut } from "../store/actions/Login";
-import MyBookings from "../components/bookings/MyBookings";
 import { fetchCompaniesRequested } from "../store/actions/Mentor";
 import MainService from "../services/main.service";
 class HomePage extends Component {
@@ -86,16 +83,16 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="flex-col mx-auto sm:h-[870px] h-[650px] bg-[#FFE8EB]">
-        <div className="grid lg:grid-cols-2 sm:h-[840px] h-[630px] sm:mx-20 mx-5">
+      <div className="flex-col mx-auto h-[650px] bg-[#FFE8EB]">
+        <div className="grid lg:grid-cols-2 h-[630px] sm:mx-20 mx-5">
           <div className="flex flex-col pt-[30%] gap-y-4">
             <div className="flex justify-start leading-[64px]">
-              <p className="text-[#8F6EC5] sm:w-[600px] font-bold sm:text-[52px] text-[42px] font-poppins">
+              <p className="text-[#8F6EC5] sm:w-[600px] font-bold sm:text-[44px] text-[38px] font-poppins">
                 Learn and grow from the best in industry
               </p>
             </div>
             <div className="flex flex-col gap-y-4">
-              <p className="text-[#797373] font-medium text-2xl font-poppins">
+              <p className="text-[#797373] font-medium text-xl font-poppins">
                 Find the best mentor who can help you ace your
                 <br /> next case
               </p>
@@ -128,11 +125,11 @@ class HomePage extends Component {
               </div>
             </div>
           </div>
-          <div className="lg:visible invisible flex-col  justify-center items-center pt-8">
-            <div className="h-[590px] w-full">
+          <div className="lg:visible invisible flex-col pl-20 justify-center items-center pt-8">
+            <div style={{backgroundPosition : `center`, backgroundSize : '100% 100%', backgroundImage : `url('${HomeProfileBG1}')`}} className="h-[420px] w-full">
               <img
                 src={profile}
-                className="relative h-[750px] w-full"
+                className="relative w-full"
                 alt="profile"
                 loading="lazy"
               />
@@ -153,19 +150,21 @@ class HomePage extends Component {
         </div>
 
         <div
-          className="flex-col sm:pt-10"
+          className="flex-col"
           style={{
-            backgroundImage: `url(${bg})`,
-            backgroundPosition: "center",
+            background: `linear-gradient(180deg, #FFE8EB 0%, rgba(226, 227, 255, 0) 100%)`,
+            backgroundPosition: "0 -140px",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
           }}
         >
-          <div className="flex flex-col lg:mx-10 mx-2 sm:mt-16 mt-8">
-            <h1 className="pb-6 text-[#646464] pl-[38px] sm:text-3xl text-2xl font-medium font-poppins">
-              CATEGORIES
-            </h1>
-            <Gallery />
+          <div className="flex flex-col sm:pt-10" style={{backgroundSize : "55% 100%", backgroundPosition: "center -50px", backgroundRepeat : "no-repeat", backgroundImage : `url('${HomeCategoriesBG1}')`}} >
+            <div className="flex flex-col lg:mx-10 mx-2 sm:mt-16 mt-8">
+              <h1 className="pb-6 text-[#646464] pl-[38px] sm:text-3xl text-2xl font-medium font-poppins">
+                CATEGORIES
+              </h1>
+              <Gallery />
+            </div>
           </div>
         </div>
 

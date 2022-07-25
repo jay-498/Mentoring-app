@@ -78,7 +78,7 @@ class HomePage extends Component {
     return (
       <div className="flex-col mx-auto">
         <div className="flex-col">
-          <div className="flex-col lg:mx-10 sm:mx-6 mx-2">
+          <div className="flex-col lg:mx-10 sm:mx-6 mx-2 my-20">
             <CarouselDiscover
               isSlider={false}
               mentorDetails={this.state.mentorDetails}
